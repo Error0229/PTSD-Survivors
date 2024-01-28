@@ -6,6 +6,9 @@
 #include <vector>
 #include <array>
 #include <set>
+#include <map>
+#include <stack>
+#include <stdexcept>
 
 #include <SDL.h>
 #include <SDL_events.h>

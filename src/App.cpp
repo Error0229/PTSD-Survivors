@@ -13,7 +13,7 @@ void App::Start() {
     m_Giraffe->SetZIndex(5);
     m_Giraffe->Start();
 
-    auto gf = std::make_shared<GiraffeText>("../assets/fonts/Inter.ttf", 500,
+    auto gf = std::make_shared<GiraffeText>("../assets/fonts/Inter.ttf", 50,
                                             "Giraffe");
     gf->SetZIndex(m_Giraffe->GetZIndex() - 1);
     gf->Start();

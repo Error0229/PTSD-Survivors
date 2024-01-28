@@ -73,6 +73,8 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Util/Transform.hpp
     ${INCLUDE_DIR}/Util/TransformUtils.hpp
     ${INCLUDE_DIR}Util/GameObject.hpp
+    ${INCLUDE_DIR}/Util/ObjectPool.hpp
+    ${INCLUDE_DIR}/Util/ObjectPool.inl
 
     ${INCLUDE_DIR}/App.hpp
     ${INCLUDE_DIR}/Triangle.hpp
