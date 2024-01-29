@@ -3,6 +3,8 @@
 
 #include "pch.hpp" // IWYU pragma: export
 
+#include "Game/Character.hpp"
+#include "Game/Map.hpp"
 #include "Giraffe.hpp"
 #include "Triangle.hpp"
 
@@ -22,9 +24,10 @@ public:
 
 private:
     State m_CurrentState = State::START;
-
+    Game::Character m_Player;
+    Game::Map m_Map;
     Triangle m_Triangle;
-    std::shared_ptr<Giraffe> m_Giraffe= std::make_shared<Giraffe>();
+    std::shared_ptr<Giraffe> m_Giraffe = std::make_shared<Giraffe>();
 };
 
 #endif

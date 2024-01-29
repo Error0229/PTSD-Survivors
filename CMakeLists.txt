@@ -44,6 +44,8 @@ set(SRC_FILES
     ${SRC_DIR}/Util/GameObject.cpp
 
     ${SRC_DIR}/Game/Map.cpp
+    ${SRC_DIR}/Game/Camera.cpp
+    ${SRC_DIR}/Game/Character.cpp
 
     ${SRC_DIR}/App.cpp
     ${SRC_DIR}/Triangle.cpp
@@ -79,6 +81,8 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Util/ObjectPool.inl
 
     ${INCLUDE_DIR}/Game/Map.hpp
+    ${INCLUDE_DIR}/Game/Camera.hpp
+    ${INCLUDE_DIR}/Game/Character.hpp
     ${INCLUDE_DIR}/Game/Config.hpp
 
     ${INCLUDE_DIR}/App.hpp

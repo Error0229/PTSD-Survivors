@@ -2,9 +2,11 @@
 #define CONFIG_HPP
 
 #include "pch.hpp"
-namespace Game{
-    constexpr const char* MAP_SPRITE_PATH = "assets/sprites/map/";
-    constexpr int32_t MAP_PADDING_NUM = 4;
-}
+namespace Game {
+constexpr const char *MAP_SPRITE_PATH = "assets/sprites/map/";
+constexpr const char *CHARACTER_SPRITE_PATH = "assets/sprites/character/";
+constexpr const char *SPRITE_EXT = ".png";
+constexpr int32_t MAP_PADDING_NUM = 4;
+} // namespace Game
 
 #endif /* CONFIG_HPP */
