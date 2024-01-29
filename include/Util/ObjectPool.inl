@@ -13,7 +13,6 @@ namespace Util {
         auto it = ObjectToIndex_.find(object);
         if (it != ObjectToIndex_.end()) {
             FreeIndices_.push(it->second);
-            ObjectToIndex_.erase(it);
             return;
         }
         throw std::invalid_argument("Object not found in pool");
@@ -34,11 +33,9 @@ namespace Util {
     }
     
     template <typename T>
-    std::shared_ptr<T> ObjectPool<T>::GetObject(std::shared_ptr<T> object) {
-        auto it = ObjectToIndex_.find(object);
-        if (it != ObjectToIndex_.end()) {
-            return Pool_[it->second];
-        }
-        throw std::invalid_argument("Object not found in pool");
+    std::shared_ptr<T> ObjectPool<T>::GetObject() {
+        auto index = FreeIndices_.top();
+        FreeIndices_.pop();
+        return Pool_[index];
     }
 } // namespace Util

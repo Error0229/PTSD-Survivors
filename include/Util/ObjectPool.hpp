@@ -28,7 +28,7 @@ public:
 
     void GetObjects(std::vector<std::shared_ptr<T>>& objects, int32_t count);
 
-    std::shared_ptr<T> GetObject(std::shared_ptr<T> object);
+    std::shared_ptr<T> GetObject();
 
 private:
     std::vector<std::shared_ptr<T>> Pool_;
