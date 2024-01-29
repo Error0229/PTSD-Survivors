@@ -14,10 +14,11 @@ public:
     void Update(const Util::Transform &transform = Util::Transform()) override;
     void SetSpeed(float speed);
     void Setup(std::string Name);
-    void MoveTowards(glm::vec2 position);
+    void GoTo(glm::vec2 target);
+    glm::vec2 GetPosition();
 
 private:
-    float m_Speed = 10.0;
+    float m_Speed = 100.0;
     glm::vec2 m_Position;
     std::string m_Name;
 };

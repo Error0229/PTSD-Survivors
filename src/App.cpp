@@ -4,20 +4,16 @@
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
+#include <memory>
 
 void App::Start() {
     LOG_TRACE("Start");
-
-    m_Giraffe->SetDrawable(
-        std::make_unique<Util::Image>("../assets/sprites/giraffe.png"));
-    m_Giraffe->SetZIndex(5);
-    m_Giraffe->Start();
-
-    auto gf = std::make_shared<GiraffeText>("../assets/fonts/Inter.ttf", 50,
-                                            "Giraffe");
-    gf->SetZIndex(m_Giraffe->GetZIndex() - 1);
-    gf->Start();
-    m_Giraffe->AppendChild(gf);
+    m_Map = std::make_unique<Game::Map>();
+    m_Player = std::make_shared<Game::Character>();
+    m_Map->Start();
+    m_Player->Start();
+    m_Map->SetMap("map");
+    m_Player->Setup("cat");
 
     m_CurrentState = State::UPDATE;
 }
@@ -52,8 +48,8 @@ void App::Update() {
         LOG_DEBUG("B");
         Util::Input::SetCursorPosition({0.0F, 0.0F});
     }
-
-    m_Giraffe->Update();
+    m_Player->Update({Util::Input::GetCursorPosition()});
+    m_Map->Update({m_Player->GetPosition()});
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)
