@@ -7,15 +7,15 @@
 #include <memory>
 
 namespace Game {
-Map::Map(std::string mapName) {
-    m_MapName = mapName;
+Map::Map(std::string name) {
+    m_Name = name;
     m_Drawable =
-        std::make_unique<Util::Image>(MAP_SPRITE_PATH + mapName + SPRITE_EXT);
+        std::make_unique<Util::Image>(MAP_SPRITE_PATH + name + SPRITE_EXT);
     m_ZIndex = MAP_LAYER;
 }
 void Map::Start() {}
 void Map::SetMap(std::string mapName) {
-    m_MapName = mapName;
+    m_Name = mapName;
     for (int i = 0; i < MAP_PADDING_NUM; i++) {
         m_Maps.push_back(std::make_unique<Map>(mapName));
     }

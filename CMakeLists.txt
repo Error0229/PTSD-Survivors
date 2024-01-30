@@ -43,8 +43,11 @@ set(SRC_FILES
     ${SRC_DIR}/Util/TransformUtils.cpp
     ${SRC_DIR}/Util/GameObject.cpp
 
-    ${SRC_DIR}/Game/Map.cpp
+    ${SRC_DIR}/Game/Util.cpp
     ${SRC_DIR}/Game/Camera.cpp
+    ${SRC_DIR}/Game/Physical.cpp
+    ${SRC_DIR}/Game/QuadTree.cpp
+    ${SRC_DIR}/Game/Map.cpp
     ${SRC_DIR}/Game/Character.cpp
 
     ${SRC_DIR}/App.cpp
@@ -77,13 +80,16 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Util/Transform.hpp
     ${INCLUDE_DIR}/Util/TransformUtils.hpp
     ${INCLUDE_DIR}/Util/GameObject.hpp
-    ${INCLUDE_DIR}/Util/ObjectPool.hpp
-    ${INCLUDE_DIR}/Util/ObjectPool.inl
-
-    ${INCLUDE_DIR}/Game/Map.hpp
-    ${INCLUDE_DIR}/Game/Camera.hpp
-    ${INCLUDE_DIR}/Game/Character.hpp
+    
     ${INCLUDE_DIR}/Game/Config.hpp
+    ${INCLUDE_DIR}/Game/Util.hpp
+    ${INCLUDE_DIR}/Game/ObjectPool.hpp
+    ${INCLUDE_DIR}/Game/ObjectPool.inl
+    ${INCLUDE_DIR}/Game/Camera.hpp
+    ${INCLUDE_DIR}/Game/Physical.hpp
+    ${INCLUDE_DIR}/Game/QuadTree.hpp
+    ${INCLUDE_DIR}/Game/Map.hpp
+    ${INCLUDE_DIR}/Game/Character.hpp
 
     ${INCLUDE_DIR}/App.hpp
     ${INCLUDE_DIR}/Triangle.hpp
