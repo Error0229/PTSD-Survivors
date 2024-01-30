@@ -8,13 +8,14 @@ namespace Game {
 class Map : public Util::GameObject {
 public:
     Map() = default;
-    Map(std::string Name);
+    Map(std::string name);
     ~Map() override = default;
     void Start() override;
-    void SetMap(std::string Name);
+    void Setup(std::string name);
     void Update(const Util::Transform &transform = Util::Transform()) override;
 
 private:
+    float m_Height, m_Width;
     glm::vec2 m_Position;
     std::string m_Name;
     bool m_Enabled = false;

@@ -3,12 +3,11 @@
 namespace Game {
 
 Physical::Physical() {
-    this->m_Position = {0, 0};
-    this->m_Size = {0, 0};
+    m_Position = {0, 0};
 }
 
 glm::vec2 &Physical::GetPosition() {
-    return this->m_Position;
+    return m_Position;
 }
 
 const std::type_info &Physical::Type() {
@@ -16,22 +15,21 @@ const std::type_info &Physical::Type() {
 }
 
 void Physical::SetVelocity(float velocity) {
-    this->m_Velocity = velocity;
+    m_Velocity = velocity;
 }
 
 float Physical::Distance(std::shared_ptr<Physical> &other) {
-    return glm::distance(this->m_Position, other->GetPosition());
+    return glm::distance(m_Position, other->GetPosition());
 }
 
 bool Physical::IsCollideWith(std::shared_ptr<Physical> &other) {
-    return Game::IsOverlapped(this->m_Position.x, this->m_Position.y,
-                              this->m_Size.w, this->m_Size.h,
+    return Game::IsOverlapped(m_Position.x, m_Position.y, Width(), Height(),
                               other->GetPosition().x, other->GetPosition().y,
                               other->Width(), other->Height());
 }
 
 void Physical::SetPosition(glm::vec2 position) {
-    this->m_Position = position;
+    m_Position = position;
 }
 
 } // namespace Game

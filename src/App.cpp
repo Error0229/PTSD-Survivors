@@ -12,7 +12,7 @@ void App::Start() {
     m_Player = std::make_shared<Game::Character>();
     m_Map->Start();
     m_Player->Start();
-    m_Map->SetMap("map");
+    m_Map->Setup("map");
     m_Player->Setup("cat");
 
     m_CurrentState = State::UPDATE;

@@ -1,25 +1,26 @@
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 
+#include "Game/Physical.hpp"
 #include "pch.hpp"
 
 #include "Util/GameObject.hpp"
 
 namespace Game {
-class Character : public Util::GameObject {
+class Character : public Util::GameObject, public Physical {
 public:
     Character() = default;
     ~Character() override = default;
     void Start() override;
     void Update(const Util::Transform &transform = Util::Transform()) override;
     void SetSpeed(float speed);
-    void Setup(std::string Name);
+    void Setup(std::string name);
     void GoTo(glm::vec2 target);
-    glm::vec2 GetPosition();
+
+    float Width() override;
+    float Height() override;
 
 private:
-    float m_Speed = 100.0;
-    glm::vec2 m_Position;
     std::string m_Name;
 };
 } // namespace Game

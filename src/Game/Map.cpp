@@ -14,13 +14,15 @@ Map::Map(std::string name) {
     m_ZIndex = MAP_LAYER;
 }
 void Map::Start() {}
-void Map::SetMap(std::string mapName) {
-    m_Name = mapName;
+void Map::Setup(std::string name) {
+    m_Name = name;
     for (int i = 0; i < MAP_PADDING_NUM; i++) {
-        m_Maps.push_back(std::make_unique<Map>(mapName));
+        m_Maps.push_back(std::make_unique<Map>(name));
     }
     m_Maps[0]->m_Enabled = true;
     m_Maps[0]->m_Position = {0, 0};
+    m_Height = m_Maps[0]->m_Drawable->GetSize().y;
+    m_Width = m_Maps[0]->m_Drawable->GetSize().x;
     m_VisibleTiles.insert({0, 0});
 }
 void Map::Update(const Util::Transform &transform) {
@@ -29,10 +31,8 @@ void Map::Update(const Util::Transform &transform) {
     int ddx[4] = {-1, 1, -1, 1};
     int ddy[4] = {-1, -1, 1, 1};
     auto &player_pos = transform.translation;
-    int32_t h = 1000;
-    int32_t w = 1000; // hardcoded for now
-    m_Position.x = w * lround(player_pos.x / w);
-    m_Position.y = h * lround(player_pos.y / h);
+    m_Position.x = m_Width * lround(player_pos.x / m_Width);
+    m_Position.y = m_Height * lround(player_pos.y / m_Height);
     for (int qr = 0; qr < 4; qr++) {
         if (!(ddx[qr] * (player_pos.x - m_Position.x) > 0 &&
               ddy[qr] * (player_pos.y - m_Position.y) > 0)) {
@@ -46,7 +46,8 @@ void Map::Update(const Util::Transform &transform) {
                 continue;
             bool in_range = false;
             for (int i = qr * 3; i < qr * 3 + 3; i++) {
-                glm::vec2 p(m_Position.x + dx[i] * w, m_Position.y + dy[i] * h);
+                glm::vec2 p(m_Position.x + dx[i] * m_Width,
+                            m_Position.y + dy[i] * m_Height);
                 if (p == padding->m_Position) {
                     in_range = true;
                 }
@@ -58,7 +59,8 @@ void Map::Update(const Util::Transform &transform) {
             }
         }
         for (int i = qr * 3; i < qr * 3 + 3; i++) {
-            std::pair p(m_Position.x + dx[i] * w, m_Position.y + dy[i] * h);
+            std::pair p(m_Position.x + dx[i] * m_Width,
+                        m_Position.y + dy[i] * m_Height);
             if (m_VisibleTiles.count(p)) {
                 continue;
             }

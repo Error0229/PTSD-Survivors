@@ -20,9 +20,8 @@ public:
     virtual bool IsCollideWith(std::shared_ptr<Physical> &other);
     virtual void SetPosition(glm::vec2 position);
 
-private:
+protected:
     glm::vec2 m_Position;
-    struct Size m_Size;
     float m_Velocity;
 };
 } // namespace Game

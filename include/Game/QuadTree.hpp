@@ -11,20 +11,20 @@ class QuadTree {
 public:
     QuadTree();
     ~QuadTree();
-    QuadTree(int x, int y, int w, int h, int max_objects, int max_levels,
+    QuadTree(int x, int y, int w, int h, int maxObjects, int maxLevels,
              int level);
     void SetRange(int, int, int, int);
     void Insert(std::shared_ptr<Physical> object);
     void Clear();
-    void QueryCollision(std::vector<std::shared_ptr<Physical>> &result,
-                        std::shared_ptr<Physical> object);
-    void QueryCollision(std::vector<std::shared_ptr<Physical>> &result,
-                        std::shared_ptr<Physical> object,
-                        const std::type_info &type);
+    void QueryCollision(std::shared_ptr<Physical> object,
+                        std::vector<std::shared_ptr<Physical>> &result);
+    void QueryCollision(std::shared_ptr<Physical> object,
+                        const std::type_info &type,
+                        std::vector<std::shared_ptr<Physical>> &result);
     void QueryNearest(std::shared_ptr<Physical> object,
                       const std::type_info &type, glm::vec2 &result,
-                      int &min_distance);
-    static QuadTree Plain;
+                      int &distance);
+    static QuadTree s_Plain;
 
 private:
     std::vector<std::shared_ptr<Physical>> objects;

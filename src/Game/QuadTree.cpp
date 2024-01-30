@@ -10,14 +10,14 @@ QuadTree::QuadTree() = default;
 QuadTree::~QuadTree() {
     Clear();
 }
-QuadTree::QuadTree(int x, int y, int w, int h, int max_objects, int max_levels,
+QuadTree::QuadTree(int x, int y, int w, int h, int maxObjects, int maxLevels,
                    int level)
     : x(x),
       y(y),
       w(w),
       h(h),
-      max_objects(max_objects),
-      max_levels(max_levels),
+      max_objects(maxObjects),
+      max_levels(maxLevels),
       level(level) {
     for (int i = 0; i < 4; i++) {
         children[i] = nullptr;
@@ -92,11 +92,11 @@ void QuadTree::Split() {
                                              subWidth, subHeight, max_objects,
                                              max_levels, level + 1);
 }
-void QuadTree::QueryCollision(std::vector<std::shared_ptr<Physical>> &result,
-                              std::shared_ptr<Physical> q) {
+void QuadTree::QueryCollision(std::shared_ptr<Physical> q,
+                              std::vector<std::shared_ptr<Physical>> &result) {
     int index = Quadrant(q);
     if (index != -1 && children[0] != nullptr) {
-        children[index]->QueryCollision(result, q);
+        children[index]->QueryCollision(q, result);
     } else {
         if (children[0] != nullptr) {
 
@@ -104,7 +104,7 @@ void QuadTree::QueryCollision(std::vector<std::shared_ptr<Physical>> &result,
                 if (IsOverlapped(children[i]->x, children[i]->y, children[i]->w,
                                  children[i]->h, q->GetPosition().x,
                                  q->GetPosition().y, q->Width(), q->Height())) {
-                    children[i]->QueryCollision(result, q);
+                    children[i]->QueryCollision(q, result);
                 }
             }
         }
@@ -115,19 +115,19 @@ void QuadTree::QueryCollision(std::vector<std::shared_ptr<Physical>> &result,
         }
     }
 }
-void QuadTree::QueryCollision(std::vector<std::shared_ptr<Physical>> &result,
-                              std::shared_ptr<Physical> q,
-                              const std::type_info &type) {
+void QuadTree::QueryCollision(std::shared_ptr<Physical> q,
+                              const std::type_info &type,
+                              std::vector<std::shared_ptr<Physical>> &result) {
     int index = Quadrant(q);
     if (index != -1 && children[0] != nullptr) {
-        children[index]->QueryCollision(result, q, type);
+        children[index]->QueryCollision(q, type, result);
     } else {
         if (children[0] != nullptr) {
             for (int i = 0; i < 4; i++) {
                 if (IsOverlapped(children[i]->x, children[i]->y, children[i]->w,
                                  children[i]->h, q->GetPosition().x,
                                  q->GetPosition().y, q->Width(), q->Height())) {
-                    children[i]->QueryCollision(result, q, type);
+                    children[i]->QueryCollision(q, type, result);
                 }
             }
         }
@@ -167,7 +167,7 @@ void QuadTree::Clear() {
         }
     }
 }
-QuadTree QuadTree::Plain =
+QuadTree QuadTree::s_Plain =
     QuadTree(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, QUADTREE_MAX_OBJECTS,
              QUADTREE_MAX_LEVELS, 0);
 } // namespace Game

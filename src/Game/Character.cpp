@@ -6,11 +6,8 @@
 #include "Util/Time.hpp"
 namespace Game {
 void Character::Start() {
-    m_Position = {0, 0};
     m_ZIndex = CHARACTER_LAYER;
-}
-void Character::SetSpeed(float speed) {
-    m_Speed = speed;
+    m_Velocity = 100; // hardcoded for now
 }
 void Character::Update(const Util::Transform &transform) {
     GoTo(Camera::ScreenToWorld(transform.translation));
@@ -26,14 +23,17 @@ void Character::Setup(std::string Name) {
 void Character::GoTo(glm::vec2 target) {
     auto direction = glm::normalize(target - m_Position);
     m_Position +=
-        direction * m_Speed * static_cast<float>(Util::Time::GetDeltaTime());
+        direction * m_Velocity * static_cast<float>(Util::Time::GetDeltaTime());
     Camera::Update(m_Position);
     m_Transform.translation = Camera::WorldToScreen(
         m_Position); // actually translation will always be 0,0
 }
 
-glm::vec2 Character::GetPosition() {
-    return m_Position;
+float Character::Width() {
+    return m_Drawable->GetSize().x * m_Transform.scale.x;
 }
 
+float Character::Height() {
+    return m_Drawable->GetSize().y * m_Transform.scale.y;
+}
 } // namespace Game
