@@ -15,7 +15,7 @@ void App::Start() {
     m_Map->Setup("map");
     m_Player->Setup("cat");
 
-    m_CurrentState = State::UPDATE;
+    m_CurrentState = State::CYCLE;
 }
 
 void App::Update() {
@@ -50,6 +50,11 @@ void App::Update() {
     }
     m_Player->Update({Util::Input::GetCursorPosition()});
     m_Map->Update({m_Player->GetPosition()});
+}
+
+void App::Draw() {
+    m_Map->Draw();
+    m_Player->Draw();
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)

@@ -74,6 +74,8 @@ void Map::Update(const Util::Transform &transform) {
             }
         }
     }
+}
+void Map::Draw() {
     for (auto &padding : m_Maps) {
         if (!padding->m_Enabled) {
             continue;

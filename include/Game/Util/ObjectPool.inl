@@ -1,6 +1,6 @@
 #include "ObjectPool.hpp"
 #include <stdexcept>
-namespace Game {
+namespace Game::Util {
 template <typename T>
 void ObjectPool<T>::AddObject(std::unique_ptr<T> object) {
     Pool_.push_back(std::move(object));
@@ -38,4 +38,4 @@ std::shared_ptr<T> ObjectPool<T>::GetObject() {
     FreeIndices_.pop();
     return Pool_[index];
 }
-} // namespace Game
+} // namespace Game::Util

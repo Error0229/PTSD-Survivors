@@ -1,12 +1,12 @@
 #ifndef QUADTREE_HPP
 #define QUADTREE_HPP
 
-#include "Physical.hpp"
+#include "Game/Util/Physical.hpp"
 #include "config.hpp"
 #include "pch.hpp"
 #include <typeinfo>
 
-namespace Game {
+namespace Game::Util {
 class QuadTree {
 public:
     QuadTree();
@@ -36,5 +36,5 @@ private:
     void Split();
     int Quadrant(std::shared_ptr<Physical> object);
 };
-} // namespace Game
+} // namespace Game::Util
 #endif /* QUADTREE_HPP */

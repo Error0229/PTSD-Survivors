@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace Game {
+namespace Game::Util {
 template <typename T>
 class ObjectPool {
 public:
@@ -35,6 +35,6 @@ private:
     std::stack<size_t> FreeIndices_;
     std::unordered_map<std::shared_ptr<T>, size_t> ObjectToIndex_;
 };
-} // namespace Game
+} // namespace Game::Util
 
 #endif

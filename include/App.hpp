@@ -12,14 +12,17 @@ class App {
 public:
     enum class State {
         START,
-        UPDATE,
+        CYCLE,
         END,
     };
 
     State GetCurrentState() const { return m_CurrentState; }
 
     void Start();
+
     void Update();
+    void Draw();
+
     void End(); // NOLINT(readability-convert-member-functions-to-static)
 
 private:

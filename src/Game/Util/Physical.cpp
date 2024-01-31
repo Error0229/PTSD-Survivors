@@ -1,6 +1,6 @@
-#include "Game/Physical.hpp"
+#include "Game/Util/Physical.hpp"
 
-namespace Game {
+namespace Game::Util {
 
 Physical::Physical() {
     m_Position = {0, 0};
@@ -23,13 +23,13 @@ float Physical::Distance(std::shared_ptr<Physical> &other) {
 }
 
 bool Physical::IsCollideWith(std::shared_ptr<Physical> &other) {
-    return Game::IsOverlapped(m_Position.x, m_Position.y, Width(), Height(),
-                              other->GetPosition().x, other->GetPosition().y,
-                              other->Width(), other->Height());
+    return IsOverlapped(m_Position.x, m_Position.y, Width(), Height(),
+                        other->GetPosition().x, other->GetPosition().y,
+                        other->Width(), other->Height());
 }
 
 void Physical::SetPosition(glm::vec2 position) {
     m_Position = position;
 }
 
-} // namespace Game
+} // namespace Game::Util

@@ -12,8 +12,9 @@ int main(int, char **) {
             app.Start();
             break;
 
-        case App::State::UPDATE:
+        case App::State::CYCLE:
             app.Update();
+            app.Draw();
             break;
 
         case App::State::END:

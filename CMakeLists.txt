@@ -44,10 +44,13 @@ set(SRC_FILES
     ${SRC_DIR}/Util/GameObject.cpp
     ${SRC_DIR}/Util/Root.cpp
 
-    ${SRC_DIR}/Game/Util.cpp
+    ${SRC_DIR}/Game/Util/Util.cpp
+    ${SRC_DIR}/Game/Util/Physical.cpp
+    ${SRC_DIR}/Game/Util/QuadTree.cpp
+    ${SRC_DIR}/Game/Passive/Passive.cpp
+    ${SRC_DIR}/Game/Weapon/Weapon.cpp
+    ${SRC_DIR}/Game/Projectile/Projectile.cpp
     ${SRC_DIR}/Game/Camera.cpp
-    ${SRC_DIR}/Game/Physical.cpp
-    ${SRC_DIR}/Game/QuadTree.cpp
     ${SRC_DIR}/Game/Map.cpp
     ${SRC_DIR}/Game/Character.cpp
 
@@ -79,8 +82,21 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Util/Text.hpp
     ${INCLUDE_DIR}/Util/Transform.hpp
     ${INCLUDE_DIR}/Util/TransformUtils.hpp
-    ${INCLUDE_DIR}Util/GameObject.hpp
+    ${INCLUDE_DIR}/Util/GameObject.hpp
 
+    ${INCLUDE_DIR}/Game/Util/Util.hpp
+    ${INCLUDE_DIR}/Game/Util/Physical.hpp
+    ${INCLUDE_DIR}/Game/Util/QuadTree.hpp
+    ${INCLUDE_DIR}/Game/Util/ObjectPool.hpp
+    ${INCLUDE_DIR}/Game/Util/ObjectPool.inl
+    
+    ${INCLUDE_DIR}/Game/Passive/Passive.hpp
+    ${INCLUDE_DIR}/Game/Weapon/Weapon.hpp
+    ${INCLUDE_DIR}/Game/Projectile/Projectile.hpp
+    ${INCLUDE_DIR}/Game/Camera.hpp
+    ${INCLUDE_DIR}/Game/Map.hpp
+    ${INCLUDE_DIR}/Game/Character.hpp
+    
     ${INCLUDE_DIR}/App.hpp
     ${INCLUDE_DIR}/Giraffe.hpp
     ${INCLUDE_DIR}/config.hpp

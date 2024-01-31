@@ -1,10 +1,10 @@
-#include "Game/QuadTree.hpp"
-#include "Game/Util.hpp"
+#include "Game/Util/QuadTree.hpp"
+#include "Game/Util/Util.hpp"
 #include "config.hpp"
 #include "pch.hpp"
 #include <memory>
 
-namespace Game {
+namespace Game::Util {
 
 QuadTree::QuadTree() = default;
 QuadTree::~QuadTree() {
@@ -170,4 +170,4 @@ void QuadTree::Clear() {
 QuadTree QuadTree::s_Plain =
     QuadTree(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, QUADTREE_MAX_OBJECTS,
              QUADTREE_MAX_LEVELS, 0);
-} // namespace Game
+} // namespace Game::Util

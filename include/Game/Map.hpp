@@ -5,14 +5,16 @@
 #include <glm/fwd.hpp>
 #include <memory>
 namespace Game {
-class Map : public Util::GameObject {
+class Map : public ::Util::GameObject {
 public:
     Map() = default;
     Map(std::string name);
     ~Map() override = default;
     void Start() override;
     void Setup(std::string name);
-    void Update(const Util::Transform &transform = Util::Transform()) override;
+    void
+    Update(const ::Util::Transform &transform = ::Util::Transform()) override;
+    void Draw() override;
 
 private:
     float m_Height, m_Width;
