@@ -23,6 +23,5 @@ private:
     time_t m_PausedTicks;
     bool m_IsRunning;
 };
-Timer Clock(); // static lifetime object
 } // namespace Game::Util
 #endif

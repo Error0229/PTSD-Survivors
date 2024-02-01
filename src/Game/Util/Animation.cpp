@@ -1,14 +1,16 @@
 #include "Game/Util/Animation.hpp"
 #include "Game/Util/Timer.hpp"
+#include "Util/Image.hpp"
 namespace Game::Util {
-Animation::Animation(std::vector<std::shared_ptr<::Core::Drawable>> frames,
+static Util::Timer Clock;
+Animation::Animation(std::vector<std::shared_ptr<::Util::Image>> frames,
                      bool isLoop, time_t frameTime)
     : m_Frames(frames),
       m_IsAnimated(false),
       m_IsLoop(isLoop),
       m_FrameTime(frameTime) {}
 void Animation::Update() {
-    auto now = Clock().Now();
+    auto now = Clock.Now();
     if (!m_IsAnimated || now - m_LastFrameTime <= m_FrameTime)
         return;
     m_LastFrameTime = now;

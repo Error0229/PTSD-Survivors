@@ -45,14 +45,20 @@ set(SRC_FILES
     ${SRC_DIR}/Util/Root.cpp
 
     ${SRC_DIR}/Game/Util/Util.cpp
+    ${SRC_DIR}/Game/Util/Timer.cpp
     ${SRC_DIR}/Game/Util/Physical.cpp
     ${SRC_DIR}/Game/Util/QuadTree.cpp
+    ${SRC_DIR}/Game/Util/Animation.cpp
+    ${SRC_DIR}/Game/Util/Animated.cpp
     ${SRC_DIR}/Game/Passive/Passive.cpp
     ${SRC_DIR}/Game/Weapon/Weapon.cpp
     ${SRC_DIR}/Game/Projectile/Projectile.cpp
+    ${SRC_DIR}/Game/Enemy/Enemy.cpp
     ${SRC_DIR}/Game/Camera.cpp
     ${SRC_DIR}/Game/Map.cpp
     ${SRC_DIR}/Game/Character.cpp
+    ${SRC_DIR}/Game/Resource.cpp
+    ${SRC_DIR}/Game/Manager.cpp
 
     ${SRC_DIR}/App.cpp
     ${SRC_DIR}/Giraffe.cpp
@@ -85,17 +91,23 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Util/GameObject.hpp
 
     ${INCLUDE_DIR}/Game/Util/Util.hpp
+    ${INCLUDE_DIR}/Game/Util/Timer.hpp
     ${INCLUDE_DIR}/Game/Util/Physical.hpp
     ${INCLUDE_DIR}/Game/Util/QuadTree.hpp
     ${INCLUDE_DIR}/Game/Util/ObjectPool.hpp
     ${INCLUDE_DIR}/Game/Util/ObjectPool.inl
+    ${INCLUDE_DIR}/Game/Util/Animation.hpp
+    ${INCLUDE_DIR}/Game/Util/Animated.hpp
     
     ${INCLUDE_DIR}/Game/Passive/Passive.hpp
     ${INCLUDE_DIR}/Game/Weapon/Weapon.hpp
     ${INCLUDE_DIR}/Game/Projectile/Projectile.hpp
+    ${INCLUDE_DIR}/Game/Enemy/Enemy.hpp
     ${INCLUDE_DIR}/Game/Camera.hpp
     ${INCLUDE_DIR}/Game/Map.hpp
     ${INCLUDE_DIR}/Game/Character.hpp
+    ${INCLUDE_DIR}/Game/Resource.hpp
+    ${INCLUDE_DIR}/Game/Manager.hpp
     
     ${INCLUDE_DIR}/App.hpp
     ${INCLUDE_DIR}/Giraffe.hpp

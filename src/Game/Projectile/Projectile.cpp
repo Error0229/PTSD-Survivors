@@ -1,6 +1,6 @@
 #include "Game/Projectile/Projectile.hpp"
+#include "Game/Util/ObjectPool.hpp"
 #include <cstdlib>
-
 namespace Game::Projectile {
 bool Projectile::operator<(const Projectile &rhs) const {
     return this->m_Type < rhs.m_Type;
@@ -21,5 +21,4 @@ float_t Projectile::Width() {
 void Projectile::CollideWith(std::shared_ptr<::Util::GameObject> &other) {
     // TODO
 }
-
 } // namespace Game::Projectile

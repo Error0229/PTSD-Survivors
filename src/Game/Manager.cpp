@@ -3,10 +3,14 @@
 #include "Game/Resource.hpp"
 #include "Util/Input.hpp"
 namespace Game {
+
+static Util::Timer Clock;
 void Manager::Start() {
     Resource::Initialize();
-    m_Character = std::make_shared<Character>("cat");
-    m_Map = std::make_shared<Map>("map");
+    m_Character->Start();
+    m_Map->Start();
+    m_Character->Setup("cat");
+    m_Map->Setup("map");
 }
 void Manager::Update() {
     m_Character->Update({::Util::Input::GetCursorPosition()});

@@ -1,5 +1,6 @@
 #ifndef PROJECTILE_HPP
 #define PROJECTILE_HPP
+#include "Game/Util/ObjectPool.hpp"
 #include "Game/Util/Physical.hpp"
 #include "Game/Weapon/Weapon.hpp"
 #include "Util/GameObject.hpp"
@@ -34,5 +35,4 @@ protected:
 };
 
 } // namespace Game::Projectile
-
 #endif // PROJECTILE_HPP

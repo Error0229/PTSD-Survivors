@@ -2,8 +2,6 @@
 #include "Game/Camera.hpp"
 #include "Game/Config.hpp"
 #include "Util/Image.hpp"
-#include "Util/Logger.hpp"
-#include <cstdint>
 #include <memory>
 
 namespace Game {

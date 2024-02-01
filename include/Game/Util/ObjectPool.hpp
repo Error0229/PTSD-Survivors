@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace Game::Util {
-template <typename T>
+template <class T>
 class ObjectPool {
 public:
     ObjectPool() = default;

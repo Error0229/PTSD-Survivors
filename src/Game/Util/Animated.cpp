@@ -1,5 +1,6 @@
 #include "Game/Util/Animated.hpp"
 #include "Game/Config.hpp"
+#include "Util/Image.hpp"
 #include <cstdint>
 #include <stdexcept>
 
@@ -21,8 +22,11 @@ std::shared_ptr<Animation> Animated::GetAnimation(const std::string &name) {
 void Animated::Load(const std::string &name,
                     const std::vector<std::string> &frames, bool isLoop,
                     time_t frameTime) {
-    m_Animation[name] =
-        std::make_shared<Animation>(std::move(frames), isLoop, frameTime);
+    std::vector<std::shared_ptr<::Util::Image>> images;
+    for (auto &frame : frames) {
+        images.push_back(std::make_shared<::Util::Image>(frame));
+    }
+    m_Animation[name] = std::make_shared<Animation>(images, isLoop, frameTime);
 }
 
 void Animated::Load(const std::string &name,
@@ -60,11 +64,13 @@ int32_t Animated::GetFrame(const std::string &name) {
     if (auto anim = GetAnimation(name)) {
         return anim->GetFrame();
     }
+    throw std::logic_error("Animation not found");
 }
 int32_t Animated::FrameCount(const std::string &name) {
     if (auto anim = GetAnimation(name)) {
         return anim->FrameCount();
     }
+    throw std::logic_error("Animation not found");
 }
 void Animated::Update(const std::string &name) {
     if (auto anim = GetAnimation(name)) {

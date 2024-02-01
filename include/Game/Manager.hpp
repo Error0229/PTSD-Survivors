@@ -5,6 +5,7 @@
 #include "Game/Map.hpp"
 #include "Game/Passive/Passive.hpp"
 #include "Game/Projectile/Projectile.hpp"
+#include "Game/Util/Timer.hpp"
 #include "Game/Weapon/Weapon.hpp"
 
 namespace Game {
