@@ -1,3 +1,5 @@
+#ifndef WEAPON_HPP
+#define WEAPON_HPP
 #include "Game/Passive/Passive.hpp"
 #include "Util/GameObject.hpp"
 #include "pch.hpp"
@@ -106,3 +108,4 @@ enum class Type {
     CANDYBOX2
 };
 } // namespace Game::Weapon
+#endif // WEAPON_HPP

@@ -1,3 +1,5 @@
+#ifndef PASSIVE_HPP
+#define PASSIVE_HPP
 #include "Util/GameObject.hpp"
 #include "pch.hpp"
 #include <cmath>
@@ -56,3 +58,4 @@ enum class PassiveType {
 };
 enum class StackingType { Additive = 1, Multiplicative };
 } // namespace Game::Passive
+#endif // PASSIVE_HPP
