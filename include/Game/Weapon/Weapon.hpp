@@ -9,7 +9,7 @@ enum class Type;
 struct DynamicStat {
     float_t Damage, Area, Speed;
     int32_t Amount;
-    clock_t Duration, CoolDown;
+    time_t Duration, CoolDown;
 };
 class Weapon : public ::Util::GameObject {
 public:
@@ -32,10 +32,6 @@ public:
     virtual void Draw() override;
     virtual void LevelUp() = 0;
 
-    static void Initialize();
-    static std::map<Type, std::shared_ptr<Weapon>> s_BaseWeapons;
-    static std::vector<std::shared_ptr<Weapon>> s_Weapons;
-
 protected:
     int32_t m_Level, m_MaxLevel, m_Rarity, m_Amount, m_Pierce, m_PoolLimit,
         m_BlockByWall;
@@ -43,7 +39,7 @@ protected:
     Type m_Type, m_EvoType;
     Game::Passive::PassiveType EvoRequirement;
     DynamicStat m_BaseState, m_Modifier;
-    clock_t m_Duration, m_Interval, m_LastTimeAttack, m_HitboxDelay, m_CoolDown;
+    time_t m_Duration, m_Interval, m_LastTimeAttack, m_HitboxDelay, m_CoolDown;
     std::vector<std::string> m_LevelUpMessage;
 };
 

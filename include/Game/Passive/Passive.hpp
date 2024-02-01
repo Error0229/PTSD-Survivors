@@ -20,12 +20,6 @@ public:
     int32_t GetMaxLevel();
     float_t GetEffect(int32_t level);
 
-    static void Initialize();
-    static std::vector<std::shared_ptr<Passive>> s_Passives;
-    static std::vector<std::shared_ptr<Passive>> s_BasePassives;
-    static int32_t PassiveCount();
-    static void LevelUp(PassiveType type);
-
 protected:
     PassiveType m_Type;
     int32_t m_Level, m_Rarity, m_MaxLevel;

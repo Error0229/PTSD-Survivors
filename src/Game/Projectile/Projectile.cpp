@@ -22,13 +22,4 @@ void Projectile::CollideWith(std::shared_ptr<::Util::GameObject> &other) {
     // TODO
 }
 
-void Projectile::Initialize() {
-    // TODO: load from file
-}
-
-void Projectile::Reset() {
-    // TODO
-}
-std::set<std::shared_ptr<Projectile>> Projectile::s_Projectiles =
-    std::set<std::shared_ptr<Projectile>>();
 } // namespace Game::Projectile

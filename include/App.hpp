@@ -3,8 +3,7 @@
 
 #include "pch.hpp" // IWYU pragma: export
 
-#include "Game/Camera.hpp"
-#include "Game/Character.hpp"
+#include "Game/Manager.hpp"
 #include "Game/Map.hpp"
 #include <memory>
 
@@ -27,8 +26,7 @@ public:
 
 private:
     State m_CurrentState = State::START;
-    std::shared_ptr<Game::Character> m_Player;
-    std::unique_ptr<Game::Map> m_Map;
+    Game::Manager m_Manager;
 };
 
 #endif

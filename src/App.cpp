@@ -8,13 +8,7 @@
 
 void App::Start() {
     LOG_TRACE("Start");
-    m_Map = std::make_unique<Game::Map>();
-    m_Player = std::make_shared<Game::Character>();
-    m_Map->Start();
-    m_Player->Start();
-    m_Map->Setup("map");
-    m_Player->Setup("cat");
-
+    m_Manager.Start();
     m_CurrentState = State::CYCLE;
 }
 
@@ -48,13 +42,11 @@ void App::Update() {
         LOG_DEBUG("B");
         Util::Input::SetCursorPosition({0.0F, 0.0F});
     }
-    m_Player->Update({Util::Input::GetCursorPosition()});
-    m_Map->Update({m_Player->GetPosition()});
+    m_Manager.Update();
 }
 
 void App::Draw() {
-    m_Map->Draw();
-    m_Player->Draw();
+    m_Manager.Draw();
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)

@@ -34,13 +34,4 @@ void Weapon::UpdateModifier(DynamicStat &modifier) {
     m_Modifier = modifier;
     RecalculateStat();
 }
-
-void Weapon::Initialize() {
-    // TODO: load base weapon
-}
-
-std::map<Type, std::shared_ptr<Weapon>> Weapon::s_BaseWeapons =
-    std::map<Type, std::shared_ptr<Weapon>>();
-std::vector<std::shared_ptr<Weapon>> Weapon::s_Weapons =
-    std::vector<std::shared_ptr<Weapon>>();
 } // namespace Game::Weapon

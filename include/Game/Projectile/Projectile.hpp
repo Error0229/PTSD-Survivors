@@ -9,7 +9,7 @@ namespace Game::Projectile {
 struct Stats {
     int32_t duration, pierce, poolLimit, blockByWall;
     float_t area, chance, critMulti, damage, knockBack, angle;
-    clock_t createdTime, interval, hitboxDelay, delay;
+    time_t createdTime, interval, hitboxDelay, delay;
 };
 class Projectile : public ::Util::GameObject, public Util::Physical {
 public:
@@ -27,11 +27,6 @@ public:
 
     void CollideWith(std::shared_ptr<::Util::GameObject> &other);
 
-    static void Initialize();
-    static void Reset();
-
-    static std::set<std::shared_ptr<Projectile>> s_Projectiles;
-    // static object pool for derived class
 protected:
     Stats m_Stats;
     Game::Weapon::Type m_Type;
