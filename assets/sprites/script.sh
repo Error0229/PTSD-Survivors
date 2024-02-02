@@ -1,5 +1,3 @@
-#!/bin/bash
-
 sizex=$1
 sizey=$2
 text=$3

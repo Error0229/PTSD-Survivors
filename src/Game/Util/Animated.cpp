@@ -2,6 +2,7 @@
 #include "Game/Config.hpp"
 #include "Util/Image.hpp"
 #include <cstdint>
+#include <linux/soundcard.h>
 #include <stdexcept>
 
 namespace Game::Util {
@@ -26,6 +27,7 @@ void Animated::Load(const std::string &name,
     for (auto &frame : frames) {
         images.push_back(std::make_shared<::Util::Image>(frame));
     }
+    m_CurrentAnimation = name;
     m_Animation[name] = std::make_shared<Animation>(images, isLoop, frameTime);
 }
 

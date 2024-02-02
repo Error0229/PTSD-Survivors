@@ -1,13 +1,16 @@
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 
+#include "Game/Util/Animated.hpp"
 #include "Game/Util/Physical.hpp"
 #include "pch.hpp"
 
 #include "Util/GameObject.hpp"
 
 namespace Game {
-class Character : public ::Util::GameObject, public Util::Physical {
+class Character : public ::Util::GameObject,
+                  public Util::Physical,
+                  public Util::Animated {
 public:
     Character() = default;
     ~Character() override = default;
