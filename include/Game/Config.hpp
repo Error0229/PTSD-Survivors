@@ -5,7 +5,7 @@
 namespace Game {
 constexpr const char *MAP_SPRITE_PATH = "../assets/sprites/map/";
 constexpr const char *CHARACTER_SPRITE_PATH = "../assets/sprites/character/";
-const std::string SPRITE_PATH = "../Assets/Sprite/";
+const std::string SPRITE_PATH = "../resources/Sprite/";
 constexpr const char *SPRITE_EXT = ".png";
 constexpr int32_t MAP_PADDING_NUM = 4;
 constexpr int32_t DEFAULT_ANIMATION_FRAME_TIME = 100;

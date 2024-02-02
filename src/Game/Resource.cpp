@@ -21,7 +21,7 @@ void Resource::Initialize() {
     using json = nlohmann::json;
     // TODO: load all resources
     // Character
-    std::ifstream chrFile("../Assets/TextAsset/v1.3.100_CHARACTER_DATA.txt");
+    std::ifstream chrFile("../resources/TextAsset/v1.3.100_CHARACTER_DATA.txt");
     auto chrJson = json::parse(chrFile);
     for (auto &item : chrJson.items()) {
         s_Character[item.key()] = std::make_shared<Character>();
