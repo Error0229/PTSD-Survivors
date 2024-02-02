@@ -7,10 +7,10 @@ namespace Game {
 static Util::Timer Clock;
 void Manager::Start() {
     Resource::Initialize();
+    m_Character = Resource::GetCharacter("TATANKA");
     m_Character->Start();
-    m_Map->Start();
-    m_Character->Setup("cat");
     m_Map->Setup("map");
+    m_Map->Start();
 }
 void Manager::Update() {
     m_Character->Update({::Util::Input::GetCursorPosition()});

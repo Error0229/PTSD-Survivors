@@ -12,11 +12,11 @@ class Resource {
 public:
     static void Initialize();
     static std::shared_ptr<Character> GetCharacter(std::string name);
-    static std::shared_ptr<Weapon::Weapon> GetWeapon(Weapon::Type type);
+    static std::shared_ptr<Weapon::Weapon> GetWeapon(std::string type);
     static std::shared_ptr<Projectile::Projectile>
-    GetProjectile(Weapon::Type type);
+    GetProjectile(std::string type);
     static void
-    ReturnProjectile(Weapon::Type type,
+    ReturnProjectile(std::string type,
                      std::shared_ptr<Projectile::Projectile> projectile);
     static std::shared_ptr<Util::Animation> GetAnimation(std::string name);
     static std::shared_ptr<Enemy::Enemy> GetEnemy(std::string name);
@@ -24,15 +24,15 @@ public:
                             std::shared_ptr<Enemy::Enemy> enemy);
 
 private:
-    static std::map<std::string, std::shared_ptr<Game::Character>> m_Character;
-    static std::map<Weapon::Type, std::shared_ptr<Weapon::Weapon>> m_Weapon;
-    static std::map<Weapon::Type, std::shared_ptr<Projectile::Projectile>>
-        m_Projectile;
-    static std::map<Weapon::Type, Util::ObjectPool<Projectile::Projectile>>
-        m_ProjectilePool;
-    static std::map<std::string, std::shared_ptr<Util::Animation>> m_Animation;
-    static std::map<std::string, std::shared_ptr<Enemy::Enemy>> m_Enemy;
-    static std::map<std::string, Util::ObjectPool<Enemy::Enemy>> m_EnemyPool;
+    static std::map<std::string, std::shared_ptr<Game::Character>> s_Character;
+    static std::map<std::string, std::shared_ptr<Weapon::Weapon>> s_Weapon;
+    static std::map<std::string, std::shared_ptr<Projectile::Projectile>>
+        s_Projectile;
+    static std::map<std::string, Util::ObjectPool<Projectile::Projectile>>
+        s_ProjectilePool;
+    static std::map<std::string, std::shared_ptr<Util::Animation>> s_Animation;
+    static std::map<std::string, std::shared_ptr<Enemy::Enemy>> s_Enemy;
+    static std::map<std::string, Util::ObjectPool<Enemy::Enemy>> s_EnemyPool;
 };
 } // namespace Game
 

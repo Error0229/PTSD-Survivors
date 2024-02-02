@@ -90,6 +90,8 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Util/TransformUtils.hpp
     ${INCLUDE_DIR}/Util/GameObject.hpp
 
+    ${INCLUDE_DIR}/json.hpp
+
     ${INCLUDE_DIR}/Game/Util/Util.hpp
     ${INCLUDE_DIR}/Game/Util/Timer.hpp
     ${INCLUDE_DIR}/Game/Util/Physical.hpp
