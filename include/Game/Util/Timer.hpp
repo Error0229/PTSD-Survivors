@@ -23,5 +23,6 @@ private:
     time_t m_PausedTicks;
     bool m_IsRunning;
 };
+extern Timer Clock;
 } // namespace Game::Util
 #endif

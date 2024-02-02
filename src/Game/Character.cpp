@@ -5,18 +5,20 @@
 #include "Util/Image.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Time.hpp"
+#include "Util/Logger.hpp"
 namespace Game {
 void Character::Start() {
     m_ZIndex = CHARACTER_LAYER;
+    Util::Animated::Play();
 }
 void Character::Update(const ::Util::Transform &transform) {
-    Util::Animated::Update();
     GoTo(Camera::ScreenToWorld(transform.translation));
+    Util::Animated::Update();
 }
 
 void Character::GoTo(glm::vec2 target) {
     auto direction = glm::normalize(target - m_Position);
-    m_Position += direction * m_Stats["moveSpeed"] *
+    m_Position += direction * m_Stats["moveSpeed"] * 100.0f *
                   static_cast<float>(::Util::Time::GetDeltaTime());
     Camera::Update(m_Position);
     m_Transform.translation = Camera::WorldToScreen(
@@ -36,6 +38,11 @@ float Character::Height() {
 
 void Character::SetBaseStats(std::unordered_map<std::string, float_t> &stats) {
     m_BaseStats = stats;
+    RecalculateStats();
+}
+
+void Character::RecalculateStats() {
+	m_Stats = m_BaseStats; // hardcoded for now
 }
 
 void Character::SetInfos(std::string ID, std::string chrName,

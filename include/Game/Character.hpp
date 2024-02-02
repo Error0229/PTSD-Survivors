@@ -27,6 +27,7 @@ public:
     float Height() override;
 
     void SetBaseStats(std::unordered_map<std::string, float_t> &stats);
+    void RecalculateStats();
     void SetInfos(std::string ID, std::string name, std::string description,
                   std::string bgm, std::string weapon);
 

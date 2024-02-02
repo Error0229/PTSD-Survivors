@@ -2,6 +2,7 @@
 #include "SDL_timer.h"
 
 namespace Game::Util {
+Timer Clock;
 Timer::Timer() {
     m_StartTicks = 0;
     m_PausedTicks = 0;
@@ -55,7 +56,7 @@ std::string Timer::GetSecondString() {
         s = "0" + s;
     return s;
 }
-void Timer::Transition(clock_t Diff) {
+void Timer::Transition(time_t Diff) {
     m_StartTicks -= Diff;
 }
 } // namespace Game::Util

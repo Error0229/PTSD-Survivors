@@ -2,13 +2,12 @@
 #include "Game/Util/Timer.hpp"
 #include "Util/Image.hpp"
 namespace Game::Util {
-static Util::Timer Clock;
 Animation::Animation(std::vector<std::shared_ptr<::Util::Image>> frames,
                      bool isLoop, time_t frameTime)
     : m_Frames(frames),
       m_IsAnimated(false),
       m_IsLoop(isLoop),
-      m_FrameTime(frameTime) {}
+      m_FrameTime(frameTime), m_LastFrameTime(-1) {}
 void Animation::Update() {
     auto now = Clock.Now();
     if (!m_IsAnimated || now - m_LastFrameTime <= m_FrameTime)

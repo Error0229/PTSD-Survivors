@@ -22,7 +22,7 @@ private:
     std::string m_Name;
     bool m_Enabled = false;
     std::set<std::pair<int32_t, int32_t>> m_VisibleTiles;
-    std::deque<std::unique_ptr<Map>> m_Maps;
+    std::deque<std::shared_ptr<Map>> m_Maps;
 };
 } // namespace Game
 

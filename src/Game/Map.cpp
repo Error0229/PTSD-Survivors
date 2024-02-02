@@ -8,14 +8,14 @@ namespace Game {
 Map::Map(std::string name) {
     m_Name = name;
     m_Drawable =
-        std::make_unique<Util::Image>(MAP_SPRITE_PATH + name + SPRITE_EXT);
+        std::make_shared<Util::Image>(MAP_SPRITE_PATH + name + SPRITE_EXT);
     m_ZIndex = MAP_LAYER;
 }
 void Map::Start() {}
 void Map::Setup(std::string name) {
     m_Name = name;
     for (int i = 0; i < MAP_PADDING_NUM; i++) {
-        m_Maps.push_back(std::make_unique<Map>(name));
+        m_Maps.push_back(std::make_shared<Map>(name));
     }
     m_Maps[0]->m_Enabled = true;
     m_Maps[0]->m_Position = {0, 0};

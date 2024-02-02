@@ -2,7 +2,6 @@
 #include "Game/Config.hpp"
 #include "Util/Image.hpp"
 #include <cstdint>
-#include <linux/soundcard.h>
 #include <stdexcept>
 
 namespace Game::Util {
@@ -34,6 +33,7 @@ void Animated::Load(const std::string &name,
 void Animated::Load(const std::string &name,
                     std::shared_ptr<Animation> animation) {
     m_Animation[name] = animation;
+    m_CurrentAnimation = name;
 }
 
 void Animated::Draw(::Util::Transform &transform, float_t &zIndex,

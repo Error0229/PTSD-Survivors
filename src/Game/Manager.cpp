@@ -1,16 +1,17 @@
 #include "Game/Manager.hpp"
 #include "Game/Camera.hpp"
 #include "Game/Resource.hpp"
+#include "Game/Util/Timer.hpp"
 #include "Util/Input.hpp"
 namespace Game {
-
-static Util::Timer Clock;
 void Manager::Start() {
     Resource::Initialize();
     m_Character = Resource::GetCharacter("TATANKA");
     m_Character->Start();
+    m_Map = std::make_shared<Map>();
     m_Map->Setup("map");
     m_Map->Start();
+    Util::Clock.Start();
 }
 void Manager::Update() {
     m_Character->Update({::Util::Input::GetCursorPosition()});
