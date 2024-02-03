@@ -22,6 +22,7 @@ public:
     int32_t GetFrame(const std::string &name = NULL_STRING);
     int32_t FrameCount(const std::string &name = NULL_STRING);
     void Update(const std::string &name = NULL_STRING);
+    bool IsAnimated(const std::string &name = NULL_STRING);
 
 protected:
     std::shared_ptr<Animation> GetAnimation(const std::string &name);

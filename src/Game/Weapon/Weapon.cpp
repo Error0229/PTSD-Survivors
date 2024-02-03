@@ -1,37 +1,39 @@
 #include "Game/Weapon/Weapon.hpp"
+#include <unordered_map>
 
 namespace Game::Weapon {
 int32_t Weapon::GetLevel() {
-    return m_Level;
+    return static_cast<int32_t>(m_["level"]);
 }
 int32_t Weapon::GetMaxLevel() {
-    return m_MaxLevel;
+    return m_["maxLevel"];
 }
 std::string Weapon::GetLevelUpMessage() {
-    return m_LevelUpMessage[m_Level];
+    return m_LevelUpMessage[GetLevel() - 1];
 }
 
 bool Weapon::IsMaxLevel() {
-    return m_Level == m_MaxLevel;
+    return m_["level"] == m_["maxLevel"];
 }
 bool Weapon::IsEvo() {
-    return m_EvoType != Type::NONE;
+    return m_["isEvolution"] == 1.0f;
 }
 bool Weapon::CanEvo() {
-    return m_Level == m_MaxLevel && m_EvoType != Type::NONE;
+    return m_["isEvolution"] && m_["level"] == m_["maxLevel"];
 }
 
 void Weapon::RecalculateStat() {
-    m_Damage = m_BaseState.Damage * m_Modifier.Damage;
-    m_Area = m_BaseState.Area * m_Modifier.Area;
-    m_Speed = m_BaseState.Speed * m_Modifier.Speed;
-    m_Amount = m_BaseState.Amount + m_Modifier.Amount;
-    m_Duration = m_BaseState.Duration * m_Modifier.Duration;
-    m_CoolDown = m_BaseState.CoolDown * m_Modifier.CoolDown;
+    m_["Damage"] = m_Base["Damage"] * m_Mod["Damage"];
+    m_["Area"] = m_Base["Area"] * m_Mod["Area"];
+    m_["Speed"] = m_Base["Speed"] * m_Mod["Speed"];
+    m_["Amount"] = m_Base["Amount"] + m_Mod["Amount"];
+    m_["Duration"] = m_Base["Duration"] * m_Mod["Duration"];
+    m_["CoolDown"] = m_Base["CoolDown"] * m_Mod["CoolDown"];
 }
 
-void Weapon::UpdateModifier(DynamicStat &modifier) {
-    m_Modifier = modifier;
+void Weapon::UpdateModifier(
+    std::unordered_map<std::string, float_t> &modifier) {
+    m_Mod = modifier;
     RecalculateStat();
 }
 } // namespace Game::Weapon

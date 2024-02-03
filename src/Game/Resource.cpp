@@ -8,15 +8,23 @@
 #include <memory>
 
 namespace Game {
-std::map<std::string, std::shared_ptr<Character>> Resource::s_Character;
-std::map<std::string, std::shared_ptr<Weapon::Weapon>> Resource::s_Weapon;
-std::map<std::string, std::shared_ptr<Projectile::Projectile>>
+std::unordered_map<std::string, std::shared_ptr<Character>>
+    Resource::s_Character;
+std::unordered_map<std::string, std::shared_ptr<Weapon::Weapon>>
+    Resource::s_Weapon;
+std::unordered_map<std::string, std::shared_ptr<Projectile::Projectile>>
     Resource::s_Projectile;
-std::map<std::string, Util::ObjectPool<Projectile::Projectile>>
+std::unordered_map<std::string, Util::ObjectPool<Projectile::Projectile>>
     Resource::s_ProjectilePool;
-std::map<std::string, std::shared_ptr<Util::Animation>> Resource::s_Animation;
-std::map<std::string, std::shared_ptr<Enemy::Enemy>> Resource::s_Enemy;
-std::map<std::string, Util::ObjectPool<Enemy::Enemy>> Resource::s_EnemyPool;
+std::unordered_map<std::string, std::shared_ptr<Util::Animation>>
+    Resource::s_Animation;
+std::unordered_map<std::string, std::shared_ptr<Enemy::Enemy>>
+    Resource::s_Enemy;
+std::unordered_map<std::string, Util::ObjectPool<Enemy::Enemy>>
+    Resource::s_EnemyPool;
+std::unordered_map<std::string, std::shared_ptr<Game::Passive::Passive>>
+    Resource::s_Passive;
+
 void Resource::Initialize() {
     using json = nlohmann::json;
     // TODO: load all resources
@@ -108,6 +116,17 @@ void Resource::Initialize() {
                 static_cast<std::string>(item.key()) + "Default";
             s_Animation[animationName] = std::move(animation);
             chr->Load(item.key(), s_Animation[animationName]);
+        }
+    }
+
+    // Weapon and Passive
+    std::ifstream wpnFile("../resources/TextAsset/v1.3.100_WEAPON_DATA.txt");
+    auto wpnJson = json::parse(wpnFile);
+    for (auto &item : wpnJson.items()) {
+        auto data = item.value();
+        if (data.find("isPowerUp") == data.end()) {
+
+        } else {
         }
     }
 }

@@ -86,4 +86,10 @@ void Animated::Update(const std::string &name) {
         anim->Update();
     }
 }
+bool Animated::IsAnimated(const std::string &name) {
+    if (auto anim = GetAnimation(name)) {
+        return anim->IsAnimated();
+    }
+    throw std::logic_error("Animation not found");
+}
 } // namespace Game::Util

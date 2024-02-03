@@ -18,6 +18,9 @@ public:
     void SetFrame(int32_t frame);
     int32_t GetFrame();
     int32_t FrameCount();
+    float_t GetHeight();
+    float_t GetWidth();
+    bool IsAnimated();
     void Draw(::Util::Transform &transform, float_t &zIndex);
 
 private:

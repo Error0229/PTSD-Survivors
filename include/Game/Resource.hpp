@@ -2,6 +2,7 @@
 #define RESOURCE_HPP
 #include "Game/Character.hpp"
 #include "Game/Enemy/Enemy.hpp"
+#include "Game/Passive/Passive.hpp"
 #include "Game/Projectile/Projectile.hpp"
 #include "Game/Util/Animation.hpp"
 #include "Game/Util/ObjectPool.hpp"
@@ -24,15 +25,25 @@ public:
                             std::shared_ptr<Enemy::Enemy> enemy);
 
 private:
-    static std::map<std::string, std::shared_ptr<Game::Character>> s_Character;
-    static std::map<std::string, std::shared_ptr<Weapon::Weapon>> s_Weapon;
-    static std::map<std::string, std::shared_ptr<Projectile::Projectile>>
+    static std::unordered_map<std::string, std::shared_ptr<Game::Character>>
+        s_Character;
+    static std::unordered_map<std::string, std::shared_ptr<Weapon::Weapon>>
+        s_Weapon;
+    static std::unordered_map<std::string,
+                              std::shared_ptr<Game::Passive::Passive>>
+        s_Passive;
+    static std::unordered_map<std::string,
+                              std::shared_ptr<Projectile::Projectile>>
         s_Projectile;
-    static std::map<std::string, Util::ObjectPool<Projectile::Projectile>>
+    static std::unordered_map<std::string,
+                              Util::ObjectPool<Projectile::Projectile>>
         s_ProjectilePool;
-    static std::map<std::string, std::shared_ptr<Util::Animation>> s_Animation;
-    static std::map<std::string, std::shared_ptr<Enemy::Enemy>> s_Enemy;
-    static std::map<std::string, Util::ObjectPool<Enemy::Enemy>> s_EnemyPool;
+    static std::unordered_map<std::string, std::shared_ptr<Util::Animation>>
+        s_Animation;
+    static std::unordered_map<std::string, std::shared_ptr<Enemy::Enemy>>
+        s_Enemy;
+    static std::unordered_map<std::string, Util::ObjectPool<Enemy::Enemy>>
+        s_EnemyPool;
 };
 } // namespace Game
 

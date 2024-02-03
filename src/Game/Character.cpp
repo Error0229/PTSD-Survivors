@@ -5,10 +5,10 @@
 #include "Util/Image.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Time.hpp"
-#include "Util/Logger.hpp"
 namespace Game {
 void Character::Start() {
     m_ZIndex = CHARACTER_LAYER;
+    m_Transform.scale = {2, 2}; // hardcoded for Debug
     Util::Animated::Play();
 }
 void Character::Update(const ::Util::Transform &transform) {
@@ -29,10 +29,14 @@ void Character::Draw() {
     // m_Drawable->Draw(m_Transform, m_ZIndex);
 }
 float Character::Width() {
+    if (m_CurrentAnimation != NULL_STRING)
+        return Util::Animated::GetAnimation(m_CurrentAnimation)->GetWidth();
     return m_Drawable->GetSize().x * m_Transform.scale.x;
 }
 
 float Character::Height() {
+    if (m_CurrentAnimation != NULL_STRING)
+        return Util::Animated::GetAnimation(m_CurrentAnimation)->GetHeight();
     return m_Drawable->GetSize().y * m_Transform.scale.y;
 }
 
@@ -42,7 +46,7 @@ void Character::SetBaseStats(std::unordered_map<std::string, float_t> &stats) {
 }
 
 void Character::RecalculateStats() {
-	m_Stats = m_BaseStats; // hardcoded for now
+    m_Stats = m_BaseStats; // hardcoded for now
 }
 
 void Character::SetInfos(std::string ID, std::string chrName,

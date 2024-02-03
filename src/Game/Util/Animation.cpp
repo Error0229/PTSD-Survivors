@@ -7,7 +7,8 @@ Animation::Animation(std::vector<std::shared_ptr<::Util::Image>> frames,
     : m_Frames(frames),
       m_IsAnimated(false),
       m_IsLoop(isLoop),
-      m_FrameTime(frameTime), m_LastFrameTime(-1) {}
+      m_FrameTime(frameTime),
+      m_LastFrameTime(-1) {}
 void Animation::Update() {
     auto now = Clock.Now();
     if (!m_IsAnimated || now - m_LastFrameTime <= m_FrameTime)
@@ -40,6 +41,19 @@ int32_t Animation::GetFrame() {
 }
 int32_t Animation::FrameCount() {
     return static_cast<int32_t>(m_Frames.size());
+}
+float_t Animation::GetHeight() {
+    if (m_CurrentFrame < 0 || m_CurrentFrame >= FrameCount())
+        return 0;
+    return m_Frames[m_CurrentFrame]->GetSize().y;
+}
+float_t Animation::GetWidth() {
+    if (m_CurrentFrame < 0 || m_CurrentFrame >= FrameCount())
+        return 0;
+    return m_Frames[m_CurrentFrame]->GetSize().x;
+}
+bool Animation::IsAnimated() {
+    return m_IsAnimated;
 }
 void Animation::Draw(::Util::Transform &transform, float_t &zIndex) {
     if (m_CurrentFrame < 0 || m_CurrentFrame >= FrameCount())

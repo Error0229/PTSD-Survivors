@@ -7,6 +7,7 @@ namespace Game {
 void Manager::Start() {
     Resource::Initialize();
     m_Character = Resource::GetCharacter("TATANKA");
+    m_Character->SetAnimation("Default");
     m_Character->Start();
     m_Map = std::make_shared<Map>();
     m_Map->Setup("map");
