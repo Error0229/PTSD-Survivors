@@ -8,7 +8,7 @@
 
 void App::Start() {
     LOG_TRACE("Start");
-    Game::🧝.Start();
+    Game::CAT.Start();
     m_CurrentState = State::CYCLE;
 }
 
@@ -42,11 +42,11 @@ void App::Update() {
         LOG_DEBUG("B");
         Util::Input::SetCursorPosition({0.0F, 0.0F});
     }
-    Game::🧝.Update();
+    Game::CAT.Update();
 }
 
 void App::Draw() {
-    Game::🧝.Draw();
+    Game::CAT.Draw();
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)

@@ -60,11 +60,11 @@ bool Weapon::CanEvo() { // for evo-able weapon to call
     if (!IsMaxLevel())
         return false;
     for (auto &evo : m_EvoRequired) {
-        if (!Game::🧝.Have(evo))
+        if (!Game::CAT.Have(evo))
             return false;
     }
     for (auto &evo : m_EvoFrom) {
-        if (!Game::🧝.Have(evo))
+        if (!Game::CAT.Have(evo))
             return false;
     }
     return true;
