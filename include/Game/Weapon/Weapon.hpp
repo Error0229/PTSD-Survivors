@@ -14,11 +14,11 @@ public:
     int32_t GetMaxLevel();
     std::string GetLevelUpMessage();
 
-    void SetUp(std::string ID, std::string EvoID, std::string Description,
-               std::vector<std::string> EvoRequired,
-               std::vector<std::string> EvoFrom,
-               std::unordered_map<std::string, float_t> BaseStats,
-               std::vector<std::pair<std::string, float_t>> LevelUpStat);
+    void SetUp(
+        std::string ID, std::string Description,
+        std::vector<std::string> EvoRequired, std::vector<std::string> EvoFrom,
+        std::unordered_map<std::string, float_t> BaseStats,
+        std::vector<std::vector<std::pair<std::string, float_t>>> LevelUpStat);
 
     bool IsMaxLevel();
     bool IsEvo();
@@ -30,14 +30,14 @@ public:
     virtual void
     Update(const ::Util::Transform &transform = ::Util::Transform()) override;
     virtual void Draw() override;
-    virtual void LevelUp() = 0;
+    virtual void LevelUp();
 
 protected:
-    std::string m_ID, m_EvoID, m_Description;
+    std::string m_ID, m_Description;
     // m_ indicate the stat
     std::unordered_map<std::string, float_t> m_, m_Base, m_Mod;
     std::vector<std::string> m_LevelUpMessage;
-    std::vector<std::pair<std::string, float_t>> m_LevelUpStat;
+    std::vector<std::vector<std::pair<std::string, float_t>>> m_LevelUpStat;
     std::vector<std::string> m_EvoRequired, m_EvoFrom;
 };
 

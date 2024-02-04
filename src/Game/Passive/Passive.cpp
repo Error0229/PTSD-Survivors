@@ -17,8 +17,9 @@ void Passive::Draw() {
 }
 
 void Passive::LevelUp() {
-    s_Effect[m_LevelUpStat[m_["level"]].first] +=
-        m_LevelUpStat[m_["level"]].second;
+    for (auto &stat : m_LevelUpStat[m_["level"] - 1]) {
+        m_[stat.first] += stat.second;
+    }
     m_["level"] += 1;
 }
 int32_t Passive::GetLevel() {
@@ -30,9 +31,10 @@ int32_t Passive::GetMaxLevel() {
 float_t Passive::GetEffect(const std::string &name) {
     return s_Effect[name];
 }
-void Passive::SetUp(const std::string &ID, const std::string &Description,
-                    std::unordered_map<std::string, float_t> &BaseStats,
-                    std::vector<std::pair<std::string, float_t>> &LevelUpStat) {
+void Passive::SetUp(
+    const std::string &ID, const std::string &Description,
+    std::unordered_map<std::string, float_t> &BaseStats,
+    std::vector<std::vector<std::pair<std::string, float_t>>> &LevelUpStat) {
     m_ID = ID;
     m_Description = Description;
     m_ = BaseStats;
@@ -47,6 +49,7 @@ void Passive::Initialize() {
     s_Effect["area"] = 0.0f;
     s_Effect["speed"] = 0.0f;
     s_Effect["duration"] = 0.0f;
+    s_Effect["interval"] = 0.0f; // cooldown for weapon
     s_Effect["amount"] = 0.0f;
     s_Effect["moveSpeed"] = 0.0f;
     s_Effect["magnet"] = 0.0f;
@@ -55,6 +58,7 @@ void Passive::Initialize() {
     s_Effect["greed"] = 0.0f;
     s_Effect["curse"] = 0.0f;
     s_Effect["revivals"] = 0.0f;
+    s_Effect["penetrating"] = 0.0f; // pierce
     for (auto &effect : s_Effect) {
         s_EffectName.insert(effect.first);
     }

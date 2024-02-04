@@ -1,6 +1,7 @@
 #include "Game/Resource.hpp"
 #include "Game/Config.hpp"
 #include "Util/Image.hpp"
+#include "Util/Logger.hpp"
 #include "json.hpp"
 #include <cstddef>
 #include <cstdio>
@@ -132,32 +133,65 @@ void Resource::Initialize() {
             stat["level"] = stats["level"];
             stat["rarity"] = stats["rarity"];
             stat["maxLevel"] = data.size();
-            std::vector<std::pair<std::string, float_t>> levelUpStat;
+            std::vector<std::vector<std::pair<std::string, float_t>>>
+                levelUpStat;
             for (auto &level : data) {
+                std::vector<std::pair<std::string, float_t>> temp;
                 for (auto &info : level.items()) {
                     if (Game::Passive::Passive::IsEffect(info.key())) {
-                        levelUpStat.push_back({info.key(), info.value()});
+                        temp.push_back({info.key(), info.value()});
                     }
                 }
+                levelUpStat.push_back(temp);
             }
             passive->SetUp(item.key(), stats["description"], stat, levelUpStat);
             passive->SetDrawable(std::make_unique<::Util::Image>(
                 SPRITE_PATH + stats["frameName"].template get<std::string>()));
         } else {
-            // s_Weapon[item.key()] = std::make_shared<Weapon::Weapon>();
-            // auto &weapon = s_Weapon[item.key()];
-            // auto &stats = data[0];
-            // std::unordered_map<std::string, float_t> stat;
-            // stat["amount"] = stats["amount"];
-            // stat["area"] = stats["area"];
-            // stat["armor"] = stats["armor"];
-            // stat["banish"] = stats["banish"];
-            // stat["cooldown"] = stats["cooldown"];
-            // stat["curse"] = stats["curse"];
-            // stat["duration"] = stats["duration"];
-            // stat["greed"] = stats["greed"];
-            // stat["growth"] = stats["growth"];
-            // stat["level"]
+            s_Weapon[item.key()] = std::make_shared<Weapon::Weapon>();
+            auto &weapon = s_Weapon[item.key()];
+            auto &stats = data[0];
+            std::unordered_map<std::string, float_t> stat;
+            stat["maxLevel"] = data.size();
+            stat["rarity"] = stats["rarity"];
+            stat["poolLimit"] = stats["poolLimit"];
+            stat["repeatInterval"] =
+                stats["repeatInterval"]; // a.k.a delay between amount of shots
+            stat["hitsWalls"] = stats.value("hitsWalls", false) ? 1.0f : 0.0f;
+            stat["critChance"] = stats.value("critChance", 0.0f);
+            stat["critMul"] = stats.value("critMul", 1.0f);
+            stat["hitVFX"] = stats.value("hitVFX", -1.0f);
+            stat["knockBack"] = stats.value("knockback", 0.0f);
+            stat["volume"] = stats.value("volume", 1.0f);
+            stat["hitBoxDelay"] = stats.value("hitBoxDelay", 0.0f);
+
+            std::vector<std::string> evoRequired;
+            std::vector<std::string> evoFrom;
+            if (stats.find("evolveFrom") != stats.end()) {
+                for (auto &evo : stats["evolveFrom"]) {
+                    evoFrom.push_back(evo);
+                }
+            }
+            if (stats.find("requires") != stats.end()) {
+                for (auto &evo : stats["requires"]) {
+                    evoRequired.push_back(evo);
+                }
+            }
+            std::vector<std::vector<std::pair<std::string, float_t>>>
+                levelUpStat;
+            for (auto &level : data) {
+                std::vector<std::pair<std::string, float_t>> temp;
+                for (auto &info : level.items()) {
+                    if (Game::Passive::Passive::IsEffect(info.key())) {
+                        temp.push_back({info.key(), info.value()});
+                    }
+                }
+                levelUpStat.push_back(temp);
+            }
+            weapon->SetUp(item.key(), stats["description"], evoRequired,
+                          evoFrom, stat, levelUpStat);
+            weapon->SetDrawable(std::make_unique<::Util::Image>(
+                SPRITE_PATH + stats["frameName"].template get<std::string>()));
         }
     }
 }

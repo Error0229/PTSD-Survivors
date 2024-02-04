@@ -18,9 +18,10 @@ public:
     void LevelUp();
     int32_t GetLevel();
     int32_t GetMaxLevel();
-    void SetUp(const std::string &ID, const std::string &Description,
-               std::unordered_map<std::string, float_t> &BaseStats,
-               std::vector<std::pair<std::string, float_t>> &LevelUpStat);
+    void SetUp(
+        const std::string &ID, const std::string &Description,
+        std::unordered_map<std::string, float_t> &BaseStats,
+        std::vector<std::vector<std::pair<std::string, float_t>>> &LevelUpStat);
 
     static float_t GetEffect(const std::string &name);
     static void Initialize();
@@ -31,7 +32,7 @@ protected:
     static std::unordered_set<std::string> s_EffectName;
     std::string m_ID, m_Description;
     std::unordered_map<std::string, float_t> m_;
-    std::vector<std::pair<std::string, float_t>> m_LevelUpStat;
+    std::vector<std::vector<std::pair<std::string, float_t>>> m_LevelUpStat;
 };
 
 enum class PassiveType {
