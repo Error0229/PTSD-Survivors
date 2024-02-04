@@ -4,7 +4,7 @@
 #include "Game/Util/Timer.hpp"
 #include "Util/Input.hpp"
 namespace Game {
-Manager π;
+Manager 🧝;
 void Manager::Start() {
     Resource::Initialize();
     m_Character = Resource::GetCharacter("TATANKA");

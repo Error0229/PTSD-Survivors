@@ -25,7 +25,7 @@ private:
     std::shared_ptr<Character> m_Character;
     std::shared_ptr<Map> m_Map;
 };
-extern Manager π;
+extern Manager 🧝;
 } // namespace Game
 
 #endif
