@@ -15,8 +15,8 @@ GLint ChannelsToInternalFormat(unsigned int channels) {
 };
 
 GLint ChannelsToFormat(unsigned int channels) {
-    // Since the color channel in MacOS is invert, we need to return the channel by the condition.
-    // Solved #57
+    // Since the color channel in MacOS is invert, we need to return the channel
+    // by the condition. Solved #57
     switch (channels) {
     case 3:
 #ifdef __APPLE__
@@ -69,6 +69,9 @@ void Texture::Bind(int slot) const {
 
     glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(GL_TEXTURE_2D, m_TextureId);
+    // for personal preference, I like to use GL_NEAREST for the mag and min
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 }
 
 void Texture::Unbind() const {
