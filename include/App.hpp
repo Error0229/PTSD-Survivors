@@ -26,7 +26,6 @@ public:
 
 private:
     State m_CurrentState = State::START;
-    Game::Manager m_Manager;
 };
 
 #endif

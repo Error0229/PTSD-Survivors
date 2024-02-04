@@ -14,6 +14,7 @@ public:
     static void Initialize();
     static std::shared_ptr<Character> GetCharacter(std::string name);
     static std::shared_ptr<Weapon::Weapon> GetWeapon(std::string type);
+    static std::shared_ptr<Passive::Passive> GetPassive(std::string type);
     static std::shared_ptr<Projectile::Projectile>
     GetProjectile(std::string type);
     static void

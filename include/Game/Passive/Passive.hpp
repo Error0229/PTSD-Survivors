@@ -4,13 +4,13 @@
 #include "pch.hpp"
 #include <cmath>
 #include <cstdint>
+#include <unordered_set>
 namespace Game::Passive {
 enum class PassiveType;
-enum class StackingType;
 class Passive : public ::Util::GameObject {
 public:
     Passive() = default;
-    virtual ~Passive() = 0;
+    ~Passive() override = default;
     virtual void Start() override;
     virtual void
     Update(const ::Util::Transform &transform = ::Util::Transform()) override;
@@ -18,13 +18,20 @@ public:
     void LevelUp();
     int32_t GetLevel();
     int32_t GetMaxLevel();
-    float_t GetEffect(int32_t level);
+    void SetUp(const std::string &ID, const std::string &Description,
+               std::unordered_map<std::string, float_t> &BaseStats,
+               std::vector<std::pair<std::string, float_t>> &LevelUpStat);
+
+    static float_t GetEffect(const std::string &name);
+    static void Initialize();
+    static bool IsEffect(const std::string &name);
 
 protected:
-    PassiveType m_Type;
-    int32_t m_Level, m_Rarity, m_MaxLevel;
-    std::vector<float_t> m_EffectByLevel;
-    StackingType m_StackingType;
+    static std::unordered_map<std::string, float_t> s_Effect;
+    static std::unordered_set<std::string> s_EffectName;
+    std::string m_ID, m_Description;
+    std::unordered_map<std::string, float_t> m_;
+    std::vector<std::pair<std::string, float_t>> m_LevelUpStat;
 };
 
 enum class PassiveType {
@@ -50,6 +57,5 @@ enum class PassiveType {
     pRIGHT,
     PANDORA
 };
-enum class StackingType { Additive = 1, Multiplicative };
 } // namespace Game::Passive
 #endif // PASSIVE_HPP

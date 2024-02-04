@@ -9,7 +9,6 @@ enum class Type;
 class Weapon : public ::Util::GameObject {
 public:
     Weapon() = default;
-    virtual ~Weapon() = 0;
 
     int32_t GetLevel();
     int32_t GetMaxLevel();

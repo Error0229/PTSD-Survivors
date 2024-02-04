@@ -124,9 +124,40 @@ void Resource::Initialize() {
     auto wpnJson = json::parse(wpnFile);
     for (auto &item : wpnJson.items()) {
         auto data = item.value();
-        if (data.find("isPowerUp") == data.end()) {
-
+        if (data[0].find("isPowerUp") != data[0].end()) {
+            s_Passive[item.key()] = std::make_shared<Passive::Passive>();
+            auto &passive = s_Passive[item.key()];
+            auto &stats = data[0];
+            std::unordered_map<std::string, float_t> stat;
+            stat["level"] = stats["level"];
+            stat["rarity"] = stats["rarity"];
+            stat["maxLevel"] = data.size();
+            std::vector<std::pair<std::string, float_t>> levelUpStat;
+            for (auto &level : data) {
+                for (auto &info : level.items()) {
+                    if (Game::Passive::Passive::IsEffect(info.key())) {
+                        levelUpStat.push_back({info.key(), info.value()});
+                    }
+                }
+            }
+            passive->SetUp(item.key(), stats["description"], stat, levelUpStat);
+            passive->SetDrawable(std::make_unique<::Util::Image>(
+                SPRITE_PATH + stats["frameName"].template get<std::string>()));
         } else {
+            // s_Weapon[item.key()] = std::make_shared<Weapon::Weapon>();
+            // auto &weapon = s_Weapon[item.key()];
+            // auto &stats = data[0];
+            // std::unordered_map<std::string, float_t> stat;
+            // stat["amount"] = stats["amount"];
+            // stat["area"] = stats["area"];
+            // stat["armor"] = stats["armor"];
+            // stat["banish"] = stats["banish"];
+            // stat["cooldown"] = stats["cooldown"];
+            // stat["curse"] = stats["curse"];
+            // stat["duration"] = stats["duration"];
+            // stat["greed"] = stats["greed"];
+            // stat["growth"] = stats["growth"];
+            // stat["level"]
         }
     }
 }
@@ -143,6 +174,13 @@ std::shared_ptr<Weapon::Weapon> Resource::GetWeapon(std::string type) {
         throw std::logic_error("Weapon not found");
     }
     return s_Weapon[type];
+}
+
+std::shared_ptr<Passive::Passive> Resource::GetPassive(std::string type) {
+    if (s_Passive.find(type) == s_Passive.end()) {
+        throw std::logic_error("Passive not found");
+    }
+    return s_Passive[type];
 }
 
 std::shared_ptr<Projectile::Projectile>

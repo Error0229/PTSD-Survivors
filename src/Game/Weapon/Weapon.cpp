@@ -1,25 +1,36 @@
 #include "Game/Weapon/Weapon.hpp"
+#include "Game/Manager.hpp"
 #include <unordered_map>
 
 namespace Game::Weapon {
 int32_t Weapon::GetLevel() {
-    return static_cast<int32_t>(m_["level"]);
+    return static_cast<int32_t>(m_["Level"]);
 }
 int32_t Weapon::GetMaxLevel() {
-    return m_["maxLevel"];
+    return static_cast<int32_t>(m_["MaxLevel"]);
 }
 std::string Weapon::GetLevelUpMessage() {
     return m_LevelUpMessage[GetLevel() - 1];
 }
 
 bool Weapon::IsMaxLevel() {
-    return m_["level"] == m_["maxLevel"];
+    return m_["Level"] == m_["MaxLevel"];
 }
 bool Weapon::IsEvo() {
-    return m_["isEvolution"] == 1.0f;
+    return m_["IsEvolution"] == 1.0f;
 }
 bool Weapon::CanEvo() {
-    return m_["isEvolution"] && m_["level"] == m_["maxLevel"];
+    if (!IsMaxLevel())
+        return false;
+    for (auto &evo : m_EvoRequired) {
+        if (!Game::π.Have(evo))
+            return false;
+    }
+    for (auto &evo : m_EvoFrom) {
+        if (!Game::π.Have(evo))
+            return false;
+    }
+    return true;
 }
 
 void Weapon::RecalculateStat() {

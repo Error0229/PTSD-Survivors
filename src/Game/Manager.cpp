@@ -4,6 +4,7 @@
 #include "Game/Util/Timer.hpp"
 #include "Util/Input.hpp"
 namespace Game {
+Manager π;
 void Manager::Start() {
     Resource::Initialize();
     m_Character = Resource::GetCharacter("TATANKA");
@@ -33,5 +34,8 @@ void Manager::Draw() {
     for (auto &projectile : m_Projectiles) {
         projectile->Draw();
     }
+}
+bool Manager::Have(std::string name) {
+    return m_Have.count(name) > 0;
 }
 } // namespace Game
