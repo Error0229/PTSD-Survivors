@@ -144,6 +144,10 @@ endif()
 target_compile_options(Sample PRIVATE
     ${TARGET_COMPILE_OPTIONS}
 )
+if (MSVC) 
+	set_target_properties(Sample PROPERTIES LINK_FLAGS "/PROFILE")
+endif()
+
 
 enable_testing()
 
