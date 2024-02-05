@@ -2,6 +2,7 @@
 
 #include "Core/Texture.hpp"
 
+#include "SDL_pixels.h"
 #include "Util/Text.hpp"
 #include "Util/TransformUtils.hpp"
 
@@ -27,9 +28,9 @@ Text::Text(const std::string &font, int size, const std::string &text) {
     }
 
     m_Surface = {TTF_RenderUTF8_Blended_Wrapped(m_Font.get(), text.c_str(),
-                                                SDL_Color{255, 0, 255, 0}, 0),
+                                                SDL_Color{0, 0, 0, 0}, 0),
                  SDL_FreeSurface};
-
+    SDL_MapRGBA(m_Surface->format, 0, 0, 255, 0);
     if (m_Surface == nullptr) {
         LOG_ERROR("Failed to create text");
         LOG_ERROR("{}", TTF_GetError());
