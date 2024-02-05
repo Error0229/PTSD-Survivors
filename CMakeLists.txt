@@ -126,6 +126,10 @@ add_executable(Sample
     ${SRC_FILES}
     ${SRC_DIR}/main.cpp
 )
+if (MSVC) 
+    target_link_options(Sample PRIVATE "/PROFILE")
+	set_target_properties(Sample PROPERTIES LINK_FLAGS "/PROFILE")
+endif()
 target_link_libraries(Sample
     SDL2::SDL2main # IDK what happens if we don't link SDL2main
     ${DEPENDENCY_LINK_LIBRARIES}
@@ -144,9 +148,6 @@ endif()
 target_compile_options(Sample PRIVATE
     ${TARGET_COMPILE_OPTIONS}
 )
-if (MSVC) 
-	set_target_properties(Sample PROPERTIES LINK_FLAGS "/PROFILE")
-endif()
 
 
 enable_testing()
