@@ -1,6 +1,7 @@
 #include "Game/Util/Animated.hpp"
 #include "Game/Config.hpp"
 #include "Util/Image.hpp"
+#include <cmath>
 #include <cstdint>
 #include <stdexcept>
 
@@ -89,6 +90,18 @@ void Animated::Update(const std::string &name) {
 bool Animated::IsAnimated(const std::string &name) {
     if (auto anim = GetAnimation(name)) {
         return anim->IsAnimated();
+    }
+    throw std::logic_error("Animation not found");
+}
+float_t Animated::Height(const std::string &name) {
+    if (auto anim = GetAnimation(name)) {
+        return anim->GetHeight();
+    }
+    throw std::logic_error("Animation not found");
+}
+float_t Animated::Width(const std::string &name) {
+    if (auto anim = GetAnimation(name)) {
+        return anim->GetWidth();
     }
     throw std::logic_error("Animation not found");
 }

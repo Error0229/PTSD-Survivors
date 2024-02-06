@@ -4,6 +4,7 @@
 #include "Util/Logger.hpp"
 #include "json.hpp"
 #include <cstddef>
+#include <cstdint>
 #include <cstdio>
 #include <fstream>
 #include <memory>
@@ -19,9 +20,9 @@ std::unordered_map<std::string, Util::ObjectPool<Projectile::Projectile>>
     Resource::s_ProjectilePool;
 std::unordered_map<std::string, std::shared_ptr<Util::Animation>>
     Resource::s_Animation;
-std::unordered_map<std::string, std::shared_ptr<Enemy::Enemy>>
+std::unordered_map<std::string, std::shared_ptr<Game::Enemy::Enemy>>
     Resource::s_Enemy;
-std::unordered_map<std::string, Util::ObjectPool<Enemy::Enemy>>
+std::unordered_map<std::string, Util::ObjectPool<Game::Enemy::Enemy>>
     Resource::s_EnemyPool;
 std::unordered_map<std::string, std::shared_ptr<Game::Passive::Passive>>
     Resource::s_Passive;
@@ -193,6 +194,63 @@ void Resource::Initialize() {
             weapon->SetDrawable(std::make_unique<::Util::Image>(
                 SPRITE_PATH + stats["frameName"].template get<std::string>()));
         }
+    }
+    // Enemy
+    std::ifstream enemyFile("../resources/TextAsset/v1.3.100_ENEMY_DATA.txt");
+    auto enemyJson = json::parse(enemyFile);
+    for (auto &item : enemyJson.items()) {
+        s_Enemy[item.key()] = std::make_shared<Game::Enemy::Enemy>();
+        auto &enemy = s_Enemy[item.key()];
+        auto data = item.value();
+        auto &stats = data[0];
+        std::unordered_map<std::string, float_t> stat;
+        stat["level"] = stats.value("level", 1.0f);
+        stat["maxHp"] = stats.value("maxHp", 1.0f);
+        stat["speed"] = stats.value("speed", 1.0f);
+        stat["power"] = stats.value("power", 1.0f);
+        stat["knockBack"] = stats.value("knockback", 1.0f);
+        stat["xp"] = stats.value("xp", 1.0f);
+        stat["scale"] = stats.value("scale", 0.0f);
+        stat["end"] = stats.value("end", 0.0f);
+        stat["tint"] = stats.value("tint", 0.0f);
+        stat["passThroughWalls"] =
+            stats.value("passThroughWalls", false) ? 1.0f : 0.0f;
+
+        enemy->SetUp(item.key(), stat);
+        std::vector<std::shared_ptr<::Util::Image>> images;
+        int32_t frames = 0;
+        if (stats.find("idleFrameCount") != stats.end()) {
+            frames = stats["idleFrameCount"];
+        } else {
+            images.push_back(std::make_shared<::Util::Image>(
+                SPRITE_PATH +
+                stats["frameNames"][0].template get<std::string>()));
+            LOG_DEBUG("No frameNames found for enemy: " + item.key());
+        }
+        std::string base = stats["frameNames"][0].template get<std::string>();
+        base = base.substr(0, base.find('.') - 1);
+        for (int32_t i = 1; i <= frames; i++) {
+            std::string frame = std::to_string(i);
+            if (i < 10) {
+                frame = "0" + frame;
+            }
+            images.push_back(std::make_shared<::Util::Image>(
+                SPRITE_PATH + base + "i" + frame + ".png"));
+        }
+        auto animation = std::make_unique<Util::Animation>(images, true);
+        auto animationName = static_cast<std::string>(item.key()) + "Idle";
+        s_Animation[animationName] = std::move(animation);
+        enemy->Load("Idle", s_Animation[animationName]);
+
+        images.clear();
+        for (int32_t i = 0; i < stats["end"]; i++) {
+            images.push_back(std::make_shared<::Util::Image>(
+                SPRITE_PATH + base + std::to_string(i) + ".png"));
+        }
+        animation = std::make_unique<Util::Animation>(images, false);
+        animationName = static_cast<std::string>(item.key()) + "Death";
+        s_Animation[animationName] = std::move(animation);
+        enemy->Load("Death", s_Animation[animationName]);
     }
 }
 
