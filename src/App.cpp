@@ -14,10 +14,12 @@ void App::Start() {
 
 void App::Update() {
     if (Util::Input::IsLButtonPressed()) {
+        Game::CAT.EnemyGen();
         LOG_DEBUG("Left button pressed");
     }
     if (Util::Input::IsRButtonPressed()) {
         LOG_DEBUG("Right button pressed");
+        Game::CAT.HurtEnemy();
     }
     if (Util::Input::IsMButtonPressed()) {
         LOG_DEBUG("Middle button pressed");

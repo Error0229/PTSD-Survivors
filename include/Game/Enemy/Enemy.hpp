@@ -21,10 +21,15 @@ public:
     void Start() override;
     void Update(const ::Util::Transform &transform = {}) override;
     void Draw() override;
+    void Hurt(float_t damage);
     void SetScale(int32_t level);
     void SetUp(std::string ID, std::unordered_map<std::string, float_t> stat);
+    void GoTo(glm::vec2);
+    bool IsOver();
+    bool IsDead();
     float_t Height() override;
     float_t Width() override;
+    std::string ID();
 
 private:
     std::string m_ID, m_Desc;

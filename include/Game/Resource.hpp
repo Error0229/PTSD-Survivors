@@ -24,6 +24,14 @@ public:
     static std::shared_ptr<Enemy::Enemy> GetEnemy(std::string name);
     static void ReturnEnemy(std::string name,
                             std::shared_ptr<Enemy::Enemy> enemy);
+    static std::vector<std::string> s_NormalEnemies;
+    static std::vector<std::string> s_BossEnemies;
+    static std::vector<std::string> s_SwarmEnemies;
+    static std::vector<std::string> s_Characters;
+    static std::vector<std::string> s_Weapons;
+    static std::vector<std::string> s_Passives;
+    static std::vector<std::string> s_Projectiles;
+
 
 private:
     static std::unordered_map<std::string, std::shared_ptr<Game::Character>>

@@ -10,6 +10,7 @@
 #include <stack>
 #include <stdexcept>
 #include <time.h>
+#include <random>
 
 #include <SDL.h>
 #include <SDL_events.h>

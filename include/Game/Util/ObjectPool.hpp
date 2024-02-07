@@ -14,15 +14,9 @@ class ObjectPool {
 public:
     ObjectPool() = default;
 
-    ObjectPool(const ObjectPool &other) = delete;
-
-    ObjectPool(ObjectPool &&other) = delete;
-
-    ObjectPool &operator=(const ObjectPool &other) = delete;
-
     virtual ~ObjectPool() = default;
 
-    void AddObject(std::unique_ptr<T> object);
+    void AddObject(std::shared_ptr<T> object);
 
     void ReturnObject(std::shared_ptr<T> object);
 

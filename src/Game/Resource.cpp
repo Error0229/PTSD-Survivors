@@ -26,7 +26,13 @@ std::unordered_map<std::string, Util::ObjectPool<Game::Enemy::Enemy>>
     Resource::s_EnemyPool;
 std::unordered_map<std::string, std::shared_ptr<Game::Passive::Passive>>
     Resource::s_Passive;
-
+std::vector<std::string> Resource::s_NormalEnemies;
+std::vector<std::string> Resource::s_BossEnemies;
+std::vector<std::string> Resource::s_SwarmEnemies;
+std::vector<std::string> Resource::s_Characters;
+std::vector<std::string> Resource::s_Weapons;
+std::vector<std::string> Resource::s_Passives;
+std::vector<std::string> Resource::s_Projectiles;
 void Resource::Initialize() {
     using json = nlohmann::json;
     // TODO: load all resources
@@ -35,6 +41,7 @@ void Resource::Initialize() {
     auto chrJson = json::parse(chrFile);
     for (auto &item : chrJson.items()) {
         s_Character[item.key()] = std::make_shared<Character>();
+        s_Characters.push_back(item.key());
         auto &chr = s_Character[item.key()];
         auto data = item.value();
         auto &stats = data[0];
@@ -128,6 +135,7 @@ void Resource::Initialize() {
         auto data = item.value();
         if (data[0].find("isPowerUp") != data[0].end()) {
             s_Passive[item.key()] = std::make_shared<Passive::Passive>();
+            s_Passives.push_back(item.key());
             auto &passive = s_Passive[item.key()];
             auto &stats = data[0];
             std::unordered_map<std::string, float_t> stat;
@@ -150,6 +158,7 @@ void Resource::Initialize() {
                 SPRITE_PATH + stats["frameName"].template get<std::string>()));
         } else {
             s_Weapon[item.key()] = std::make_shared<Weapon::Weapon>();
+            s_Weapons.push_back(item.key());
             auto &weapon = s_Weapon[item.key()];
             auto &stats = data[0];
             std::unordered_map<std::string, float_t> stat;
@@ -200,6 +209,13 @@ void Resource::Initialize() {
     auto enemyJson = json::parse(enemyFile);
     for (auto &item : enemyJson.items()) {
         s_Enemy[item.key()] = std::make_shared<Game::Enemy::Enemy>();
+        if (item.key().find("BOSS") != std::string::npos) {
+            s_BossEnemies.push_back(item.key());
+        } else if (item.key().find("SWARM") != std::string::npos) {
+            s_SwarmEnemies.push_back(item.key());
+        } else {
+            s_NormalEnemies.push_back(item.key());
+        }
         auto &enemy = s_Enemy[item.key()];
         auto data = item.value();
         auto &stats = data[0];
@@ -225,7 +241,7 @@ void Resource::Initialize() {
             images.push_back(std::make_shared<::Util::Image>(
                 SPRITE_PATH +
                 stats["frameNames"][0].template get<std::string>()));
-            LOG_DEBUG("No frameNames found for enemy: " + item.key());
+            LOG_DEBUG("No idleFrame found for enemy: " + item.key());
         }
         std::string base = stats["frameNames"][0].template get<std::string>();
         base = base.substr(0, base.find('.') - 1);
@@ -251,6 +267,11 @@ void Resource::Initialize() {
         animationName = static_cast<std::string>(item.key()) + "Death";
         s_Animation[animationName] = std::move(animation);
         enemy->Load("Death", s_Animation[animationName]);
+        enemy->SetAnimation("Idle");
+        s_EnemyPool[item.key()] = Util::ObjectPool<Game::Enemy::Enemy>();
+        for (int32_t i = 0; i < 10; i++) {
+            s_EnemyPool[item.key()].AddObject(enemy);
+        }
     }
 }
 

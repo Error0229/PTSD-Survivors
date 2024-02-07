@@ -17,6 +17,8 @@ public:
     void Update();
     void Draw();
     bool Have(std::string name);
+    void EnemyGen();
+    void HurtEnemy();
 
 private:
     std::set<std::string> m_Have;

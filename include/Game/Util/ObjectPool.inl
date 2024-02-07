@@ -2,8 +2,8 @@
 #include <stdexcept>
 namespace Game::Util {
 template <class T>
-void ObjectPool<T>::AddObject(std::unique_ptr<T> object) {
-    Pool_.push_back(std::move(object));
+void ObjectPool<T>::AddObject(std::shared_ptr<T> object) {
+    Pool_.push_back(object);
     FreeIndices_.push(Pool_.size() - 1);
     ObjectToIndex_.insert(std::make_pair(Pool_.back(), Pool_.size() - 1));
 }
