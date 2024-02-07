@@ -67,7 +67,14 @@ void Manager::EnemyGen() { /*
      Resource::s_NormalEnemies.size() - 1); auto enemyName =
      std::next(Resource::s_NormalEnemies.begin(), distribute(gen));*/
     static int32_t i = 0;
-    auto &enemyName = Resource::s_NormalEnemies[i++];
+    static std::string enemyName;
+    if (i < Resource::s_NormalEnemies.size()) {
+        enemyName = Resource::s_NormalEnemies[i++];
+    } else {
+        enemyName =
+            Resource::s_BossEnemies[i - Resource::s_NormalEnemies.size()];
+        i++;
+    }
     auto enemy = Resource::GetEnemy(enemyName);
     enemy->Start();
     m_Enemies.insert(enemy);
