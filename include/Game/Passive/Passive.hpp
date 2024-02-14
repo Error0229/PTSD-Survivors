@@ -11,9 +11,9 @@ class Passive : public ::Util::GameObject {
 public:
     Passive() = default;
     ~Passive() override = default;
-    virtual void Start() override;
+    virtual void Start();
     virtual void
-    Update(const ::Util::Transform &transform = ::Util::Transform()) override;
+    Update(const ::Util::Transform &transform = ::Util::Transform());
     virtual void Draw() override;
     void LevelUp();
     int32_t GetLevel();

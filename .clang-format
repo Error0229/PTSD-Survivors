@@ -3,3 +3,5 @@ IndentWidth: 4
 AccessModifierOffset: -4
 AllowShortFunctionsOnASingleLine: Inline
 AlwaysBreakTemplateDeclarations: Yes
+PackConstructorInitializers: Never
+InsertNewlineAtEOF: true

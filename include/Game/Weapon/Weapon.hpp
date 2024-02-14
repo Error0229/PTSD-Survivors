@@ -26,9 +26,9 @@ public:
     void RecalculateStat();
     void UpdateModifier(std::unordered_map<std::string, float_t> &modifier);
 
-    virtual void Start() override;
+    virtual void Start();
     virtual void
-    Update(const ::Util::Transform &transform = ::Util::Transform()) override;
+    Update(const ::Util::Transform &transform = ::Util::Transform());
     virtual void Draw() override;
     virtual void LevelUp();
 

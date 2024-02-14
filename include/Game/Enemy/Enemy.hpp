@@ -18,8 +18,8 @@ class Enemy : public ::Util::GameObject,
 public:
     Enemy() = default;
     ~Enemy() override = default;
-    void Start() override;
-    void Update(const ::Util::Transform &transform = {}) override;
+    void Start();
+    void Update(const ::Util::Transform &transform = {});
     void Draw() override;
     void Hurt(float_t damage);
     void SetScale(int32_t level);

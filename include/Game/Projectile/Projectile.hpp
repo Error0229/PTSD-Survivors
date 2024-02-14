@@ -17,9 +17,9 @@ public:
     Projectile() = default;
     virtual ~Projectile() = 0;
     bool operator<(const Projectile &rhs) const;
-    virtual void Start() override;
+    virtual void Start();
     virtual void
-    Update(const ::Util::Transform &transform = ::Util::Transform()) override;
+    Update(const ::Util::Transform &transform = ::Util::Transform());
     virtual void Draw() override;
 
     void SetStatus(Stats stats);

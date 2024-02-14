@@ -15,9 +15,8 @@ class Character : public ::Util::GameObject,
 public:
     Character() = default;
     ~Character() override = default;
-    void Start() override;
-    void
-    Update(const ::Util::Transform &transform = ::Util::Transform()) override;
+    void Start();
+    void Update(const ::Util::Transform &transform = ::Util::Transform());
     void Draw() override;
 
     void SetSpeed(float speed);

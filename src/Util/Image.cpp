@@ -1,14 +1,17 @@
-#include "Core/Texture.hpp"
+#include "Util/Image.hpp"
 
 #include "pch.hpp"
 
-#include "Util/Image.hpp"
+#include "Core/Texture.hpp"
+#include "Core/TextureUtils.hpp"
+
 #include "Util/TransformUtils.hpp"
 
 #include "config.hpp"
 
 namespace Util {
-Image::Image(const std::string &filepath) {
+Image::Image(const std::string &filepath)
+    : m_Path(filepath) {
     if (s_Program == nullptr) {
         InitProgram();
     }
@@ -19,17 +22,36 @@ Image::Image(const std::string &filepath) {
         InitUniformBuffer();
     }
 
-    m_Surface = {IMG_Load(filepath.c_str()), SDL_FreeSurface};
-
-    if (m_Surface == nullptr) {
+    auto surface =
+        std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
+            IMG_Load(filepath.c_str()),
+            SDL_FreeSurface,
+        };
+    if (surface == nullptr) {
         LOG_ERROR("Failed to load image: '{}'", filepath);
         LOG_ERROR("{}", IMG_GetError());
     }
 
     m_Texture = std::make_unique<Core::Texture>(
-        m_Surface->format->BytesPerPixel, m_Surface->w, m_Surface->h,
-        m_Surface->pixels);
-    m_Size = {m_Surface->w, m_Surface->h};
+        Core::SdlFormatToGlFormat(surface->format->format), surface->w,
+        surface->h, surface->pixels);
+    m_Size = {surface->w, surface->h};
+}
+
+void Image::SetImage(const std::string &filepath) {
+    auto surface =
+        std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
+            IMG_Load(filepath.c_str()),
+            SDL_FreeSurface,
+        };
+    if (surface == nullptr) {
+        LOG_ERROR("Failed to load image: '{}'", filepath);
+        LOG_ERROR("{}", IMG_GetError());
+    }
+
+    m_Texture->UpdateData(Core::SdlFormatToGlFormat(surface->format->format),
+                          surface->w, surface->h, surface->pixels);
+    m_Size = {surface->w, surface->h};
 }
 
 void Image::Draw(const Util::Transform &transform, const float zIndex) {
@@ -93,10 +115,6 @@ void Image::InitVertexArray() {
 void Image::InitUniformBuffer() {
     s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
         *s_Program, "Matrices", 0);
-}
-
-glm::vec2 Image::GetSize() {
-    return m_Size;
 }
 
 std::unique_ptr<Core::Program> Image::s_Program = nullptr;

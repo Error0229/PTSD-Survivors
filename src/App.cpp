@@ -6,6 +6,8 @@
 #include "Util/Logger.hpp"
 #include <memory>
 
+#include "GiraffeText.hpp"
+
 void App::Start() {
     LOG_TRACE("Start");
     Game::CAT.Start();
