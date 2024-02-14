@@ -64,7 +64,7 @@ void Enemy ::CollisionWith(const std::shared_ptr<Enemy> &other) {
         std::min(m_Position.y + Height() - other->m_Position.y,
                  other->m_Position.y + other->Height() - m_Position.y);
     glm::vec2 normal{0, 0};
-    static float_t percent = 0.5f;
+    static float_t percent = 0.2f;
     static float_t slop = 0.001f;
     auto penetration = std::min(overlap_x, overlap_y);
     if (overlap_x < overlap_y) {
