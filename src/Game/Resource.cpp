@@ -273,6 +273,24 @@ void Resource::Initialize() {
             s_EnemyPool[item.key()].AddObject(enemy);
         }
     }
+    // hitVFX
+    std::ifstream hitVFXFile("../resources/TextAsset/v1.3.100_HITVFX_DATA.txt");
+    auto hitVFXJson = json::parse(hitVFXFile);
+    for (auto &item : hitVFXJson.items()) {
+        if (item.key() == "0") {
+            continue;
+        }
+        auto data = item.value();
+        auto images = std::vector<std::shared_ptr<::Util::Image>>();
+        images.emplace_back(std::make_shared<::Util::Image>(
+            SPRITE_PATH + data["hitFrameName"].template get<std::string>()));
+        images.emplace_back(std::make_shared<::Util::Image>(
+            SPRITE_PATH + data["impactFrameName"].template get<std::string>()));
+        auto animation = std::make_unique<Util::Animation>(
+            images, false, data["duration"].template get<int32_t>());
+        auto animationName = "VFX" + item.key();
+        s_Animation[animationName] = std::move(animation);
+    }
 }
 
 std::shared_ptr<Character> Resource::GetCharacter(std::string name) {
