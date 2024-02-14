@@ -1,5 +1,6 @@
 #ifndef ENEMY_HPP
 #define ENEMY_HPP
+#include "Game/Character.hpp"
 #include "Game/Util/Animated.hpp"
 #include "Game/Util/ObjectPool.hpp"
 #include "Game/Util/Physical.hpp"
@@ -25,8 +26,12 @@ public:
     void SetScale(int32_t level);
     void SetUp(std::string ID, std::unordered_map<std::string, float_t> stat);
     void GoTo(glm::vec2);
+    void CollisionWith(const std::shared_ptr<Enemy> &other);
+    void CollisionWith(const std::shared_ptr<Character> &other);
     bool IsOver();
     bool IsDead();
+    bool IsBoss();
+    bool IsSwarm();
     float_t Height() override;
     float_t Width() override;
     std::string ID();
@@ -34,7 +39,6 @@ public:
 private:
     std::string m_ID, m_Desc;
     std::unordered_map<std::string, float_t> m_;
-    bool m_IsBoss, m_IsSwarm;
 };
 } // namespace Game::Enemy
 

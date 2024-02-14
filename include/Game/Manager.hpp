@@ -5,6 +5,7 @@
 #include "Game/Map.hpp"
 #include "Game/Passive/Passive.hpp"
 #include "Game/Projectile/Projectile.hpp"
+#include "Game/Util/QuadTree.hpp"
 #include "Game/Util/Timer.hpp"
 #include "Game/Weapon/Weapon.hpp"
 #include "Util/Text.hpp"
@@ -29,6 +30,7 @@ private:
     std::shared_ptr<Character> m_Character;
     std::shared_ptr<Map> m_Map;
     std::shared_ptr<::Util::Text> m_FPS;
+    std::shared_ptr<Util::QuadTree> m_Plain;
 };
 extern Manager CAT;
 } // namespace Game

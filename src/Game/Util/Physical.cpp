@@ -10,6 +10,10 @@ glm::vec2 &Physical::GetPosition() {
     return m_Position;
 }
 
+glm::vec2 &Physical::GetVelocity() {
+    return m_Velocity;
+}
+
 const std::type_info &Physical::Type() {
     return typeid(*this);
 }
@@ -26,6 +30,9 @@ bool Physical::IsCollideWith(std::shared_ptr<Physical> &other) {
 
 void Physical::SetPosition(glm::vec2 position) {
     m_Position = position;
+}
+void Physical::SetVelocity(glm::vec2 velocity) {
+    m_Velocity = velocity;
 }
 
 } // namespace Game::Util

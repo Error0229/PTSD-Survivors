@@ -29,12 +29,13 @@ public:
     void RecalculateStats();
     void SetInfos(std::string ID, std::string name, std::string description,
                   std::string bgm, std::string weapon);
+    void Hurt(float_t damage);
 
 private:
     std::string m_ID, m_ChrName, m_Description, m_BGM, m_Weapon;
     std::unordered_map<std::string, float_t> m_BaseStats;
     std::unordered_map<std::string, float_t> m_Coefficients;
-    std::unordered_map<std::string, float_t> m_Stats;
+    std::unordered_map<std::string, float_t> m_;
 };
 } // namespace Game
 

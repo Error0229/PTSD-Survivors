@@ -24,7 +24,6 @@ public:
     void QueryNearest(std::shared_ptr<Physical> object,
                       const std::type_info &type, glm::vec2 &result,
                       int &distance);
-    static QuadTree s_Plain;
 
 private:
     std::vector<std::shared_ptr<Physical>> objects;

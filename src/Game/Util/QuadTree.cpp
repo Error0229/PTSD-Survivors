@@ -110,6 +110,8 @@ void QuadTree::QueryCollision(std::shared_ptr<Physical> q,
         }
     }
     for (std::shared_ptr<Physical> obj : objects) {
+        if (obj == q)
+            continue;
         if (q->IsCollideWith(obj)) {
             result.push_back(obj);
         }
@@ -133,7 +135,7 @@ void QuadTree::QueryCollision(std::shared_ptr<Physical> q,
         }
     }
     for (std::shared_ptr<Physical> obj : objects) {
-        if (obj->Type() != type)
+        if (obj->Type() != type || obj == q)
             continue;
         if (q->IsCollideWith(obj)) {
             result.push_back(obj);
@@ -167,7 +169,4 @@ void QuadTree::Clear() {
         }
     }
 }
-QuadTree QuadTree::s_Plain =
-    QuadTree(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, QUADTREE_MAX_OBJECTS,
-             QUADTREE_MAX_LEVELS, 0);
 } // namespace Game::Util

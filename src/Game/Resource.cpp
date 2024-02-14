@@ -209,9 +209,14 @@ void Resource::Initialize() {
     auto enemyJson = json::parse(enemyFile);
     for (auto &item : enemyJson.items()) {
         s_Enemy[item.key()] = std::make_shared<Game::Enemy::Enemy>();
+        std::unordered_map<std::string, float_t> stat;
+        stat["isBoss"] = 0.0f;
+        stat["isSwarm"] = 0.0f;
         if (item.key().find("BOSS") != std::string::npos) {
+            stat["isBoss"] = 1.0f;
             s_BossEnemies.push_back(item.key());
         } else if (item.key().find("SWARM") != std::string::npos) {
+            stat["isSwarm"] = 1.0f;
             s_SwarmEnemies.push_back(item.key());
         } else {
             s_NormalEnemies.push_back(item.key());
@@ -219,7 +224,6 @@ void Resource::Initialize() {
         auto &enemy = s_Enemy[item.key()];
         auto data = item.value();
         auto &stats = data[0];
-        std::unordered_map<std::string, float_t> stat;
         stat["level"] = stats.value("level", 1.0f);
         stat["maxHp"] = stats.value("maxHp", 1.0f);
         stat["speed"] = stats.value("speed", 1.0f);

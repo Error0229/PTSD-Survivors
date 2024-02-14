@@ -1,13 +1,15 @@
 #include "Game/Manager.hpp"
 #include "Game/Camera.hpp"
+#include "Game/Config.hpp"
 #include "Game/Resource.hpp"
+#include "Game/Util/Physical.hpp"
 #include "Game/Util/Timer.hpp"
 #include "Util/Input.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Time.hpp"
 #include "Util/Transform.hpp"
+#include "config.hpp"
 #include "pch.hpp"
-#include <string>
 namespace Game {
 Manager CAT;
 void Manager::Start() {
@@ -20,6 +22,9 @@ void Manager::Start() {
     m_Map->Start();
     m_FPS = std::make_shared<::Util::Text>("../resources/Font/ANY.ttf", 24,
                                            "FPS: 0");
+    m_Plain = std::make_shared<Util::QuadTree>(
+        0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, QUADTREE_MAX_OBJECTS,
+        QUADTREE_MAX_LEVELS, 0);
     Util::Clock.Start();
 }
 void Manager::Update() {
@@ -36,13 +41,34 @@ void Manager::Update() {
         Resource::ReturnEnemy(enemy->ID(), enemy);
         m_Enemies.erase(enemy);
     }
+    // handle enemy collision
+    m_Plain->Clear();
+    m_Plain->SetRange(m_Character->GetPosition().x - 1000,
+                      m_Character->GetPosition().y - 1000, 2000, 2000);
+    for (auto &enemy : m_Enemies) {
+        m_Plain->Insert(enemy);
+    }
+    std::vector<std::shared_ptr<Util::Physical>> result;
+    for (auto &enemy : m_Enemies) {
+        m_Plain->QueryCollision(enemy, typeid(Enemy::Enemy), result);
+        for (auto &other : result) {
+            if (enemy->IsCollideWith(other)) {
+                enemy->CollisionWith(
+                    std::static_pointer_cast<Enemy::Enemy>(other));
+            }
+        }
+        if (enemy->IsCollideWith(
+                std::static_pointer_cast<Util::Physical>(m_Character))) {
+            enemy->CollisionWith(m_Character);
+        }
+        result.clear();
+    }
+
     toErase.clear();
     for (auto &projectile : m_Projectiles) {
         projectile->Update();
     }
-    // m_FPS = std::make_shared<::Util::Text>(
-    //     "../resources/Font/ANY.ttf", 24,
-    //     "FPS: " + std::to_string(1 / ::Util::Time::GetDeltaTime()));
+    m_FPS->SetText("FPS: " + std::to_string(1 / ::Util::Time::GetDeltaTime()));
 }
 void Manager::Draw() {
     m_Map->Draw();
@@ -53,8 +79,7 @@ void Manager::Draw() {
     for (auto &projectile : m_Projectiles) {
         projectile->Draw();
     }
-    // LOG_DEBUG("fps: {}", 1 / ::Util::Time::GetDeltaTime());
-    // m_FPS->Draw({{-280, 275}, 0, {1, 1}}, 3);
+    m_FPS->Draw({{-280, 275}, 0, {1, 1}}, 3);
 }
 bool Manager::Have(std::string name) {
     return m_Have.count(name) > 0;
