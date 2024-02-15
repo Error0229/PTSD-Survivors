@@ -1,5 +1,6 @@
 #include "Game/Weapon/Weapon.hpp"
 #include "Game/Manager.hpp"
+#include <string>
 #include <unordered_map>
 
 namespace Game::Weapon {
@@ -17,6 +18,10 @@ void Weapon::SetUp(
     m_EvoFrom = EvoFrom;
     m_["level"] = 0;
     m_["maxLevel"] = m_LevelUpStat.size();
+    m_LastTimeAttack = -1;
+}
+std::string Weapon::ID() {
+    return m_ID;
 }
 
 int32_t Weapon::GetLevel() {
@@ -39,7 +44,9 @@ void Weapon::Update(const ::Util::Transform &transform) {
     (void)transform;
 }
 
-void Weapon::Draw() {}
+void Weapon::Draw() {
+    m_Drawable->Draw(m_Transform, m_ZIndex);
+}
 
 void Weapon::LevelUp() {
     assert(m_["level"] < m_["maxLevel"]);

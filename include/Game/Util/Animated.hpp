@@ -24,11 +24,11 @@ public:
     int32_t FrameCount(const std::string &name = NULL_STRING);
     void Update(const std::string &name = NULL_STRING);
     bool IsAnimated(const std::string &name = NULL_STRING);
-    float_t Height(const std::string &name = NULL_STRING);
-    float_t Width(const std::string &name = NULL_STRING);
+    float_t Height(const std::string &name = NULL_STRING) const;
+    float_t Width(const std::string &name = NULL_STRING) const;
 
 protected:
-    std::shared_ptr<Animation> GetAnimation(const std::string &name);
+    std::shared_ptr<Animation> GetAnimation(const std::string &name) const;
     std::map<std::string, std::shared_ptr<Animation>> m_Animation;
     std::string m_CurrentAnimation = NULL_STRING;
 };

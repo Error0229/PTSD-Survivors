@@ -2,6 +2,7 @@
 #define ENEMY_HPP
 #include "Game/Character.hpp"
 #include "Game/Util/Animated.hpp"
+#include "Game/Util/Mirrored.hpp"
 #include "Game/Util/ObjectPool.hpp"
 #include "Game/Util/Physical.hpp"
 #include "Util/GameObject.hpp"
@@ -15,7 +16,8 @@
 namespace Game::Enemy {
 class Enemy : public ::Util::GameObject,
               public Util::Physical,
-              public Util::Animated {
+              public Util::Animated,
+              public Util::Mirrored {
 public:
     Enemy() = default;
     ~Enemy() override = default;
@@ -32,8 +34,9 @@ public:
     bool IsDead();
     bool IsBoss();
     bool IsSwarm();
-    float_t Height() override;
-    float_t Width() override;
+    float_t Height() const override;
+    float_t Width() const override;
+    float_t Rotation() const override;
     std::string ID();
 
 private:

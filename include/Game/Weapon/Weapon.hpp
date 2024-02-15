@@ -4,7 +4,9 @@
 #include "Util/GameObject.hpp"
 #include "pch.hpp"
 #include <cmath>
-namespace Game::Weapon {
+#include <string>
+namespace Game {
+namespace Weapon {
 enum class Type;
 class Weapon : public ::Util::GameObject {
 public:
@@ -31,9 +33,11 @@ public:
     Update(const ::Util::Transform &transform = ::Util::Transform());
     virtual void Draw() override;
     virtual void LevelUp();
+    std::string ID();
 
 protected:
     std::string m_ID, m_Description;
+    time_t m_LastTimeAttack;
     // m_ indicate the stat
     std::unordered_map<std::string, float_t> m_, m_Base, m_Mod;
     std::vector<std::string> m_LevelUpMessage;
@@ -41,5 +45,6 @@ protected:
     std::vector<std::string> m_EvoRequired, m_EvoFrom;
 };
 
-} // namespace Game::Weapon
+} // namespace Weapon
+} // namespace Game
 #endif // WEAPON_HPP

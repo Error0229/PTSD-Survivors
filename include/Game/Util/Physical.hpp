@@ -8,22 +8,29 @@
 namespace Game::Util {
 class Physical {
 public:
-  Physical();
-  virtual ~Physical() = default;
-  virtual float_t Width() = 0;
-  virtual float_t Height() = 0;
-  virtual glm::vec2 &GetPosition();
-  virtual glm::vec2 &GetVelocity();
+    Physical();
+    virtual ~Physical() = default;
+    virtual float_t Width() const = 0;
+    virtual float_t Height() const = 0;
+    virtual float_t Rotation() const = 0;
+    virtual const glm::vec2 &GetPosition() const;
+    virtual const glm::vec2 &GetVelocity() const;
 
-  virtual const std::type_info &Type() final;
-  virtual float Distance(const std::shared_ptr<Physical> &other);
-  virtual bool IsCollideWith(const std::shared_ptr<Physical> &other);
-  virtual void SetPosition(glm::vec2 position);
-  virtual void SetVelocity(glm::vec2 velocity);
+    virtual const std::type_info &Type() final;
+    virtual float Distance(const std::shared_ptr<Physical> &other);
+    virtual bool IsCollideWith(const std::shared_ptr<Physical> &other);
+    virtual void SetPosition(glm::vec2 position);
+    virtual void SetVelocity(glm::vec2 velocity);
 
 protected:
-  glm::vec2 m_Position;
-  glm::vec2 m_Velocity;
+    std::vector<glm::vec2> getCorners() const;
+    std::pair<float_t, float_t> project(const std::vector<glm::vec2> &corners,
+                                        const glm::vec2 &axis) const;
+    bool overlapOnAxis(const std::shared_ptr<Physical> &other,
+                       const glm::vec2 &axis) const;
+
+    glm::vec2 m_Position;
+    glm::vec2 m_Velocity;
 };
 } // namespace Game::Util
 

@@ -80,7 +80,8 @@ void Resource::Initialize() {
             weapon = stats["startingWeapon"];
         }
         chr->SetBaseStats(stat);
-        chr->SetInfos(item.key(), stats["charName"], stats["description"], bgm,
+        chr->SetInfos(item.key(), stats["charName"].template get<std::string>(),
+                      stats["description"].template get<std::string>(), bgm,
                       weapon);
         chr->SetDrawable(std::make_unique<::Util::Image>(
             SPRITE_PATH + stats["spriteName"].template get<std::string>()));
@@ -133,6 +134,7 @@ void Resource::Initialize() {
     auto wpnJson = json::parse(wpnFile);
     for (auto &item : wpnJson.items()) {
         auto data = item.value();
+        // Passive
         if (data[0].find("isPowerUp") != data[0].end()) {
             s_Passive[item.key()] = std::make_shared<Passive::Passive>();
             s_Passives.push_back(item.key());
@@ -153,9 +155,12 @@ void Resource::Initialize() {
                 }
                 levelUpStat.push_back(temp);
             }
-            passive->SetUp(item.key(), stats["description"], stat, levelUpStat);
+            passive->SetUp(item.key(),
+                           stats["description"].template get<std::string>(),
+                           stat, levelUpStat);
             passive->SetDrawable(std::make_unique<::Util::Image>(
                 SPRITE_PATH + stats["frameName"].template get<std::string>()));
+            // Weapon
         } else {
             s_Weapon[item.key()] = std::make_shared<Weapon::Weapon>();
             s_Weapons.push_back(item.key());
@@ -174,17 +179,23 @@ void Resource::Initialize() {
             stat["knockBack"] = stats.value("knockback", 0.0f);
             stat["volume"] = stats.value("volume", 1.0f);
             stat["hitBoxDelay"] = stats.value("hitBoxDelay", 0.0f);
-
+            stat["interval"] = stats.value("interval", 0.0f);
+            stat["power"] = stats.value("power", 0.0f);
+            stat["area"] = stats.value("area", 0.0f);
+            stat["speed"] = stats.value("speed", 0.0f);
+            stat["amount"] = stats.value("amount", 0.0f);
+            stat["duration"] = stats.value("duration", 0.0f);
+            stat["penetrating"] = stats.value("penetrating", 0.0f);
             std::vector<std::string> evoRequired;
             std::vector<std::string> evoFrom;
             if (stats.find("evolveFrom") != stats.end()) {
                 for (auto &evo : stats["evolveFrom"]) {
-                    evoFrom.push_back(evo);
+                    evoFrom.push_back(evo.template get<std::string>());
                 }
             }
             if (stats.find("requires") != stats.end()) {
                 for (auto &evo : stats["requires"]) {
-                    evoRequired.push_back(evo);
+                    evoRequired.push_back(evo.template get<std::string>());
                 }
             }
             std::vector<std::vector<std::pair<std::string, float_t>>>
@@ -198,10 +209,18 @@ void Resource::Initialize() {
                 }
                 levelUpStat.push_back(temp);
             }
-            weapon->SetUp(item.key(), stats["description"], evoRequired,
-                          evoFrom, stat, levelUpStat);
+            weapon->SetUp(item.key(),
+                          stats["description"].template get<std::string>(),
+                          evoRequired, evoFrom, stat, levelUpStat);
             weapon->SetDrawable(std::make_unique<::Util::Image>(
                 SPRITE_PATH + stats["frameName"].template get<std::string>()));
+            s_ProjectilePool[item.key()] =
+                Util::ObjectPool<Projectile::Projectile>();
+            for (int32_t i = 0; i < static_cast<int32_t>(stat["poolLimit"]);
+                 i++) {
+                s_ProjectilePool[item.key()].AddObject(
+                    std::make_shared<Projectile::Projectile>(item.key()));
+            }
         }
     }
     // Enemy
@@ -295,6 +314,18 @@ void Resource::Initialize() {
         auto animationName = "VFX" + item.key();
         s_Animation[animationName] = std::move(animation);
     }
+    // projectiles
+    // WHIP
+    std::vector<std::string> paths = {
+        SPRITE_PATH + "slash.png",
+        SPRITE_PATH + "none.png",
+    };
+    auto animation = std::make_shared<Game::Util::Animation>(paths, true, 200);
+    s_Animation["WHIP"] = animation;
+    paths.clear();
+}
+bool Resource::HaveAnimation(std::string name) {
+    return s_Animation.find(name.data()) != s_Animation.end();
 }
 
 std::shared_ptr<Character> Resource::GetCharacter(std::string name) {
@@ -306,6 +337,11 @@ std::shared_ptr<Character> Resource::GetCharacter(std::string name) {
 
 std::shared_ptr<Weapon::Weapon> Resource::GetWeapon(std::string type) {
     if (s_Weapon.find(type) == s_Weapon.end()) {
+        for (auto &content : s_Weapon) {
+            LOG_DEBUG("Key: {}", content.first);
+            LOG_DEBUG("Value: {}", content.second->ID());
+        }
+        LOG_ERROR("Weapon {} Not Found", type.data());
         throw std::logic_error("Weapon not found");
     }
     return s_Weapon[type];

@@ -2,6 +2,7 @@
 #define CHARACTER_HPP
 
 #include "Game/Util/Animated.hpp"
+#include "Game/Util/Mirrored.hpp"
 #include "Game/Util/Physical.hpp"
 #include "pch.hpp"
 
@@ -11,7 +12,8 @@
 namespace Game {
 class Character : public ::Util::GameObject,
                   public Util::Physical,
-                  public Util::Animated {
+                  public Util::Animated,
+                  public Util::Mirrored {
 public:
     Character() = default;
     ~Character() override = default;
@@ -22,9 +24,9 @@ public:
     void SetSpeed(float speed);
     void GoTo(glm::vec2 target);
 
-    float Width() override;
-    float Height() override;
-
+    float_t Width() const override;
+    float_t Height() const override;
+    float_t Rotation() const override;
     void SetBaseStats(std::unordered_map<std::string, float_t> &stats);
     void RecalculateStats();
     void SetInfos(std::string ID, std::string name, std::string description,

@@ -36,16 +36,14 @@ public:
                const bool visible = true,
                const std::vector<std::shared_ptr<GameObject>> &children =
                    std::vector<std::shared_ptr<GameObject>>())
-        : m_Drawable(std::move(drawable)),
-          m_Children(children),
-          m_ZIndex(zIndex),
-          m_Visible(visible) {}
+        : m_Drawable(std::move(drawable)), m_Children(children),
+          m_ZIndex(zIndex), m_Visible(visible) {}
 
-    // Deleted copy constructor.
-    GameObject(const GameObject &other) = delete;
+    // not Deleted copy constructor.
+    // GameObject(const GameObject &other) = delete;
 
-    // Deleted move constructor.
-    GameObject(GameObject &&other) = delete;
+    // not Deleted move constructor.
+    // GameObject(GameObject &&other) = delete;
 
     /**
      * @brief Default destructor.
@@ -127,8 +125,9 @@ public:
      * @param child The child to be removed.
      */
     void RemoveChild(const std::shared_ptr<GameObject> &child) {
-        m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child),
-                         m_Children.end());
+        m_Children.erase(
+            std::remove(m_Children.begin(), m_Children.end(), child),
+            m_Children.end());
     }
 
     virtual void Draw();

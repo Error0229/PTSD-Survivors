@@ -6,12 +6,13 @@
 #include <stdexcept>
 
 namespace Game::Util {
-std::shared_ptr<Animation> Animated::GetAnimation(const std::string &name) {
+std::shared_ptr<Animation>
+Animated::GetAnimation(const std::string &name) const {
     if (name == NULL_STRING) {
         if (m_CurrentAnimation == NULL_STRING) {
             throw std::logic_error("Animation not found");
         }
-        return m_Animation[m_CurrentAnimation];
+        return m_Animation.at(m_CurrentAnimation);
     }
     auto it = m_Animation.find(name);
     if (it == m_Animation.end()) {
@@ -93,13 +94,13 @@ bool Animated::IsAnimated(const std::string &name) {
     }
     throw std::logic_error("Animation not found");
 }
-float_t Animated::Height(const std::string &name) {
+float_t Animated::Height(const std::string &name) const {
     if (auto anim = GetAnimation(name)) {
         return anim->GetHeight();
     }
     throw std::logic_error("Animation not found");
 }
-float_t Animated::Width(const std::string &name) {
+float_t Animated::Width(const std::string &name) const {
     if (auto anim = GetAnimation(name)) {
         return anim->GetWidth();
     }

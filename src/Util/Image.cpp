@@ -10,8 +10,7 @@
 #include "config.hpp"
 
 namespace Util {
-Image::Image(const std::string &filepath)
-    : m_Path(filepath) {
+Image::Image(const std::string &filepath) : m_Path(filepath) {
     if (s_Program == nullptr) {
         InitProgram();
     }
@@ -37,6 +36,8 @@ Image::Image(const std::string &filepath)
         surface->h, surface->pixels);
     m_Size = {surface->w, surface->h};
 }
+
+Image::Image(const std::string_view &filepath) : Image(std::string{filepath}) {}
 
 void Image::SetImage(const std::string &filepath) {
     auto surface =

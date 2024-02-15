@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(PracticalToolsForSimpleDesign)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 if (MSVC)
@@ -51,9 +51,13 @@ set(SRC_FILES
     ${SRC_DIR}/Game/Util/QuadTree.cpp
     ${SRC_DIR}/Game/Util/Animation.cpp
     ${SRC_DIR}/Game/Util/Animated.cpp
+    ${SRC_DIR}/Game/Util/Mirrored.cpp
+    ${SRC_DIR}/Game/Util/Offseted.cpp
     ${SRC_DIR}/Game/Passive/Passive.cpp
-    ${SRC_DIR}/Game/Weapon/Weapon.cpp
     ${SRC_DIR}/Game/Projectile/Projectile.cpp
+    ${SRC_DIR}/Game/Projectile/Whip.cpp
+    ${SRC_DIR}/Game/Weapon/Weapon.cpp
+    ${SRC_DIR}/Game/Weapon/Whip.cpp
     ${SRC_DIR}/Game/Enemy/Enemy.cpp
     ${SRC_DIR}/Game/Camera.cpp
     ${SRC_DIR}/Game/Map.cpp
@@ -103,10 +107,14 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Game/Util/ObjectPool.inl
     ${INCLUDE_DIR}/Game/Util/Animation.hpp
     ${INCLUDE_DIR}/Game/Util/Animated.hpp
+    ${INCLUDE_DIR}/Game/Util/Mirrored.hpp
+    ${INCLUDE_DIR}/Game/Util/Offseted.hpp
     
     ${INCLUDE_DIR}/Game/Passive/Passive.hpp
-    ${INCLUDE_DIR}/Game/Weapon/Weapon.hpp
     ${INCLUDE_DIR}/Game/Projectile/Projectile.hpp
+    ${INCLUDE_DIR}/Game/Projectile/Whip.hpp
+    ${INCLUDE_DIR}/Game/Weapon/Weapon.hpp
+    ${INCLUDE_DIR}/Game/Weapon/Whip.hpp
     ${INCLUDE_DIR}/Game/Enemy/Enemy.hpp
     ${INCLUDE_DIR}/Game/Camera.hpp
     ${INCLUDE_DIR}/Game/Map.hpp

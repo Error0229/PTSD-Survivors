@@ -8,6 +8,7 @@
 #include "Game/Util/ObjectPool.hpp"
 #include "Game/Util/ObjectPool.inl"
 #include "Game/Weapon/Weapon.hpp"
+#include "pch.hpp"
 namespace Game {
 class Resource {
 public:
@@ -31,7 +32,7 @@ public:
     static std::vector<std::string> s_Weapons;
     static std::vector<std::string> s_Passives;
     static std::vector<std::string> s_Projectiles;
-
+    static bool HaveAnimation(std::string name);
 
 private:
     static std::unordered_map<std::string, std::shared_ptr<Game::Character>>

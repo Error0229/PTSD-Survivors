@@ -10,6 +10,7 @@
 #include "Game/Weapon/Weapon.hpp"
 #include "Util/Text.hpp"
 #include <memory>
+#include <string>
 
 namespace Game {
 class Manager {
@@ -20,6 +21,8 @@ public:
     bool Have(std::string name);
     void EnemyGen();
     void HurtEnemy();
+    void AcquireWeapon(std::string name);
+    void AddProjectile(std::shared_ptr<Projectile::Projectile> projectile);
 
 private:
     std::set<std::string> m_Have;

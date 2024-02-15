@@ -8,6 +8,7 @@
 
 namespace Game::Enemy {
 void Enemy::Start() {
+    m_DefaultDirection = Util::Direction::LEFT;
     m_["hp"] = m_["maxHp"];
     m_["isOver"] = false;
     m_["isDead"] = false;
@@ -20,12 +21,21 @@ void Enemy::Update(const ::Util::Transform &transform) {
     Util::Animated::Update();
 }
 void Enemy::GoTo(glm::vec2 target) {
+    if (target.x < m_Position.x) {
+        m_Direction = Util::Direction::LEFT;
+    } else {
+        m_Direction = Util::Direction::RIGHT;
+    }
     m_Position += m_Velocity * static_cast<float>(::Util::Time::GetDeltaTime());
     auto direction = glm::normalize(target - m_Position);
     m_Velocity = direction * m_["speed"];
     m_Transform.translation = Camera::WorldToScreen(m_Position);
 }
 void Enemy::Draw() {
+    if ((IsMirrored() && m_Transform.scale.x > 0) ||
+        (!IsMirrored() && m_Transform.scale.x < 0)) {
+        m_Transform.scale.x *= -1;
+    }
     Animated::Draw(m_Transform, m_ZIndex);
     if (IsDead() && !IsAnimated()) {
         m_["isOver"] = true;
@@ -112,17 +122,20 @@ void Enemy::CollisionWith(const std::shared_ptr<Character> &other) {
 void Enemy::SetScale(int32_t level) {
     m_["maxHp"] += level * m_["scale"];
 }
-float_t Enemy::Height() {
+float_t Enemy::Height() const {
     if (m_CurrentAnimation != NULL_STRING)
         return Util::Animated::GetAnimation(m_CurrentAnimation)->GetWidth() *
-               m_Transform.scale.x;
-    return m_Drawable->GetSize().x * m_Transform.scale.x;
+               std::abs(m_Transform.scale.x);
+    return m_Drawable->GetSize().x * std::abs(m_Transform.scale.x);
 }
-float_t Enemy::Width() {
+float_t Enemy::Width() const {
     if (m_CurrentAnimation != NULL_STRING)
         return Util::Animated::GetAnimation(m_CurrentAnimation)->GetHeight() *
                m_Transform.scale.y;
     return m_Drawable->GetSize().y * m_Transform.scale.y;
+}
+float_t Enemy::Rotation() const {
+    return m_Transform.rotation;
 }
 void Enemy::SetUp(std::string ID,
                   std::unordered_map<std::string, float_t> stat) {

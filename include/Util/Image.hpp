@@ -31,6 +31,13 @@ public:
     explicit Image(const std::string &filepath);
 
     /**
+     * @brief Constructor that takes a file path to the image.
+     *
+     * @param filepath The file path to the image.
+     */
+    explicit Image(const std::string_view &filepath);
+
+    /**
      * @brief Retrieves the size of the image.
      *
      * This function returns the size of the image.

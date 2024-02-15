@@ -11,6 +11,9 @@ public:
     Animation() = default;
     Animation(std::vector<std::shared_ptr<::Util::Image>> frames,
               bool isLoop = true, time_t frameTime = 100);
+    Animation(std::vector<std::string> &paths, bool isLoop = true,
+              time_t frameTime = 100);
+
     void Update();
     void Stop();
     void Pause();
