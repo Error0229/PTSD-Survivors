@@ -1,5 +1,7 @@
 #include "Game/Projectile/Projectile.hpp"
+#include "Game/Camera.hpp"
 #include "Game/Util/Timer.hpp"
+#include "Util/Logger.hpp"
 #include <cstdlib>
 namespace Game::Projectile {
 Projectile::Projectile(std::string ID) {
@@ -42,6 +44,7 @@ void Projectile::Draw() {
         (!IsMirrored() && m_Transform.scale.x < 0)) {
         m_Transform.scale.x *= -1;
     }
+    m_Transform.translation = Camera::WorldToScreen(m_Position);
     Animated::Draw(m_Transform, m_ZIndex);
 }
 void Projectile::CollideWith(std::shared_ptr<::Util::GameObject> &other) {

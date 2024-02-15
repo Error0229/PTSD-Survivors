@@ -1,5 +1,4 @@
 #include "Game/Util/Offsetted.hpp"
-
 namespace Game::Util {
 void Offsetted::SetOffset(const glm::vec2 &offset) {
     m_Offset = offset;

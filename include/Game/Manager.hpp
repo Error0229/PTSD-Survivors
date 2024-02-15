@@ -33,6 +33,7 @@ private:
     std::shared_ptr<Character> m_Character;
     std::shared_ptr<Map> m_Map;
     std::shared_ptr<::Util::Text> m_FPS;
+    std::shared_ptr<::Util::Text> m_ChrPos;
     std::shared_ptr<Util::QuadTree> m_Plain;
 };
 extern Manager CAT;

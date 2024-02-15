@@ -34,7 +34,7 @@ void Animated::Load(const std::string &name,
 
 void Animated::Load(const std::string &name,
                     std::shared_ptr<Animation> animation) {
-    m_Animation[name] = animation;
+    m_Animation[name] = std::make_shared<Animation>(*animation);
     m_CurrentAnimation = name;
 }
 

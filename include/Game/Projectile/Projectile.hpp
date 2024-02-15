@@ -35,6 +35,7 @@ public:
     void CollideWith(std::shared_ptr<::Util::GameObject> &other);
 
 protected:
+    float m_ZIndex = PROJECTILE_LAYER;
     std::unordered_map<std::string, float_t> m_;
     std::string m_ID;
     bool m_IsOver = false, m_IsStarted = false;

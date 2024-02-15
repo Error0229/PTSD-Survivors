@@ -24,6 +24,8 @@ void Manager::Start() {
     m_Map->Start();
     m_FPS = std::make_shared<::Util::Text>("../resources/Font/ANY.ttf", 24,
                                            "FPS: 0");
+    m_ChrPos = std::make_shared<::Util::Text>("../resources/Font/ANY.ttf", 24,
+                                              "ChrPos: 0");
     m_Plain = std::make_shared<Util::QuadTree>(
         0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, QUADTREE_MAX_OBJECTS,
         QUADTREE_MAX_LEVELS, 0);
@@ -79,6 +81,7 @@ void Manager::Update() {
         return projectile->IsOver();
     });
     m_FPS->SetText("FPS: " + std::to_string(1 / ::Util::Time::GetDeltaTime()));
+    m_ChrPos->SetText("ChrPos: " + glm::to_string(m_Character->GetPosition()));
 }
 void Manager::Draw() {
     m_Map->Draw();
@@ -90,6 +93,7 @@ void Manager::Draw() {
         projectile->Draw();
     }
     m_FPS->Draw({{-280, 275}, 0, {1, 1}}, 3);
+    m_ChrPos->Draw({{-280, 250}, 0, {1, 1}}, 3);
 }
 bool Manager::Have(std::string name) {
     return m_Have.count(name) > 0;

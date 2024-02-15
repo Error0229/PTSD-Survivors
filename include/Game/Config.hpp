@@ -12,6 +12,7 @@ constexpr int32_t DEFAULT_ANIMATION_FRAME_TIME = 100;
 constexpr float MAP_LAYER = 1;
 constexpr float ENEMY_LAYER = 2;
 constexpr float CHARACTER_LAYER = 3;
+constexpr float PROJECTILE_LAYER = 4;
 
 // sha256 string won't collide, right?
 const std::string NULL_STRING =

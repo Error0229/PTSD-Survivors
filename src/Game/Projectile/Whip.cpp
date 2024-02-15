@@ -26,4 +26,7 @@ void Whip::Update(const ::Util::Transform &transform) {
         m_IsOver = true;
     }
 }
+void Whip::Flip() {
+    m_Transform.scale.y *= -1;
+}
 } // namespace Game::Projectile

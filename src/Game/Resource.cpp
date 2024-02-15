@@ -320,7 +320,7 @@ void Resource::Initialize() {
         SPRITE_PATH + "slash.png",
         SPRITE_PATH + "none.png",
     };
-    auto animation = std::make_shared<Game::Util::Animation>(paths, true, 200);
+    auto animation = std::make_shared<Game::Util::Animation>(paths, false, 200);
     s_Animation["WHIP"] = animation;
     paths.clear();
 }

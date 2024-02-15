@@ -10,6 +10,7 @@ public:
     Whip();
     void Start() override;
     void Update(const ::Util::Transform &transform) override;
+    void Flip();
 };
 } // namespace Game::Projectile
 #endif /* WHIP_HPP */

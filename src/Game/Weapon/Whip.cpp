@@ -15,38 +15,39 @@ void Whip::Update(const ::Util::Transform &transform) {
     if (Util::Clock.Now() - m_LastTimeAttack < m_["interval"]) {
         return;
     }
-    LOG_DEBUG("Attack!");
     m_LastTimeAttack = Util::Clock.Now();
-    auto proj = std::make_shared<Game::Projectile::Whip>();
-    proj->SetUp(m_);
     auto mouse = Camera::ScreenToWorld(::Util::Input::GetCursorPosition());
     auto chrPos = Camera::s_Position;
     for (int32_t i = 0; i < static_cast<int32_t>(m_["amount"]); i++) {
+        auto proj = std::make_shared<Game::Projectile::Whip>();
+        proj->SetUp(m_);
         if (mouse.x < chrPos.x) {
             if (!(i & 1)) {
-                proj->SetOffset({proj->Width() / 2, proj->Height() / 2 * i});
-                proj->SetDirection(Util::Direction::LEFT);
-                proj->SetDelay(i * 2 * m_["repeatInterval"]);
-            } else {
-                proj->SetOffset(
-                    {-proj->Width() / 2, -proj->Height() / 2 * (i - 1)});
-                proj->SetDirection(Util::Direction::RIGHT);
-                proj->SetDelay((i - 1) * 2 * m_["repeatInterval"]);
-            }
-        } else {
-            if (!(i & 1)) {
                 proj->SetOffset({-proj->Width() / 2, proj->Height() / 2 * i});
-                proj->SetDirection(Util::Direction::RIGHT);
+                proj->SetDirection(Util::Direction::LEFT);
                 proj->SetDelay(i * 2 * m_["repeatInterval"]);
             } else {
                 proj->SetOffset(
                     {proj->Width() / 2, -proj->Height() / 2 * (i - 1)});
+                proj->SetDirection(Util::Direction::RIGHT);
+                proj->SetDelay((i - 1) * 2 * m_["repeatInterval"]);
+                proj->Flip();
+            }
+        } else {
+            if (!(i & 1)) {
+                proj->SetOffset({proj->Width() / 2, proj->Height() / 2 * i});
+                proj->SetDirection(Util::Direction::RIGHT);
+                proj->SetDelay(i * 2 * m_["repeatInterval"]);
+            } else {
+                proj->SetOffset(
+                    {-proj->Width() / 2, -proj->Height() / 2 * (i - 1)});
                 proj->SetDirection(Util::Direction::LEFT);
                 proj->SetDelay((i - 1) * 2 * m_["repeatInterval"]);
+                proj->Flip();
             }
         }
+        CAT.AddProjectile(proj);
     }
-    CAT.AddProjectile(proj);
 }
 void Whip::Draw() {
     Weapon::Draw();
