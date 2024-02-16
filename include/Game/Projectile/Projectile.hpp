@@ -3,7 +3,6 @@
 #include "Game/Util/Animated.hpp"
 #include "Game/Util/Mirrored.hpp"
 #include "Game/Util/Physical.hpp"
-#include "Game/Weapon/Weapon.hpp"
 #include "Util/GameObject.hpp"
 #include "pch.hpp"
 #include <cmath>

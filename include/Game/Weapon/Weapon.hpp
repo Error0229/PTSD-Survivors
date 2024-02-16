@@ -1,9 +1,11 @@
 #ifndef WEAPON_HPP
 #define WEAPON_HPP
 #include "Game/Passive/Passive.hpp"
+#include "Game/Projectile/Projectile.hpp"
 #include "Util/GameObject.hpp"
 #include "pch.hpp"
 #include <cmath>
+#include <memory>
 #include <string>
 namespace Game {
 namespace Weapon {

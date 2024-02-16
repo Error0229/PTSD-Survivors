@@ -56,8 +56,10 @@ set(SRC_FILES
     ${SRC_DIR}/Game/Passive/Passive.cpp
     ${SRC_DIR}/Game/Projectile/Projectile.cpp
     ${SRC_DIR}/Game/Projectile/Whip.cpp
+    ${SRC_DIR}/Game/Projectile/Vampirica.cpp
     ${SRC_DIR}/Game/Weapon/Weapon.cpp
     ${SRC_DIR}/Game/Weapon/Whip.cpp
+    ${SRC_DIR}/Game/Weapon/Vampirica.cpp
     ${SRC_DIR}/Game/Enemy/Enemy.cpp
     ${SRC_DIR}/Game/Camera.cpp
     ${SRC_DIR}/Game/Map.cpp
@@ -113,8 +115,10 @@ set(INCLUDE_FILES
     ${INCLUDE_DIR}/Game/Passive/Passive.hpp
     ${INCLUDE_DIR}/Game/Projectile/Projectile.hpp
     ${INCLUDE_DIR}/Game/Projectile/Whip.hpp
+    ${INCLUDE_DIR}/Game/Projectile/Vampirica.hpp
     ${INCLUDE_DIR}/Game/Weapon/Weapon.hpp
     ${INCLUDE_DIR}/Game/Weapon/Whip.hpp
+    ${INCLUDE_DIR}/Game/Weapon/Vampirica.hpp
     ${INCLUDE_DIR}/Game/Enemy/Enemy.hpp
     ${INCLUDE_DIR}/Game/Camera.hpp
     ${INCLUDE_DIR}/Game/Map.hpp

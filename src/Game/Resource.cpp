@@ -323,6 +323,14 @@ void Resource::Initialize() {
     auto animation = std::make_shared<Game::Util::Animation>(paths, false, 200);
     s_Animation["WHIP"] = animation;
     paths.clear();
+    // VAMPIRICA
+    paths = {
+        SPRITE_PATH + "slashr.png",
+        SPRITE_PATH + "none.png",
+    };
+    animation = std::make_shared<Game::Util::Animation>(paths, false, 200);
+    s_Animation["VAMPIRICA"] = animation;
+    paths.clear();
 }
 bool Resource::HaveAnimation(std::string name) {
     return s_Animation.find(name.data()) != s_Animation.end();

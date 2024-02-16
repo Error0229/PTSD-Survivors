@@ -7,8 +7,7 @@
 namespace Game {
 Map::Map(std::string name) {
     m_Name = name;
-    m_Drawable =
-        std::make_shared<Util::Image>(MAP_SPRITE_PATH + name + SPRITE_EXT);
+    m_Drawable = std::make_shared<Util::Image>(SPRITE_PATH + name + SPRITE_EXT);
     m_ZIndex = MAP_LAYER;
 }
 void Map::Start() {}

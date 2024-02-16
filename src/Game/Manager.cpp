@@ -4,7 +4,9 @@
 #include "Game/Resource.hpp"
 #include "Game/Util/Physical.hpp"
 #include "Game/Util/Timer.hpp"
+#include "Game/Weapon/Vampirica.hpp"
 #include "Game/Weapon/Whip.hpp"
+#include "Util/Color.hpp"
 #include "Util/Input.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Time.hpp"
@@ -20,16 +22,18 @@ void Manager::Start() {
     m_Character->SetAnimation("Default");
     m_Character->Start();
     m_Map = std::make_shared<Map>();
-    m_Map->Setup("map");
+    m_Map->Setup("dummy5");
     m_Map->Start();
-    m_FPS = std::make_shared<::Util::Text>("../resources/Font/ANY.ttf", 24,
-                                           "FPS: 0");
-    m_ChrPos = std::make_shared<::Util::Text>("../resources/Font/ANY.ttf", 24,
-                                              "ChrPos: 0");
+    m_FPS = std::make_shared<::Util::Text>(
+        "../resources/Font/ANY.ttf", 24, "FPS: 0",
+        ::Util::Color{135 / 255, 206 / 255, 235 / 255, 1});
+    m_ChrPos = std::make_shared<::Util::Text>(
+        "../resources/Font/ANY.ttf", 24, "ChrPos: 0",
+        ::Util::Color{135 / 255, 206 / 255, 235 / 255, 1});
     m_Plain = std::make_shared<Util::QuadTree>(
         0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, QUADTREE_MAX_OBJECTS,
         QUADTREE_MAX_LEVELS, 0);
-    AcquireWeapon("WHIP");
+    AcquireWeapon("VAMPIRICA");
     Util::Clock.Start();
 }
 void Manager::Update() {
@@ -129,6 +133,9 @@ void Manager::AcquireWeapon(std::string name) {
     if (name == "WHIP") {
         weapon = std::static_pointer_cast<Weapon::Weapon>(
             std::make_shared<Weapon::Whip>(*weapon));
+    } else if (name == "VAMPIRICA") {
+        weapon = std::static_pointer_cast<Weapon::Weapon>(
+            std::make_shared<Weapon::Vampirica>(*weapon));
     }
     weapon->Start();
     m_Weapons.insert(weapon);
