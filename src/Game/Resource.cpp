@@ -178,14 +178,14 @@ void Resource::Initialize() {
             stat["hitVFX"] = stats.value("hitVFX", -1.0f);
             stat["knockBack"] = stats.value("knockback", 0.0f);
             stat["volume"] = stats.value("volume", 1.0f);
-            stat["hitBoxDelay"] = stats.value("hitBoxDelay", 0.0f);
+            stat["hitBoxDelay"] = stats.value("hitBoxDelay", 2000000.0f);
             stat["interval"] = stats.value("interval", 0.0f);
             stat["power"] = stats.value("power", 0.0f);
             stat["area"] = stats.value("area", 0.0f);
             stat["speed"] = stats.value("speed", 0.0f);
             stat["amount"] = stats.value("amount", 0.0f);
             stat["duration"] = stats.value("duration", 0.0f);
-            stat["penetrating"] = stats.value("penetrating", 0.0f);
+            stat["penetrating"] = stats.value("penetrating", 100000.0f);
             std::vector<std::string> evoRequired;
             std::vector<std::string> evoFrom;
             if (stats.find("evolveFrom") != stats.end()) {

@@ -16,7 +16,7 @@ public:
     virtual const glm::vec2 &GetPosition() const;
     virtual const glm::vec2 &GetVelocity() const;
 
-    virtual const std::type_info &Type() final;
+    const std::string &Type() const;
     virtual float Distance(const std::shared_ptr<Physical> &other);
     virtual bool IsCollideWith(const std::shared_ptr<Physical> &other);
     virtual void SetPosition(glm::vec2 position);
@@ -31,6 +31,8 @@ protected:
 
     glm::vec2 m_Position;
     glm::vec2 m_Velocity;
+
+    std::string m_Type;
 };
 } // namespace Game::Util
 

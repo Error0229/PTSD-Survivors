@@ -71,6 +71,11 @@ void Animated::SetFrame(int32_t frame, const std::string &name) {
         anim->SetFrame(frame);
     }
 }
+void Animated::SetFrameTime(time_t frameTime, const std::string &name) {
+    if (auto anim = GetAnimation(name)) {
+        anim->SetFrameTime(frameTime);
+    }
+}
 int32_t Animated::GetFrame(const std::string &name) {
     if (auto anim = GetAnimation(name)) {
         return anim->GetFrame();

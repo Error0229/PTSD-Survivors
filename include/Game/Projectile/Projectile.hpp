@@ -6,6 +6,8 @@
 #include "Util/GameObject.hpp"
 #include "pch.hpp"
 #include <cmath>
+#include <string>
+#include <string_view>
 namespace Game::Projectile {
 struct Stats {
     int32_t duration, pierce, poolLimit, blockByWall;
@@ -32,6 +34,9 @@ public:
     float_t Rotation() const override;
     void SetDelay(time_t delay);
     void CollideWith(std::shared_ptr<::Util::GameObject> &other);
+    std::string_view ID() const;
+    float_t Get(const std::string &name) const;
+    void Set(const std::string &name, float_t value);
 
 protected:
     float m_ZIndex = PROJECTILE_LAYER;

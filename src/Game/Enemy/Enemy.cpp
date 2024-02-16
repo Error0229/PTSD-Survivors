@@ -8,6 +8,7 @@
 
 namespace Game::Enemy {
 void Enemy::Start() {
+    m_Type = ENEMY;
     m_DefaultDirection = Util::Direction::LEFT;
     m_["hp"] = m_["maxHp"];
     m_["isOver"] = false;
@@ -50,6 +51,16 @@ void Enemy::Hurt(float_t damage) {
         Animated::Play();
     }
 }
+bool Enemy::HitBy(std::shared_ptr<Projectile::Projectile> proj,
+                  float_t damage) {
+    if (m_lastHitBy.find(proj) != m_lastHitBy.end() &&
+        proj->Get("hitBoxDelay") > Util::Clock.Now() - m_lastHitBy.at(proj)) {
+        return false;
+    }
+    m_lastHitBy[proj] = Util::Clock.Now();
+    Hurt(damage);
+    return true;
+}
 std::string Enemy::ID() {
     return m_ID;
 }
@@ -66,7 +77,7 @@ bool Enemy::IsBoss() {
 bool Enemy::IsSwarm() {
     return m_["isSwarm"];
 }
-void Enemy ::CollisionWith(const std::shared_ptr<Enemy> &other) {
+void Enemy::CollisionWith(const std::shared_ptr<Enemy> &other) {
     auto overlap_x =
         std::min(m_Position.x + Width() - other->m_Position.x,
                  other->m_Position.x + other->Width() - m_Position.x);
@@ -113,7 +124,36 @@ void Enemy::CollisionWith(const std::shared_ptr<Character> &other) {
     auto j = -velAlongNormal;
     auto impulse = j * normal * 2.0f;
     m_Velocity -= impulse;
-    static float_t percent = 0.9f;
+    static float_t percent = 0.8f;
+    static float_t slop = 0.001f;
+    auto penetration = std::min(overlap_x, overlap_y);
+    auto correction = std::max(penetration - slop, 0.0f) * percent * normal;
+    m_Position += correction;
+}
+void Enemy::CollisionWith(
+    const std::shared_ptr<Projectile::Projectile> &other) {
+    if (IsDead() || !HitBy(other, other->Get("power"))) {
+        return;
+    }
+    other->Set("penetrating", other->Get("penetrating") - 1);
+    auto overlap_x =
+        std::min(m_Position.x + Width() - other->GetPosition().x,
+                 other->GetPosition().x + other->Width() - m_Position.x);
+    auto overlap_y =
+        std::min(m_Position.y + Height() - other->GetPosition().y,
+                 other->GetPosition().y + other->Height() - m_Position.y);
+    glm::vec2 normal{0, 0};
+    if (overlap_x < overlap_y) {
+        normal.x = m_Position.x > other->GetPosition().x ? 1 : -1;
+    } else {
+        normal.y = m_Position.y > other->GetPosition().y ? 1 : -1;
+    }
+    auto rv = other->GetVelocity() - m_Velocity;
+    auto velAlongNormal = glm::dot(rv, normal);
+    auto j = -velAlongNormal;
+    auto impulse = j * normal * 2.0f;
+    m_Velocity -= impulse;
+    static float_t percent = 0.8f;
     static float_t slop = 0.001f;
     auto penetration = std::min(overlap_x, overlap_y);
     auto correction = std::max(penetration - slop, 0.0f) * percent * normal;

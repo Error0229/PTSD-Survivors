@@ -19,11 +19,10 @@ public:
     void QueryCollision(std::shared_ptr<Physical> object,
                         std::vector<std::shared_ptr<Physical>> &result);
     void QueryCollision(std::shared_ptr<Physical> object,
-                        const std::type_info &type,
+                        const std::string &type,
                         std::vector<std::shared_ptr<Physical>> &result);
-    void QueryNearest(std::shared_ptr<Physical> object,
-                      const std::type_info &type, glm::vec2 &result,
-                      int &distance);
+    void QueryNearest(std::shared_ptr<Physical> object, const std::string &type,
+                      glm::vec2 &result, int &distance);
 
 private:
     std::vector<std::shared_ptr<Physical>> objects;

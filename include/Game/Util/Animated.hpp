@@ -20,6 +20,7 @@ public:
     void Stop(const std::string &name = NULL_STRING);
     void Pause(const std::string &name = NULL_STRING);
     void SetFrame(int32_t frame, const std::string &name = NULL_STRING);
+    void SetFrameTime(time_t frameTime, const std::string &name = NULL_STRING);
     int32_t GetFrame(const std::string &name = NULL_STRING);
     int32_t FrameCount(const std::string &name = NULL_STRING);
     void Update(const std::string &name = NULL_STRING);

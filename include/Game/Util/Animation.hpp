@@ -19,6 +19,7 @@ public:
     void Pause();
     void Play();
     void SetFrame(int32_t frame);
+    void SetFrameTime(time_t frameTime);
     int32_t GetFrame();
     int32_t FrameCount();
     float_t GetHeight();
@@ -30,7 +31,7 @@ private:
     std::vector<std::shared_ptr<::Util::Image>> m_Frames;
     bool m_IsAnimated = false, m_IsLoop;
     int32_t m_CurrentFrame = 0;
-    time_t m_FrameTime, m_LastFrameTime;
+    time_t m_FrameTime, m_LastFrameTime, m_PauseTime;
 };
 } // namespace Game::Util
 #endif

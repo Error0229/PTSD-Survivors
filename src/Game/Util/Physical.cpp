@@ -14,8 +14,8 @@ const glm::vec2 &Physical::GetVelocity() const {
     return m_Velocity;
 }
 
-const std::type_info &Physical::Type() {
-    return typeid(*this);
+const std::string &Physical::Type() const {
+    return m_Type;
 }
 
 float Physical::Distance(const std::shared_ptr<Physical> &other) {

@@ -10,6 +10,7 @@
 #include <cmath>
 namespace Game {
 void Character::Start() {
+    m_Type = CHARACTER;
     m_DefaultDirection = Util::Direction::RIGHT;
     m_ZIndex = CHARACTER_LAYER;
     m_Transform.scale = {2, 2}; // hardcoded for Debug

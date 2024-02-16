@@ -1,5 +1,6 @@
 #include "Game/Util/QuadTree.hpp"
 #include "Game/Util/Util.hpp"
+#include "Util/Logger.hpp"
 #include "config.hpp"
 #include "pch.hpp"
 #include <memory>
@@ -12,12 +13,7 @@ QuadTree::~QuadTree() {
 }
 QuadTree::QuadTree(int x, int y, int w, int h, int maxObjects, int maxLevels,
                    int level)
-    : x(x),
-      y(y),
-      w(w),
-      h(h),
-      max_objects(maxObjects),
-      max_levels(maxLevels),
+    : x(x), y(y), w(w), h(h), max_objects(maxObjects), max_levels(maxLevels),
       level(level) {
     for (int i = 0; i < 4; i++) {
         children[i] = nullptr;
@@ -118,7 +114,7 @@ void QuadTree::QueryCollision(std::shared_ptr<Physical> q,
     }
 }
 void QuadTree::QueryCollision(std::shared_ptr<Physical> q,
-                              const std::type_info &type,
+                              const std::string &type,
                               std::vector<std::shared_ptr<Physical>> &result) {
     int index = Quadrant(q);
     if (index != -1 && children[0] != nullptr) {
@@ -143,7 +139,7 @@ void QuadTree::QueryCollision(std::shared_ptr<Physical> q,
     }
 }
 void QuadTree::QueryNearest(std::shared_ptr<Physical> q,
-                            const std::type_info &type, glm::vec2 &result,
+                            const std::string &type, glm::vec2 &result,
                             int &min_distance) {
     if (children[0] != nullptr) {
         for (int i = 0; i < 4; i++) {

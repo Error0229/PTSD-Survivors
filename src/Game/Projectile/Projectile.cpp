@@ -1,5 +1,6 @@
 #include "Game/Projectile/Projectile.hpp"
 #include "Game/Camera.hpp"
+#include "Game/Config.hpp"
 #include "Game/Util/Timer.hpp"
 #include "Util/Logger.hpp"
 #include <cstdlib>
@@ -8,6 +9,8 @@ Projectile::Projectile(std::string ID) {
     m_ID = ID;
 }
 void Projectile::Start() {
+    m_Type = PROJECTILE;
+    SetFrameTime(m_["repeatInterval"]);
     m_StartTime = Util::Clock.Now();
     m_IsStarted = true;
 }
@@ -49,5 +52,14 @@ void Projectile::Draw() {
 }
 void Projectile::CollideWith(std::shared_ptr<::Util::GameObject> &other) {
     // TODO
+}
+std::string_view Projectile::ID() const {
+    return m_ID;
+}
+float_t Projectile::Get(const std::string &name) const {
+    return m_.at(name);
+}
+void Projectile::Set(const std::string &name, float_t value) {
+    m_[name] = value;
 }
 } // namespace Game::Projectile

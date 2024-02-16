@@ -13,7 +13,9 @@ constexpr float MAP_LAYER = 1;
 constexpr float ENEMY_LAYER = 2;
 constexpr float CHARACTER_LAYER = 3;
 constexpr float PROJECTILE_LAYER = 4;
-
+const std::string ENEMY = "Enemy";
+const std::string CHARACTER = "Character";
+const std::string PROJECTILE = "Projectile";
 // sha256 string won't collide, right?
 const std::string NULL_STRING =
     "16e81418a36c58995e00aeb9c261c9ef7fb739b37c72351f511dc3b3a89e5962";

@@ -1,6 +1,7 @@
 #include "Game/Manager.hpp"
 #include "Game/Camera.hpp"
 #include "Game/Config.hpp"
+#include "Game/Projectile/Projectile.hpp"
 #include "Game/Resource.hpp"
 #include "Game/Util/Physical.hpp"
 #include "Game/Util/Timer.hpp"
@@ -26,10 +27,10 @@ void Manager::Start() {
     m_Map->Start();
     m_FPS = std::make_shared<::Util::Text>(
         "../resources/Font/ANY.ttf", 24, "FPS: 0",
-        ::Util::Color{135 / 255, 206 / 255, 235 / 255, 1});
+        ::Util::Color{135 / 255., 206 / 255., 235 / 255., 1});
     m_ChrPos = std::make_shared<::Util::Text>(
         "../resources/Font/ANY.ttf", 24, "ChrPos: 0",
-        ::Util::Color{135 / 255, 206 / 255, 235 / 255, 1});
+        ::Util::Color{135 / 255., 206 / 255., 235 / 255., 1});
     m_Plain = std::make_shared<Util::QuadTree>(
         0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, QUADTREE_MAX_OBJECTS,
         QUADTREE_MAX_LEVELS, 0);
@@ -39,6 +40,36 @@ void Manager::Start() {
 void Manager::Update() {
     m_Character->Update({::Util::Input::GetCursorPosition()});
     m_Map->Update({m_Character->GetPosition()});
+    for (auto &weapon : m_Weapons) {
+        weapon->Update();
+    }
+
+    std::erase_if(m_Projectiles, [](auto &projectile) {
+        projectile->Update();
+        return projectile->IsOver();
+    });
+
+    // handle projectile collision
+    m_Plain->Clear();
+    m_Plain->SetRange(m_Character->GetPosition().x - 1000,
+                      m_Character->GetPosition().y - 1000, 2000, 2000);
+    for (auto &projectile : m_Projectiles) {
+        m_Plain->Insert(projectile);
+    }
+    for (auto &enemy : m_Enemies) {
+        m_Plain->Insert(enemy);
+    }
+    std::vector<std::shared_ptr<Util::Physical>> result;
+    for (auto &enemy : m_Enemies) {
+        m_Plain->QueryCollision(enemy, PROJECTILE, result);
+        for (auto &other : result) {
+            if (enemy->IsCollideWith(other)) {
+                enemy->CollisionWith(
+                    std::static_pointer_cast<Projectile::Projectile>(other));
+            }
+        }
+        result.clear();
+    }
     static std::vector<std::shared_ptr<Enemy::Enemy>> toErase;
     for (auto &enemy : m_Enemies) {
         enemy->Update({m_Character->GetPosition()});
@@ -51,15 +82,13 @@ void Manager::Update() {
         m_Enemies.erase(enemy);
     }
     // handle enemy collision
+    result.clear();
     m_Plain->Clear();
-    m_Plain->SetRange(m_Character->GetPosition().x - 1000,
-                      m_Character->GetPosition().y - 1000, 2000, 2000);
     for (auto &enemy : m_Enemies) {
         m_Plain->Insert(enemy);
     }
-    std::vector<std::shared_ptr<Util::Physical>> result;
     for (auto &enemy : m_Enemies) {
-        m_Plain->QueryCollision(enemy, typeid(Enemy::Enemy), result);
+        m_Plain->QueryCollision(enemy, ENEMY, result);
         for (auto &other : result) {
             if (enemy->IsCollideWith(other)) {
                 enemy->CollisionWith(
@@ -74,18 +103,8 @@ void Manager::Update() {
     }
 
     toErase.clear();
-    for (auto &weapon : m_Weapons) {
-        weapon->Update();
-    }
-    // for (auto &projectile : m_Projectiles) {
-    //     projectile->Update();
-    // }
-    std::erase_if(m_Projectiles, [](auto &projectile) {
-        projectile->Update();
-        return projectile->IsOver();
-    });
     m_FPS->SetText("FPS: " + std::to_string(1 / ::Util::Time::GetDeltaTime()));
-    m_ChrPos->SetText("ChrPos: " + glm::to_string(m_Character->GetPosition()));
+    m_ChrPos->SetText("ChrPos:" + glm::to_string(m_Character->GetPosition()));
 }
 void Manager::Draw() {
     m_Map->Draw();

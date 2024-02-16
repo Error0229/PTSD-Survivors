@@ -5,11 +5,11 @@ namespace Game::Util {
 Animation::Animation(std::vector<std::shared_ptr<::Util::Image>> frames,
                      bool isLoop, time_t frameTime)
     : m_Frames(frames), m_IsAnimated(false), m_IsLoop(isLoop),
-      m_FrameTime(frameTime), m_LastFrameTime(-1) {}
+      m_FrameTime(frameTime), m_LastFrameTime(0), m_PauseTime(0) {}
 Animation::Animation(std::vector<std::string> &paths, bool isLoop,
                      time_t frameTime)
     : m_IsAnimated(false), m_IsLoop(isLoop), m_FrameTime(frameTime),
-      m_LastFrameTime(-1) {
+      m_LastFrameTime(0), m_PauseTime(0) {
     for (auto &path : paths) {
         m_Frames.push_back(std::make_shared<::Util::Image>(path));
     }
@@ -33,11 +33,12 @@ void Animation::Stop() {
     m_CurrentFrame = FrameCount() - 1;
 }
 void Animation::Pause() {
+    m_PauseTime = Clock.Now();
     m_IsAnimated = false;
 }
 void Animation::Play() {
     if (!m_IsAnimated) {
-        m_LastFrameTime = Clock.Now();
+        m_LastFrameTime += Clock.Now() - m_PauseTime;
     }
     m_IsAnimated = true;
 }
@@ -67,5 +68,8 @@ void Animation::Draw(::Util::Transform &transform, float_t &zIndex) {
     if (m_CurrentFrame < 0 || m_CurrentFrame >= FrameCount())
         return;
     m_Frames[m_CurrentFrame]->Draw(transform, zIndex);
+}
+void Animation::SetFrameTime(time_t frameTime) {
+    m_FrameTime = frameTime;
 }
 } // namespace Game::Util
