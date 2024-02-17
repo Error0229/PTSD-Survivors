@@ -64,7 +64,8 @@ float_t Animation::GetWidth() {
 bool Animation::IsAnimated() {
     return m_IsAnimated;
 }
-void Animation::Draw(::Util::Transform &transform, float_t &zIndex) {
+void Animation::Draw(::Util::Transform &transform, const float_t &zIndex) {
+    Update();
     if (m_CurrentFrame < 0 || m_CurrentFrame >= FrameCount())
         return;
     m_Frames[m_CurrentFrame]->Draw(transform, zIndex);

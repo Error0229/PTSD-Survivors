@@ -13,15 +13,14 @@ Whip::Whip() {
     Load("Default", Resource::GetAnimation("WHIP"));
 }
 void Whip::Start() {
-    Util::Animated::Play();
     Projectile::Start();
+    m_Position = Camera::s_Position + m_Offset;
 }
 void Whip::Update(const ::Util::Transform &transform) {
     Projectile::Update(transform);
     if (!m_IsStarted)
         return;
     m_Position = Camera::s_Position + m_Offset;
-    Util::Animated::Update();
     if (!IsAnimated()) {
         m_IsOver = true;
     }

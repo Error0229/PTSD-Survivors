@@ -175,7 +175,7 @@ void Resource::Initialize() {
             stat["hitsWalls"] = stats.value("hitsWalls", false) ? 1.0f : 0.0f;
             stat["critChance"] = stats.value("critChance", 0.0f);
             stat["critMul"] = stats.value("critMul", 1.0f);
-            stat["hitVFX"] = stats.value("hitVFX", -1.0f);
+            stat["hitVFX"] = stats.value("hitVFX", 1.0f);
             stat["knockBack"] = stats.value("knockback", 0.0f);
             stat["volume"] = stats.value("volume", 1.0f);
             stat["hitBoxDelay"] = stats.value("hitBoxDelay", 2000000.0f);
@@ -310,7 +310,7 @@ void Resource::Initialize() {
         images.emplace_back(std::make_shared<::Util::Image>(
             SPRITE_PATH + data["impactFrameName"].template get<std::string>()));
         auto animation = std::make_unique<Util::Animation>(
-            images, false, data["duration"].template get<int32_t>());
+            images, false, data["duration"].template get<int32_t>() * 4);
         auto animationName = "VFX" + item.key();
         s_Animation[animationName] = std::move(animation);
     }
@@ -379,7 +379,7 @@ std::shared_ptr<Util::Animation> Resource::GetAnimation(std::string name) {
     if (s_Animation.find(name) == s_Animation.end()) {
         throw std::logic_error("Animation not found");
     }
-    return s_Animation[name];
+    return std::make_shared<Util::Animation>(*s_Animation[name]);
 }
 
 std::shared_ptr<Enemy::Enemy> Resource::GetEnemy(std::string name) {

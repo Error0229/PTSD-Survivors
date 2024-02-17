@@ -47,7 +47,6 @@ void Manager::Update() {
         projectile->Update();
         return projectile->IsOver();
     });
-
     // handle projectile collision
     m_Plain->Clear();
     m_Plain->SetRange(m_Character->GetPosition().x - 1000,

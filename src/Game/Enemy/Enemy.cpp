@@ -1,7 +1,10 @@
 #include "Game/Enemy/Enemy.hpp"
 #include "Game/Camera.hpp"
+#include "Game/Config.hpp"
+#include "Game/Resource.hpp"
 #include "Game/Util/Animated.hpp"
 #include "Game/Util/Timer.hpp"
+#include "Util/Logger.hpp"
 #include "Util/Time.hpp"
 #include "pch.hpp"
 #include <cmath>
@@ -19,7 +22,6 @@ void Enemy::Start() {
 void Enemy::Update(const ::Util::Transform &transform) {
     if (!IsDead())
         GoTo(transform.translation);
-    Util::Animated::Update();
 }
 void Enemy::GoTo(glm::vec2 target) {
     if (target.x < m_Position.x) {
@@ -36,9 +38,9 @@ void Enemy::GoTo(glm::vec2 target) {
         }
     }
     m_Velocity = direction * m_["speed"];
-    m_Transform.translation = Camera::WorldToScreen(m_Position);
 }
 void Enemy::Draw() {
+    m_Transform.translation = Camera::WorldToScreen(m_Position);
     if ((IsMirrored() && m_Transform.scale.x > 0) ||
         (!IsMirrored() && m_Transform.scale.x < 0)) {
         m_Transform.scale.x *= -1;
@@ -46,6 +48,12 @@ void Enemy::Draw() {
     Animated::Draw(m_Transform, m_ZIndex);
     if (IsDead() && !IsAnimated()) {
         m_["isOver"] = true;
+    }
+    if (m_HitVFX != nullptr) {
+        m_HitVFX->Draw(m_Transform, VFX_LAYER);
+        if (!m_HitVFX->IsAnimated()) {
+            m_HitVFX = nullptr;
+        }
     }
 }
 void Enemy::Hurt(float_t damage) {
@@ -67,6 +75,9 @@ bool Enemy::HitBy(std::shared_ptr<Projectile::Projectile> proj,
     Hurt(damage);
     m_IsStunned = true;
     m_lastHit = Util::Clock.Now();
+    m_HitVFX = Resource::GetAnimation(
+        "VFX" + std::to_string(static_cast<int32_t>(proj->Get("hitVFX"))));
+    m_HitVFX->Play();
     return true;
 }
 std::string Enemy::ID() {

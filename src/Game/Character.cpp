@@ -19,7 +19,6 @@ void Character::Start() {
 }
 void Character::Update(const ::Util::Transform &transform) {
     GoTo(Camera::ScreenToWorld(transform.translation));
-    Util::Animated::Update();
 }
 
 void Character::GoTo(glm::vec2 target) {

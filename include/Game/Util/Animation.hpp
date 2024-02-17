@@ -25,7 +25,7 @@ public:
     float_t GetHeight();
     float_t GetWidth();
     bool IsAnimated();
-    void Draw(::Util::Transform &transform, float_t &zIndex);
+    void Draw(::Util::Transform &transform, const float_t &zIndex);
 
 private:
     std::vector<std::shared_ptr<::Util::Image>> m_Frames;

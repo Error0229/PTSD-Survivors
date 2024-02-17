@@ -1,6 +1,7 @@
 #include "Game/Projectile/Projectile.hpp"
 #include "Game/Camera.hpp"
 #include "Game/Config.hpp"
+#include "Game/Util/Animated.hpp"
 #include "Game/Util/Timer.hpp"
 #include "Util/Logger.hpp"
 #include <cstdlib>
@@ -13,6 +14,7 @@ void Projectile::Start() {
     SetFrameTime(m_["repeatInterval"]);
     m_StartTime = Util::Clock.Now();
     m_IsStarted = true;
+    Util::Animated::Play();
 }
 void Projectile::Update(const ::Util::Transform &transform) {
     if (!m_IsStarted && Util::Clock.Now() - m_CreateTime >= m_Delay) {
@@ -44,6 +46,8 @@ bool Projectile::IsOver() const {
     return m_IsOver;
 }
 void Projectile::Draw() {
+    if (!m_IsStarted)
+        return;
     if ((IsMirrored() && m_Transform.scale.x > 0) ||
         (!IsMirrored() && m_Transform.scale.x < 0)) {
         m_Transform.scale.x *= -1;

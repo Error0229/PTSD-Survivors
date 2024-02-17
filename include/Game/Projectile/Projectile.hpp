@@ -1,6 +1,7 @@
 #ifndef PROJECTILE_HPP
 #define PROJECTILE_HPP
 #include "Game/Util/Animated.hpp"
+#include "Game/Util/Animation.hpp"
 #include "Game/Util/Mirrored.hpp"
 #include "Game/Util/Physical.hpp"
 #include "Util/GameObject.hpp"

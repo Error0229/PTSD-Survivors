@@ -3,6 +3,7 @@
 #include "Game/Character.hpp"
 #include "Game/Projectile/Projectile.hpp"
 #include "Game/Util/Animated.hpp"
+#include "Game/Util/Animation.hpp"
 #include "Game/Util/Mirrored.hpp"
 #include "Game/Util/Physical.hpp"
 #include "Util/GameObject.hpp"
@@ -45,6 +46,7 @@ private:
     std::unordered_map<std::string, float_t> m_;
     std::unordered_map<std::shared_ptr<Projectile::Projectile>, time_t>
         m_lastHitBy;
+    std::shared_ptr<Util::Animation> m_HitVFX;
 };
 } // namespace Game::Enemy
 
