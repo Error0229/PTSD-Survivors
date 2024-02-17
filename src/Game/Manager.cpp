@@ -41,7 +41,7 @@ void Manager::Start() {
 void Manager::Update() {
     m_Character->Update({::Util::Input::GetCursorPosition()});
     m_Map->Update({m_Character->GetPosition()});
-    std::for_each(std::execution::par, m_Weapons.begin(), m_Weapons.end(),
+    std::for_each(m_Weapons.begin(), m_Weapons.end(),
                   [](auto &weapon) { weapon->Update(); });
     std::erase_if(m_Projectiles, [](auto &projectile) {
         projectile->Update();
@@ -100,7 +100,6 @@ void Manager::Update() {
         }
         result.clear();
     }
-
     toErase.clear();
     m_FPS->SetText("Frame time: " + std::to_string( ::Util::Time::GetDeltaTime() *1000));
     m_ChrPos->SetText("ChrPos:" + glm::to_string(m_Character->GetPosition()));

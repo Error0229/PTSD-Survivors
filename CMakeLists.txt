@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(PracticalToolsForSimpleDesign)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 if (MSVC)
@@ -13,7 +13,7 @@ if (MSVC)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/build)
 else()
     set(TARGET_COMPILE_OPTIONS
-        -Wall -Wextra -pedantic
+        -Wall -Wextra -pedantic -O0 -g -fno-omit-frame-pointer
     )
 endif()
 
@@ -151,6 +151,7 @@ if (MSVC)
 endif()
 target_link_libraries(Sample
     SDL2::SDL2main # IDK what happens if we don't link SDL2main
+    tbb
     ${DEPENDENCY_LINK_LIBRARIES}
 )
 target_include_directories(Sample SYSTEM PRIVATE
