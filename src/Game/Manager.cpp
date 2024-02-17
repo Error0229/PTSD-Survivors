@@ -59,6 +59,7 @@ void Manager::Update() {
     }
     std::vector<std::shared_ptr<Util::Physical>> result;
     for (auto &enemy : m_Enemies) {
+        continue;
         m_Plain->QueryCollision(enemy, PROJECTILE, result);
         for (auto &other : result) {
             if (enemy->IsCollideWith(other)) {
@@ -101,13 +102,13 @@ void Manager::Update() {
     }
 
     toErase.clear();
-    m_FPS->SetText("FPS: " + std::to_string(1 / ::Util::Time::GetDeltaTime()));
+    m_FPS->SetText("Frame time: " + std::to_string( ::Util::Time::GetDeltaTime() *1000));
     m_ChrPos->SetText("ChrPos:" + glm::to_string(m_Character->GetPosition()));
 }
 void Manager::Draw() {
     m_Map->Draw();
     m_Character->Draw();
-    std::for_each(std::execution::par, m_Enemies.begin(), m_Enemies.end(),
+    std::for_each(m_Enemies.begin(), m_Enemies.end(),
                   [](auto &enemy) { enemy->Draw(); });
     for (auto &projectile : m_Projectiles) {
         projectile->Draw();
