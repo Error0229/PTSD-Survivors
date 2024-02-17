@@ -22,24 +22,21 @@ void Whip::Update(const ::Util::Transform &transform) {
             if (!(i & 1)) {
                 proj->SetOffset({-proj->Width() / 2, proj->Height() / 2 * i});
                 proj->SetDirection(Util::Direction::LEFT);
-                proj->SetDelay(i * 2 * m_["repeatInterval"]);
             } else {
-                proj->SetOffset(
-                    {proj->Width() / 2, -proj->Height() / 2 * (i - 1)});
+                proj->SetOffset({proj->Width() / 2, -proj->Height() / 2 * (i)});
                 proj->SetDirection(Util::Direction::RIGHT);
-                proj->SetDelay((i - 1) * 2 * m_["repeatInterval"]);
+                proj->SetDelay(m_["repeatInterval"]);
                 proj->Flip();
             }
         } else {
             if (!(i & 1)) {
                 proj->SetOffset({proj->Width() / 2, proj->Height() / 2 * i});
                 proj->SetDirection(Util::Direction::RIGHT);
-                proj->SetDelay(i * 2 * m_["repeatInterval"]);
             } else {
                 proj->SetOffset(
-                    {-proj->Width() / 2, -proj->Height() / 2 * (i - 1)});
+                    {-proj->Width() / 2, -proj->Height() / 2 * (i)});
                 proj->SetDirection(Util::Direction::LEFT);
-                proj->SetDelay((i - 1) * 2 * m_["repeatInterval"]);
+                proj->SetDelay(m_["repeatInterval"]);
                 proj->Flip();
             }
         }

@@ -25,6 +25,7 @@ bool Projectile::operator<(const Projectile &rhs) const {
 void Projectile::SetUp(std::unordered_map<std::string, float_t> stats) {
     m_ = stats;
     m_CreateTime = Util::Clock.Now();
+    m_Delay = 0;
 }
 void Projectile::SetDelay(time_t delay) {
     m_Delay = delay;

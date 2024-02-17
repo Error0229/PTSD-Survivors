@@ -29,6 +29,12 @@ void Enemy::GoTo(glm::vec2 target) {
     }
     m_Position += m_Velocity * static_cast<float>(::Util::Time::GetDeltaTime());
     auto direction = glm::normalize(target - m_Position);
+    if (m_IsStunned) {
+        direction = -direction;
+        if (Util::Clock.Now() - m_lastHit > 120) {
+            m_IsStunned = false;
+        }
+    }
     m_Velocity = direction * m_["speed"];
     m_Transform.translation = Camera::WorldToScreen(m_Position);
 }
@@ -59,6 +65,8 @@ bool Enemy::HitBy(std::shared_ptr<Projectile::Projectile> proj,
     }
     m_lastHitBy[proj] = Util::Clock.Now();
     Hurt(damage);
+    m_IsStunned = true;
+    m_lastHit = Util::Clock.Now();
     return true;
 }
 std::string Enemy::ID() {
@@ -122,7 +130,7 @@ void Enemy::CollisionWith(const std::shared_ptr<Character> &other) {
     auto rv = other->GetVelocity() - m_Velocity;
     auto velAlongNormal = glm::dot(rv, normal);
     auto j = -velAlongNormal;
-    auto impulse = j * normal * 2.0f;
+    auto impulse = j * normal * 1.5f;
     m_Velocity -= impulse;
     static float_t percent = 0.8f;
     static float_t slop = 0.001f;
@@ -151,7 +159,7 @@ void Enemy::CollisionWith(
     auto rv = other->GetVelocity() - m_Velocity;
     auto velAlongNormal = glm::dot(rv, normal);
     auto j = -velAlongNormal;
-    auto impulse = j * normal * 2.0f;
+    auto impulse = j * normal * (2.2f + other->Get("knockBack"));
     m_Velocity -= impulse;
     static float_t percent = 0.8f;
     static float_t slop = 0.001f;

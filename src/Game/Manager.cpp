@@ -14,6 +14,7 @@
 #include "Util/Transform.hpp"
 #include "config.hpp"
 #include "pch.hpp"
+#include <execution>
 #include <memory>
 namespace Game {
 Manager CAT;
@@ -40,10 +41,8 @@ void Manager::Start() {
 void Manager::Update() {
     m_Character->Update({::Util::Input::GetCursorPosition()});
     m_Map->Update({m_Character->GetPosition()});
-    for (auto &weapon : m_Weapons) {
-        weapon->Update();
-    }
-
+    std::for_each(std::execution::par, m_Weapons.begin(), m_Weapons.end(),
+                  [](auto &weapon) { weapon->Update(); });
     std::erase_if(m_Projectiles, [](auto &projectile) {
         projectile->Update();
         return projectile->IsOver();
@@ -109,9 +108,8 @@ void Manager::Update() {
 void Manager::Draw() {
     m_Map->Draw();
     m_Character->Draw();
-    for (auto &enemy : m_Enemies) {
-        enemy->Draw();
-    }
+    std::for_each(std::execution::par, m_Enemies.begin(), m_Enemies.end(),
+                  [](auto &enemy) { enemy->Draw(); });
     for (auto &projectile : m_Projectiles) {
         projectile->Draw();
     }

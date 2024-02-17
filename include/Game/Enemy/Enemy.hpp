@@ -25,7 +25,7 @@ public:
                float_t damage); // if hit return true
     void SetScale(int32_t level);
     void SetUp(std::string ID, std::unordered_map<std::string, float_t> stat);
-    void GoTo(glm::vec2);
+    void GoTo(glm::vec2 destination);
     void CollisionWith(const std::shared_ptr<Enemy> &other);
     void CollisionWith(const std::shared_ptr<Character> &other);
     void CollisionWith(const std::shared_ptr<Projectile::Projectile> &other);
@@ -39,6 +39,8 @@ public:
     std::string ID();
 
 private:
+    time_t m_lastHit;
+    bool m_IsStunned;
     std::string m_ID, m_Desc;
     std::unordered_map<std::string, float_t> m_;
     std::unordered_map<std::shared_ptr<Projectile::Projectile>, time_t>
