@@ -47,6 +47,17 @@ void Manager::Update() {
         projectile->Update();
         return projectile->IsOver();
     });
+    static std::vector<std::shared_ptr<Enemy::Enemy>> toErase;
+    for (auto &enemy : m_Enemies) {
+        enemy->Update({m_Character->GetPosition()});
+        if (enemy->IsOver()) {
+            toErase.push_back(enemy);
+        }
+    }
+    for (auto &enemy : toErase) {
+        Resource::ReturnEnemy(enemy->ID(), enemy);
+        m_Enemies.erase(enemy);
+    }
     // handle projectile collision
     m_Plain->Clear();
     m_Plain->SetRange(m_Character->GetPosition().x - 1000,
@@ -69,30 +80,12 @@ void Manager::Update() {
         }
         result.clear();
     }
-    static std::vector<std::shared_ptr<Enemy::Enemy>> toErase;
-    for (auto &enemy : m_Enemies) {
-        enemy->Update({m_Character->GetPosition()});
-        if (enemy->IsOver()) {
-            toErase.push_back(enemy);
-        }
-    }
-    for (auto &enemy : toErase) {
-        Resource::ReturnEnemy(enemy->ID(), enemy);
-        m_Enemies.erase(enemy);
-    }
     // handle enemy collision
     result.clear();
-    m_Plain->Clear();
-    for (auto &enemy : m_Enemies) {
-        m_Plain->Insert(enemy);
-    }
     for (auto &enemy : m_Enemies) {
         m_Plain->QueryCollision(enemy, ENEMY, result);
         for (auto &other : result) {
-            if (enemy->IsCollideWith(other)) {
-                enemy->CollisionWith(
-                    std::static_pointer_cast<Enemy::Enemy>(other));
-            }
+            enemy->CollisionWith(std::static_pointer_cast<Enemy::Enemy>(other));
         }
         if (enemy->IsCollideWith(
                 std::static_pointer_cast<Game::Util::Physical>(m_Character))) {
@@ -101,7 +94,8 @@ void Manager::Update() {
         result.clear();
     }
     toErase.clear();
-    m_FPS->SetText("Frame time: " + std::to_string( ::Util::Time::GetDeltaTime() *1000));
+    m_FPS->SetText("Frame time: " +
+                   std::to_string(::Util::Time::GetDeltaTime() * 1000));
     m_ChrPos->SetText("ChrPos:" + glm::to_string(m_Character->GetPosition()));
 }
 void Manager::Draw() {

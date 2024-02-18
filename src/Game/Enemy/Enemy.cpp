@@ -143,7 +143,7 @@ void Enemy::CollisionWith(const std::shared_ptr<Character> &other) {
     auto j = -velAlongNormal;
     auto impulse = j * normal * 1.5f;
     m_Velocity -= impulse;
-    static float_t percent = 0.8f;
+    static float_t percent = 0.2f;
     static float_t slop = 0.001f;
     auto penetration = std::min(overlap_x, overlap_y);
     auto correction = std::max(penetration - slop, 0.0f) * percent * normal;

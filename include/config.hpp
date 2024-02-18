@@ -13,9 +13,9 @@ constexpr int WINDOW_POS_Y = SDL_WINDOWPOS_UNDEFINED;
 constexpr unsigned int WINDOW_WIDTH = 800;
 constexpr unsigned int WINDOW_HEIGHT = 600;
 
-constexpr unsigned int QUADTREE_MAX_OBJECTS = 10;
+constexpr unsigned int QUADTREE_MAX_OBJECTS = 6;
 
-constexpr unsigned int QUADTREE_MAX_LEVELS = 5;
+constexpr unsigned int QUADTREE_MAX_LEVELS = 6;
 
 constexpr Util::Logger::Level DEFAULT_LOG_LEVEL = Util::Logger::Level::DEBUG;
 

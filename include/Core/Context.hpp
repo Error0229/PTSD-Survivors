@@ -21,7 +21,7 @@ public:
     Context &operator=(Context &&) = delete;
 
     static std::shared_ptr<Context> GetInstance();
-
+    static int32_t Counter;
     bool GetExit() const { return m_Exit; }
     unsigned int GetWindowWidth() const { return m_WindowWidth; }
     unsigned int GetWindowHeight() const { return m_WindowHeight; }

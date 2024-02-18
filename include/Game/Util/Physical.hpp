@@ -15,7 +15,6 @@ public:
     virtual float_t Rotation() const = 0;
     virtual const glm::vec2 &GetPosition() const;
     virtual const glm::vec2 &GetVelocity() const;
-
     const std::string &Type() const;
     virtual float Distance(const std::shared_ptr<Physical> &other);
     virtual bool IsCollideWith(const std::shared_ptr<Physical> &other);
@@ -23,16 +22,22 @@ public:
     virtual void SetVelocity(glm::vec2 velocity);
 
 protected:
-    std::vector<glm::vec2> getCorners() const;
+    std::vector<glm::vec2> getCorners();
+    std::vector<glm::vec2> getAxes();
     std::pair<float_t, float_t> project(const std::vector<glm::vec2> &corners,
                                         const glm::vec2 &axis) const;
     bool overlapOnAxis(const std::shared_ptr<Physical> &other,
-                       const glm::vec2 &axis) const;
+                       const glm::vec2 &axis);
 
     glm::vec2 m_Position;
     glm::vec2 m_Velocity;
-
+    std::vector<glm::vec2> m_Corners;
+    int32_t m_Epoch;
     std::string m_Type;
+    std::vector<glm::vec2> m_Axes;
+    mutable std::unordered_map<std::string,
+                               std::pair<int, std::vector<glm::vec2>>>
+        m_Cache;
 };
 } // namespace Game::Util
 

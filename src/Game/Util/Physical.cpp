@@ -1,9 +1,11 @@
 #include "Game/Util/Physical.hpp"
-
+#include "Core/Context.hpp"
 namespace Game::Util {
 
 Physical::Physical() {
     m_Position = {0, 0};
+    m_Cache["Corners"] = {0, std::vector<glm::vec2>(4)};
+    m_Cache["Axes"] = {0, std::vector<glm::vec2>(4)};
 }
 
 const glm::vec2 &Physical::GetPosition() const {
@@ -26,40 +28,48 @@ bool Physical::IsCollideWith(const std::shared_ptr<Physical> &other) {
     // return IsOverlapped(m_Position.x, m_Position.y, Width(), Height(),
     //                     other->GetPosition().x, other->GetPosition().y,
     //                     other->Width(), other->Height());
-    auto cornersSelf = getCorners();
-    auto cornersOther = other->getCorners();
-
-    // Normals (axes) are the perpendiculars to the edges
-    std::vector<glm::vec2> axes = {
-        glm::rotate(glm::normalize(cornersSelf[1] - cornersSelf[0]),
-                    glm::radians(90.0f)),
-        glm::rotate(glm::normalize(cornersSelf[3] - cornersSelf[0]),
-                    glm::radians(90.0f)),
-        glm::rotate(glm::normalize(cornersOther[1] - cornersOther[0]),
-                    glm::radians(90.0f)),
-        glm::rotate(glm::normalize(cornersOther[3] - cornersOther[0]),
-                    glm::radians(90.0f))};
-
+    auto selfAxes = getAxes();
+    auto otherAxes = other->getAxes();
+    std::vector<glm::vec2> axes{selfAxes.begin(), selfAxes.end()};
+    axes.insert(axes.end(), otherAxes.begin(), otherAxes.end());
     for (const auto &axis : axes) {
         if (!overlapOnAxis(other, axis)) {
             return false; // No collision if there is no overlap on one axis
         }
     }
-
     return true; // Collision if there is overlap on all axes
 }
-std::vector<glm::vec2> Physical::getCorners() const {
-    std::vector<glm::vec2> corners(4);
+std::vector<glm::vec2> Physical::getCorners() {
+    auto &[epoch, corners] = m_Cache["Corners"];
+    if (epoch == Core::Context::Counter) {
+        return corners;
+    }
     glm::vec2 halfExtents(Width() / 2, Height() / 2);
-    glm::vec2 right(cos(Rotation()), sin(Rotation()));
-    glm::vec2 up = glm::rotate(right, glm::radians(90.0f));
-
-    corners[0] = m_Position - right * halfExtents.x - up * halfExtents.y;
-    corners[1] = m_Position + right * halfExtents.x - up * halfExtents.y;
-    corners[2] = m_Position + right * halfExtents.x + up * halfExtents.y;
-    corners[3] = m_Position - right * halfExtents.x + up * halfExtents.y;
-
+    // Corners in local space (assuming center at origin)
+    std::vector<glm::vec2> localCorners = {{-halfExtents.x, -halfExtents.y},
+                                           {halfExtents.x, -halfExtents.y},
+                                           {halfExtents.x, halfExtents.y},
+                                           {-halfExtents.x, halfExtents.y}};
+    const auto rotation = Rotation();
+    // Rotate and translate corners
+    for (int i = 0; i < 4; ++i) {
+        corners[i] = glm::rotate(localCorners[i], rotation) + m_Position;
+    }
+    epoch = Core::Context::Counter;
     return corners;
+}
+std::vector<glm::vec2> Physical::getAxes() {
+    auto &[epoch, axes] = m_Cache["Axes"];
+    if (epoch == Core::Context::Counter) {
+        return axes;
+    }
+    const auto corners = getCorners();
+    for (int i = 0; i < 4; i++) {
+        glm::vec2 edge = glm::normalize(corners[(i + 1) % 4] - corners[i]);
+        axes[i] = {-edge.y, edge.x};
+    }
+    epoch = Core::Context::Counter;
+    return axes;
 }
 void Physical::SetPosition(glm::vec2 position) {
     m_Position = position;
@@ -74,15 +84,13 @@ Physical::project(const std::vector<glm::vec2> &corners,
     float maxProj = minProj;
     for (const auto &corner : corners) {
         float proj = glm::dot(corner, axis);
-        if (proj < minProj)
-            minProj = proj;
-        if (proj > maxProj)
-            maxProj = proj;
+        minProj = std::min(minProj, proj);
+        maxProj = std::max(maxProj, proj);
     }
     return {minProj, maxProj};
 }
 bool Physical::overlapOnAxis(const std::shared_ptr<Physical> &other,
-                             const glm::vec2 &axis) const {
+                             const glm::vec2 &axis) {
     auto cornersSelf = getCorners();
     auto cornersOther = other->getCorners();
     auto [minProjSelf, maxProjSelf] = project(cornersSelf, axis);

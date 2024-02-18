@@ -107,6 +107,7 @@ void Context::Update() {
     //     SDL_Delay(static_cast<Uint32>(frameTime -
     //     Util::Time::GetDeltaTime()));
     // }
+    Counter += 1; // It is ok to overflow, right?
 }
 std::shared_ptr<Context> Context::GetInstance() {
     if (s_Instance == nullptr) {
@@ -114,4 +115,5 @@ std::shared_ptr<Context> Context::GetInstance() {
     }
     return s_Instance;
 }
+int32_t Context::Counter = 0;
 } // namespace Core
