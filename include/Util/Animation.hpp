@@ -22,6 +22,9 @@ public:
     enum class State {
         PLAY,  /**< Animation is playing. */
         PAUSE, /**< Animation is paused. */
+        END,   /**< Animation has ended. */
+        CD,    /**< Animation is on cooldown. */
+        IDLE   /**< Animation is idle. */
     };
 
     /**
@@ -117,8 +120,9 @@ public:
      * @brief Reset the animation to its initial frame.
      */
     void Reset() {
-        // TODO: use `SetCurrentFrame(0)` when it's implemented
         m_Index = 0;
+        m_PauseOffset = 0;
+        m_State = State::IDLE;
     }
 
     /**
@@ -127,19 +131,12 @@ public:
      * If the animation has ended and `looping` is set to `false`, this would
      * replay the animation once.
      */
-    void Play() {
-        m_State = State::PLAY;
-        if (m_HasEnded) {
-            m_Index = 0;
-            m_HasEnded = false;
-        }
-    }
-
+    void Play();
     /**
      * @brief Pause the animation.
      * If the animation has already been paused, this method won't do anything.
      */
-    void Pause() { m_State = State::PAUSE; }
+    void Pause();
 
 private:
     /**
@@ -148,17 +145,16 @@ private:
     void Update();
 
 private:
-    State m_State = State::PLAY;
+    State m_State = State::IDLE;
 
     unsigned long m_StartTime;
 
     unsigned long m_PauseTime;
     unsigned long m_PauseOffset = 0;
 
-    std::size_t m_Interval;
+    std::size_t m_Interval, m_LastFrameTime;
     bool m_Looping;
     std::size_t m_Cooldown;
-    bool m_HasEnded;
 
     std::vector<std::shared_ptr<Util::Image>> m_Frames;
     std::size_t m_Index;
