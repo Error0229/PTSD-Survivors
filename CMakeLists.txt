@@ -151,7 +151,6 @@ if (MSVC)
 endif()
 target_link_libraries(Sample
     SDL2::SDL2main # IDK what happens if we don't link SDL2main
-    tbb
     ${DEPENDENCY_LINK_LIBRARIES}
 )
 target_include_directories(Sample SYSTEM PRIVATE
