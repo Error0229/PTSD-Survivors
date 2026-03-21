@@ -17,7 +17,8 @@ public:
     virtual const glm::vec2 &GetVelocity() const;
     const std::string &Type() const;
     virtual float Distance(const std::shared_ptr<Physical> &other);
-    virtual bool IsCollideWith(const std::shared_ptr<Physical> &other);
+    virtual bool IsCollideWith(const std::shared_ptr<Physical> &other,
+                               bool isRotate = false);
     virtual void SetPosition(glm::vec2 position);
     virtual void SetVelocity(glm::vec2 velocity);
 

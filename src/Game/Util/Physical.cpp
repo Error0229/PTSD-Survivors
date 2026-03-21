@@ -24,10 +24,12 @@ float Physical::Distance(const std::shared_ptr<Physical> &other) {
     return glm::distance(m_Position, other->GetPosition());
 }
 
-bool Physical::IsCollideWith(const std::shared_ptr<Physical> &other) {
-    // return IsOverlapped(m_Position.x, m_Position.y, Width(), Height(),
-    //                     other->GetPosition().x, other->GetPosition().y,
-    //                     other->Width(), other->Height());
+bool Physical::IsCollideWith(const std::shared_ptr<Physical> &other,
+                             bool isRotate) {
+    if (!isRotate)
+        return IsOverlapped(m_Position.x, m_Position.y, Width(), Height(),
+                            other->GetPosition().x, other->GetPosition().y,
+                            other->Width(), other->Height());
     auto selfAxes = getAxes();
     auto otherAxes = other->getAxes();
     std::vector<glm::vec2> axes{selfAxes.begin(), selfAxes.end()};

@@ -1,6 +1,6 @@
-# Practical Tools for Simple Design
+# Practical Tools for Simple Design with Vampire Survivors
 
-###### Officially Supported Platforms and IDEs
+This is a game devloping fork of [Practical Tools for Simple Design](https://github.com/ntut-open-source-club/practical-tools-for-simple-design)
 
 |                                | Windows | macOS | Linux |
 |:------------------------------:|:-------:|:-----:|:-----:|
@@ -24,8 +24,8 @@ Optional: Ninja Build, Clang
 ### Command Line
 
 [//]: # (TODO: No IDE Quick Start)
-> [!WARNING]  
-> This section is work in progress.
+> [!WARNING]
+> You cannot run the game without required resources, which may cause copyright issue. So you may contact me to get the resources.
 
 ```
 git clone https://github.com/ntut-open-source-club/practical-tools-for-simple-design.git
@@ -50,7 +50,7 @@ cmake --build build
 ### VSCode
 
 [//]: # (TODO: VSCode Quick Start)
-> [!WARNING]  
+> [!WARNING]
 > This section is work in progress.
 
 ### CLion
