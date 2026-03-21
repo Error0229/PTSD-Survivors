@@ -129,10 +129,17 @@ target_include_directories(PTSD SYSTEM PRIVATE
 target_include_directories(PTSD PRIVATE
     ${INCLUDE_DIR}
 )
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(EMSCRIPTEN)
+    target_compile_definitions(PTSD PRIVATE PTSD_ASSETS_DIR="/assets" PTSD_DISABLE_IMGUI FMT_CONSTEVAL=constexpr)
+    target_compile_options(PTSD PRIVATE
+        -sUSE_SDL=2
+        -sUSE_SDL_IMAGE=2
+        -sUSE_SDL_TTF=2
+        -sUSE_SDL_MIXER=2
+    )
+elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(PTSD PRIVATE PTSD_ASSETS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
 else()
-    # TODO
     message(AUTHOR_WARNING "relative PTSD_ASSETS_DIR is WIP, Please use `-DCMAKE_BUILD_TYPE=Debug` build for now.")
     target_compile_definitions(PTSD PRIVATE PTSD_ASSETS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
 endif()
@@ -151,22 +158,23 @@ if(NOT PROJECT_IS_TOP_LEVEL)
     set(DEPENDENCY_LINK_LIBRARIES ${DEPENDENCY_LINK_LIBRARIES} PARENT_SCOPE)
 endif()
 
-add_executable(Example EXCLUDE_FROM_ALL
-    ${EXAMPLE_FILES}
-)
-target_link_libraries(Example
-    SDL2::SDL2main # IDK what happens if we don't link SDL2main
-    PTSD
-)
-target_include_directories(Example SYSTEM PRIVATE
-    ${INCLUDE_DIR}
-    ${DEPENDENCY_INCLUDE_DIRS}
-)
-target_include_directories(Example PRIVATE
-    ${EXAMPLE_DIR}/include
-)
-
-target_compile_definitions(Example PRIVATE ASSETS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+if(NOT EMSCRIPTEN)
+    add_executable(Example EXCLUDE_FROM_ALL
+        ${EXAMPLE_FILES}
+    )
+    target_link_libraries(Example
+        SDL2::SDL2main
+        PTSD
+    )
+    target_include_directories(Example SYSTEM PRIVATE
+        ${INCLUDE_DIR}
+        ${DEPENDENCY_INCLUDE_DIRS}
+    )
+    target_include_directories(Example PRIVATE
+        ${EXAMPLE_DIR}/include
+    )
+    target_compile_definitions(Example PRIVATE ASSETS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+endif()
 
 set(GAME_SRC_FILES
     ${SRC_DIR}/Game/Util/Util.cpp
@@ -227,10 +235,32 @@ add_executable(Sample
     ${GAME_SRC_FILES}
     ${GAME_INCLUDE_FILES}
 )
-target_link_libraries(Sample
-    SDL2::SDL2main
-    PTSD
-)
+if(EMSCRIPTEN)
+    target_link_libraries(Sample PTSD)
+    target_compile_definitions(Sample PRIVATE PTSD_DISABLE_IMGUI)
+    target_compile_options(Sample PRIVATE
+        -sUSE_SDL=2
+        -sUSE_SDL_IMAGE=2
+        -sUSE_SDL_TTF=2
+        -sUSE_SDL_MIXER=2
+    )
+    set_target_properties(Sample PROPERTIES SUFFIX ".html")
+    target_link_options(Sample PRIVATE
+        -sUSE_SDL=2
+        -sUSE_SDL_IMAGE=2
+        -sSDL2_IMAGE_FORMATS=["png"]
+        -sUSE_SDL_TTF=2
+        -sUSE_SDL_MIXER=2
+        -sMIN_WEBGL_VERSION=2
+        -sMAX_WEBGL_VERSION=2
+        -sALLOW_MEMORY_GROWTH=1
+        -sFULL_ES3=1
+        "SHELL:--preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets@/assets"
+        "SHELL:--preload-file ${CMAKE_CURRENT_SOURCE_DIR}/resources@/resources"
+    )
+else()
+    target_link_libraries(Sample SDL2::SDL2main PTSD)
+endif()
 target_include_directories(Sample SYSTEM PRIVATE
     ${INCLUDE_DIR}
     ${DEPENDENCY_INCLUDE_DIRS}

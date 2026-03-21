@@ -143,7 +143,9 @@ private:
     static bool s_MouseMoving;
     static bool s_Exit;
 
+#ifndef PTSD_DISABLE_IMGUI
     static ImGuiIO s_Io;
+#endif
 };
 
 } // namespace Util

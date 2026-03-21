@@ -21,8 +21,10 @@ bool Input::s_Scroll = false;
 bool Input::s_MouseMoving = false;
 bool Input::s_Exit = false;
 
+#ifndef PTSD_DISABLE_IMGUI
 ImGuiIO Input::s_Io; // allocate memory only because it is invalid
                      // to call `ImGui::GetIO()` at this time
+#endif
 
 bool Input::IsKeyPressed(const Keycode &key) {
 
@@ -85,13 +87,17 @@ void Input::Update() {
         i.first = i.second;
     }
 
+#ifndef PTSD_DISABLE_IMGUI
     s_Io = ImGui::GetIO();
+#endif
 
     while (SDL_PollEvent(&s_Event) != 0) {
+#ifndef PTSD_DISABLE_IMGUI
         if (s_Io.WantCaptureMouse) {
             ImGui_ImplSDL2_ProcessEvent(&s_Event);
             continue;
         }
+#endif
         if (s_Event.type == SDL_KEYDOWN || s_Event.type == SDL_KEYUP) {
             UpdateKeyState(&s_Event);
         } else if (s_Event.type == SDL_MOUSEBUTTONDOWN ||

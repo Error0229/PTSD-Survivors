@@ -37,7 +37,7 @@ void Resource::Initialize() {
     using json = nlohmann::json;
     // TODO: load all resources
     // Character
-    std::ifstream chrFile("../resources/TextAsset/v1.3.100_CHARACTER_DATA.txt");
+    std::ifstream chrFile(RESOURCE_BASE + "TextAsset/v1.3.100_CHARACTER_DATA.txt");
     auto chrJson = json::parse(chrFile);
     for (auto &item : chrJson.items()) {
         s_Character[item.key()] = std::make_shared<Character>();
@@ -130,7 +130,7 @@ void Resource::Initialize() {
     }
 
     // Weapon and Passive
-    std::ifstream wpnFile("../resources/TextAsset/v1.3.100_WEAPON_DATA.txt");
+    std::ifstream wpnFile(RESOURCE_BASE + "TextAsset/v1.3.100_WEAPON_DATA.txt");
     auto wpnJson = json::parse(wpnFile);
     for (auto &item : wpnJson.items()) {
         auto data = item.value();
@@ -224,7 +224,7 @@ void Resource::Initialize() {
         }
     }
     // Enemy
-    std::ifstream enemyFile("../resources/TextAsset/v1.3.100_ENEMY_DATA.txt");
+    std::ifstream enemyFile(RESOURCE_BASE + "TextAsset/v1.3.100_ENEMY_DATA.txt");
     auto enemyJson = json::parse(enemyFile);
     for (auto &item : enemyJson.items()) {
         s_Enemy[item.key()] = std::make_shared<Game::Enemy::Enemy>();
@@ -297,7 +297,7 @@ void Resource::Initialize() {
         }
     }
     // hitVFX
-    std::ifstream hitVFXFile("../resources/TextAsset/v1.3.100_HITVFX_DATA.txt");
+    std::ifstream hitVFXFile(RESOURCE_BASE + "TextAsset/v1.3.100_HITVFX_DATA.txt");
     auto hitVFXJson = json::parse(hitVFXFile);
     for (auto &item : hitVFXJson.items()) {
         if (item.key() == "0") {

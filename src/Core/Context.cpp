@@ -2,7 +2,9 @@
 
 #include <memory>
 
+#ifndef __EMSCRIPTEN__
 #include "Core/DebugMessageCallback.hpp"
+#endif
 
 #include "Util/Input.hpp"
 #include "Util/Logger.hpp"
@@ -52,10 +54,17 @@ Context::Context() {
         LOG_ERROR(SDL_GetError());
     }
 
+#ifdef __EMSCRIPTEN__
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
+                        SDL_GL_CONTEXT_PROFILE_ES);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+#else
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
                         SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+#endif
 
     m_GlContext = SDL_GL_CreateContext(m_Window);
 
@@ -64,13 +73,15 @@ Context::Context() {
         LOG_ERROR(SDL_GetError());
     }
 
+#ifndef __EMSCRIPTEN__
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
         GLuint err = glGetError();
         LOG_ERROR(reinterpret_cast<const char *>(glewGetErrorString(err)));
     }
+#endif
 
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(__EMSCRIPTEN__)
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
     glDebugMessageCallback(Core::OpenGLDebugMessageCallback, nullptr);
@@ -86,6 +97,7 @@ Context::Context() {
     LOG_INFO("  Version: {}", glGetString(GL_VERSION));
     LOG_INFO("  GLSL Version: {}", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
+#ifndef PTSD_DISABLE_IMGUI
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
@@ -94,14 +106,21 @@ Context::Context() {
     io.ConfigWindowsMoveFromTitleBarOnly = true;
 
     ImGui_ImplSDL2_InitForOpenGL(m_Window, m_GlContext);
+#ifdef __EMSCRIPTEN__
+    ImGui_ImplOpenGL3_Init("#version 300 es");
+#else
     ImGui_ImplOpenGL3_Init();
+#endif
+#endif // PTSD_DISABLE_IMGUI
 }
 std::shared_ptr<Context> Context::s_Instance(nullptr);
 
 Context::~Context() {
+#ifndef PTSD_DISABLE_IMGUI
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
+#endif
 
     SDL_DestroyWindow(m_Window);
     SDL_GL_DeleteContext(m_GlContext);
@@ -116,9 +135,11 @@ Context::~Context() {
 }
 
 void Context::Setup() {
+#ifndef PTSD_DISABLE_IMGUI
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
+#endif
 }
 
 void Context::Update() {
@@ -131,18 +152,12 @@ void Context::Update() {
     ms_t afterUpdate = Util::Time::GetElapsedTimeMs();
     ms_t updateTime = afterUpdate - m_BeforeUpdateTime;
     if (updateTime < frameTime) {
+#ifndef __EMSCRIPTEN__
         SDL_Delay(static_cast<Uint32>(frameTime - updateTime));
+#endif
     }
     m_BeforeUpdateTime = Util::Time::GetElapsedTimeMs();
 
-    // Here's a figure explaining how Delta time & Delay work:
-    //
-    // --|--UT--|--Delay--|--UT--|--
-    //   |---Delta time---|  ^ Last delta time used here
-    //   ^                ^
-    //   (s_Last)         (s_Now) Time::Update here
-    //
-    // # Updating/rendering time is denoted as "UT"
     Util::Time::Update();
 
 #ifdef DEBUG_DELTA_TIME
@@ -151,7 +166,7 @@ void Context::Update() {
               deltaTime, updateTime,
               updateTime < frameTime ? frameTime - updateTime : 0,
               1000.0f / deltaTime);
-#endif // DEBUG_DELTA_TIME
+#endif
 }
 
 std::shared_ptr<Context> Context::GetInstance() {

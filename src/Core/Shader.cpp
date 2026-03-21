@@ -4,10 +4,19 @@
 #include "Util/Logger.hpp"
 
 namespace Core {
+
+static std::string PrependVersion(const std::string &src) {
+#ifdef __EMSCRIPTEN__
+    return "#version 300 es\nprecision mediump float;\n" + src;
+#else
+    return "#version 410 core\n" + src;
+#endif
+}
+
 Shader::Shader(const std::string &filepath, Type shaderType) {
     m_ShaderId = glCreateShader(static_cast<GLenum>(shaderType));
 
-    Compile(Util::LoadTextFile(filepath));
+    Compile(PrependVersion(Util::LoadTextFile(filepath)));
     CheckStatus(filepath);
 }
 

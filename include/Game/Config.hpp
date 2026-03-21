@@ -3,9 +3,16 @@
 
 #include "pch.hpp"
 namespace Game {
-constexpr const char *MAP_SPRITE_PATH = "../assets/sprites/map/";
-constexpr const char *CHARACTER_SPRITE_PATH = "../assets/sprites/character/";
-const std::string SPRITE_PATH = "../resources/Sprite/";
+#ifdef __EMSCRIPTEN__
+const std::string RESOURCE_BASE = "/resources/";
+const std::string ASSET_BASE = "/assets/";
+#else
+const std::string RESOURCE_BASE = "../resources/";
+const std::string ASSET_BASE = "../assets/";
+#endif
+const std::string MAP_SPRITE_PATH = ASSET_BASE + "sprites/map/";
+const std::string CHARACTER_SPRITE_PATH = ASSET_BASE + "sprites/character/";
+const std::string SPRITE_PATH = RESOURCE_BASE + "Sprite/";
 constexpr const char *SPRITE_EXT = ".png";
 constexpr int32_t MAP_PADDING_NUM = 4;
 constexpr int32_t DEFAULT_ANIMATION_FRAME_TIME = 100;

@@ -1,3 +1,5 @@
+#ifndef __EMSCRIPTEN__
+
 #include "Core/DebugMessageCallback.hpp"
 
 #include "Util/Logger.hpp"
@@ -89,3 +91,5 @@ void GLAPIENTRY OpenGLDebugMessageCallback(GLenum source, GLenum type,
     (void)data;
 }
 } // namespace Core
+
+#endif // !__EMSCRIPTEN__

@@ -7,9 +7,17 @@
 GLint ChannelsToInternalFormat(unsigned int channels) {
     switch (channels) {
     case 3:
+#ifdef __EMSCRIPTEN__
+        return GL_RGB8;
+#else
         return GL_RGB16;
+#endif
     case 4:
+#ifdef __EMSCRIPTEN__
+        return GL_RGBA8;
+#else
         return GL_RGBA16;
+#endif
     default:
         LOG_ERROR("Format currently unsupported");
         return -1;
@@ -95,8 +103,13 @@ void Texture::UpdateData(GLint format, int width, int height,
     glTexImage2D(GL_TEXTURE_2D, 0, GlFormatToGlInternalFormat(format), width,
                  height, 0, format, GL_UNSIGNED_BYTE, data);
 
+#ifdef __EMSCRIPTEN__
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+#else
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+#endif
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_MinFilter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_MagFilter);
     glGenerateMipmap(GL_TEXTURE_2D);

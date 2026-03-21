@@ -1,6 +1,8 @@
 #ifndef CORE_DEBUG_MESSAGE_CALLBACK_HPP
 #define CORE_DEBUG_MESSAGE_CALLBACK_HPP
 
+#ifndef __EMSCRIPTEN__
+
 #include "pch.hpp" // IWYU pragma: export
 
 namespace Core {
@@ -18,5 +20,7 @@ void GLAPIENTRY OpenGLDebugMessageCallback(GLenum source, GLenum type,
                                            const GLchar *message,
                                            const void *data);
 } // namespace Core
+
+#endif // !__EMSCRIPTEN__
 
 #endif

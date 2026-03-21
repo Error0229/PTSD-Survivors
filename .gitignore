@@ -502,3 +502,4 @@ docs/html/
 # Ignore all Assets
 Assets/
 resources/
+build-web/

@@ -19,7 +19,11 @@
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 
+#ifdef __EMSCRIPTEN__
+#include <GLES3/gl3.h>
+#else
 #include <GL/glew.h>
+#endif
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
@@ -27,9 +31,11 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/string_cast.hpp>
 
+#ifndef PTSD_DISABLE_IMGUI
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl2.h>
+#endif
 
 #include <nlohmann/json.hpp>
 

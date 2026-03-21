@@ -27,10 +27,10 @@ void Manager::Start() {
     m_Map->Setup("dummy5");
     m_Map->Start();
     m_FPS = std::make_shared<::Util::Text>(
-        "../resources/Font/ANY.ttf", 24, "FPS: 0",
+        (RESOURCE_BASE + "Font/ANY.ttf").c_str(), 24, "FPS: 0",
         ::Util::Color{135 / 255., 206 / 255., 235 / 255., 1});
     m_ChrPos = std::make_shared<::Util::Text>(
-        "../resources/Font/ANY.ttf", 24, "ChrPos: 0",
+        (RESOURCE_BASE + "Font/ANY.ttf").c_str(), 24, "ChrPos: 0",
         ::Util::Color{135 / 255., 206 / 255., 235 / 255., 1});
     m_Plain = std::make_shared<Util::QuadTree>(
         0, 0, PTSD_Config::WINDOW_WIDTH, PTSD_Config::WINDOW_HEIGHT,
