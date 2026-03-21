@@ -1,10 +1,13 @@
 #include "App.hpp"
 
 #include "Core/Context.hpp"
+#include "Util/Logger.hpp"
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
+
+#include <exception>
 
 struct MainLoopData {
     App *app;
@@ -16,26 +19,39 @@ void MainLoopIteration(void *arg) {
     auto &app = *data->app;
     auto &context = *data->context;
 
-    switch (app.GetCurrentState()) {
-    case App::State::START:
-        app.Start();
-        break;
+    try {
+        switch (app.GetCurrentState()) {
+        case App::State::START:
+            app.Start();
+            break;
 
-    case App::State::CYCLE:
-        app.Update();
-        app.Draw();
-        break;
+        case App::State::CYCLE:
+            context.Setup();
+            app.Update();
+            app.Draw();
+            break;
 
-    case App::State::END:
-        app.End();
+        case App::State::END:
+            app.End();
+#ifdef __EMSCRIPTEN__
+            emscripten_cancel_main_loop();
+#else
+            context.SetExit(true);
+#endif
+            break;
+        }
+        context.Update();
+    } catch (const std::exception &e) {
+        LOG_ERROR("Exception in main loop: {}", e.what());
 #ifdef __EMSCRIPTEN__
         emscripten_cancel_main_loop();
-#else
-        context.SetExit(true);
 #endif
-        break;
+    } catch (...) {
+        LOG_ERROR("Unknown exception in main loop");
+#ifdef __EMSCRIPTEN__
+        emscripten_cancel_main_loop();
+#endif
     }
-    context.Update();
 }
 
 int main(int, char **) {

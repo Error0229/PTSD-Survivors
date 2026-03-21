@@ -1,7 +1,7 @@
 layout(location = 0) in vec2 vertPosition;
 layout(location = 1) in vec2 vertUv;
 
-layout(location = 0) out vec2 uv;
+out vec2 uv;
 
 layout(std140) uniform Matrices {
     mat4 model;

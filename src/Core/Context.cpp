@@ -87,6 +87,8 @@ Context::Context() {
     glDebugMessageCallback(Core::OpenGLDebugMessageCallback, nullptr);
 #endif
 
+    glViewport(0, 0, PTSD_Config::WINDOW_WIDTH, PTSD_Config::WINDOW_HEIGHT);
+    glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -135,6 +137,9 @@ Context::~Context() {
 }
 
 void Context::Setup() {
+#ifdef __EMSCRIPTEN__
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+#endif
 #ifndef PTSD_DISABLE_IMGUI
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
@@ -145,7 +150,14 @@ void Context::Setup() {
 void Context::Update() {
     Util::Input::Update();
     SDL_GL_SwapWindow(m_Window);
+
+    // On Emscripten, SDL_GL_SwapWindow is a no-op; the browser presents the
+    // buffer when the JS event loop yields. Clearing here would erase the frame
+    // before the browser composites it. Instead, we clear at the START of the
+    // next frame via Setup().
+#ifndef __EMSCRIPTEN__
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+#endif
 
     static ms_t frameTime =
         PTSD_Config::FPS_CAP != 0 ? 1000.0F / PTSD_Config::FPS_CAP : 0;

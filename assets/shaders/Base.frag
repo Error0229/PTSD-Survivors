@@ -1,6 +1,6 @@
-layout(location = 0) in vec2 uv;
+in vec2 uv;
 
-layout(location = 0) out vec4 fragColor;
+out vec4 fragColor;
 
 uniform sampler2D surface;
 

@@ -40,4 +40,3 @@
 - `Enemy::Width()` and `Height()` are swapped
 - `Vampirica` weapon is an exact copy of `Whip` — differentiate or remove
 - Projectile-enemy collision partially disabled in `Manager.cpp`
-- Hardcoded font path `"../resources/Font/ANY.ttf"`

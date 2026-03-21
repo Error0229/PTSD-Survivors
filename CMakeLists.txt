@@ -130,13 +130,9 @@ target_include_directories(PTSD PRIVATE
     ${INCLUDE_DIR}
 )
 if(EMSCRIPTEN)
+    set(EMSCRIPTEN_SDL_FLAGS -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sUSE_SDL_TTF=2 -sUSE_SDL_MIXER=2)
     target_compile_definitions(PTSD PRIVATE PTSD_ASSETS_DIR="/assets" PTSD_DISABLE_IMGUI FMT_CONSTEVAL=constexpr)
-    target_compile_options(PTSD PRIVATE
-        -sUSE_SDL=2
-        -sUSE_SDL_IMAGE=2
-        -sUSE_SDL_TTF=2
-        -sUSE_SDL_MIXER=2
-    )
+    target_compile_options(PTSD PRIVATE ${EMSCRIPTEN_SDL_FLAGS} -fexceptions)
 elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(PTSD PRIVATE PTSD_ASSETS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
 else()
@@ -238,23 +234,18 @@ add_executable(Sample
 if(EMSCRIPTEN)
     target_link_libraries(Sample PTSD)
     target_compile_definitions(Sample PRIVATE PTSD_DISABLE_IMGUI)
-    target_compile_options(Sample PRIVATE
-        -sUSE_SDL=2
-        -sUSE_SDL_IMAGE=2
-        -sUSE_SDL_TTF=2
-        -sUSE_SDL_MIXER=2
-    )
+    target_compile_options(Sample PRIVATE ${EMSCRIPTEN_SDL_FLAGS})
     set_target_properties(Sample PROPERTIES SUFFIX ".html")
+    target_compile_options(Sample PRIVATE -fexceptions)
     target_link_options(Sample PRIVATE
-        -sUSE_SDL=2
-        -sUSE_SDL_IMAGE=2
+        ${EMSCRIPTEN_SDL_FLAGS}
         -sSDL2_IMAGE_FORMATS=["png"]
-        -sUSE_SDL_TTF=2
-        -sUSE_SDL_MIXER=2
         -sMIN_WEBGL_VERSION=2
         -sMAX_WEBGL_VERSION=2
         -sALLOW_MEMORY_GROWTH=1
         -sFULL_ES3=1
+        -fexceptions
+        -sASSERTIONS=2
         "SHELL:--preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets@/assets"
         "SHELL:--preload-file ${CMAKE_CURRENT_SOURCE_DIR}/resources@/resources"
     )

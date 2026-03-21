@@ -13,9 +13,18 @@ SDL_Surface *GetMissingImageTextureSDLSurface() {
 
     if (aSurface == nullptr) {
         LOG_ERROR("base64ToSurface");
+        return nullptr;
     }
 
-    return aSurface;
+    // Convert to RGBA32 to avoid INDEX8/palette formats that GL can't handle
+    SDL_Surface *converted =
+        SDL_ConvertSurfaceFormat(aSurface, SDL_PIXELFORMAT_ABGR8888, 0);
+    SDL_FreeSurface(aSurface);
+    if (converted == nullptr) {
+        LOG_ERROR("Failed to convert missing texture to RGBA: {}",
+                  SDL_GetError());
+    }
+    return converted;
 }
 
 SDL_Surface *GetMissingFontTextureSDLSurface() {
@@ -26,8 +35,17 @@ SDL_Surface *GetMissingFontTextureSDLSurface() {
 
     if (aSurface == nullptr) {
         LOG_ERROR("base64ToSurface");
+        return nullptr;
     }
 
-    return aSurface;
+    // Convert to RGBA32 to avoid unsupported formats
+    SDL_Surface *converted =
+        SDL_ConvertSurfaceFormat(aSurface, SDL_PIXELFORMAT_ABGR8888, 0);
+    SDL_FreeSurface(aSurface);
+    if (converted == nullptr) {
+        LOG_ERROR("Failed to convert missing font texture to RGBA: {}",
+                  SDL_GetError());
+    }
+    return converted;
 }
 } // namespace Util

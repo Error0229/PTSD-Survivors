@@ -49,10 +49,13 @@ void VertexArray::AddVertexBuffer(std::unique_ptr<VertexBuffer> vertexBuffer) {
 }
 
 void VertexArray::SetIndexBuffer(std::unique_ptr<IndexBuffer> indexBuffer) {
+    glBindVertexArray(m_ArrayId);
+    indexBuffer->Bind();
     m_IndexBuffer = std::move(indexBuffer);
 }
 
 void VertexArray::DrawTriangles() const {
+    m_IndexBuffer->Bind();
     glDrawElements(GL_TRIANGLES, static_cast<GLint>(m_IndexBuffer->GetCount()),
                    GL_UNSIGNED_INT, nullptr);
 }
