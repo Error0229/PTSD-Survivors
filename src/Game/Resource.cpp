@@ -2,7 +2,7 @@
 #include "Game/Config.hpp"
 #include "Util/Image.hpp"
 #include "Util/Logger.hpp"
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
@@ -46,44 +46,44 @@ void Resource::Initialize() {
         auto data = item.value();
         auto &stats = data[0];
         std::unordered_map<std::string, float_t> stat;
-        stat["amount"] = stats["amount"];
-        stat["area"] = stats["area"];
-        stat["armor"] = stats["armor"];
-        stat["banish"] = stats["banish"];
-        stat["cooldown"] = stats["cooldown"];
-        stat["curse"] = stats["curse"];
-        stat["duration"] = stats["duration"];
-        stat["greed"] = stats["greed"];
-        stat["growth"] = stats["growth"];
-        stat["level"] = stats["level"];
-        stat["luck"] = stats["luck"];
-        stat["magnet"] = stats["magnet"];
-        stat["maxHp"] = stats["maxHp"];
-        stat["moveSpeed"] = stats["moveSpeed"];
-        stat["power"] = stats["power"];
-        stat["price"] = stats["price"];
-        stat["regen"] = stats["regen"];
-        stat["rerolls"] = stats["rerolls"];
+        stat["amount"] = stats["amount"].get<float>();
+        stat["area"] = stats["area"].get<float>();
+        stat["armor"] = stats["armor"].get<float>();
+        stat["banish"] = stats["banish"].get<float>();
+        stat["cooldown"] = stats["cooldown"].get<float>();
+        stat["curse"] = stats["curse"].get<float>();
+        stat["duration"] = stats["duration"].get<float>();
+        stat["greed"] = stats["greed"].get<float>();
+        stat["growth"] = stats["growth"].get<float>();
+        stat["level"] = stats["level"].get<float>();
+        stat["luck"] = stats["luck"].get<float>();
+        stat["magnet"] = stats["magnet"].get<float>();
+        stat["maxHp"] = stats["maxHp"].get<float>();
+        stat["moveSpeed"] = stats["moveSpeed"].get<float>();
+        stat["power"] = stats["power"].get<float>();
+        stat["price"] = stats["price"].get<float>();
+        stat["regen"] = stats["regen"].get<float>();
+        stat["rerolls"] = stats["rerolls"].get<float>();
         if (stats.find("revivals") != stats.end()) {
-            stat["revivals"] = stats["revivals"];
+            stat["revivals"] = stats["revivals"].get<float>();
         } else {
             stat["revivals"] = 0;
         }
-        stat["skips"] = stats["skips"];
-        stat["speed"] = stats["speed"];
+        stat["skips"] = stats["skips"].get<float>();
+        stat["speed"] = stats["speed"].get<float>();
         auto bgm = NULL_STRING;
         if (stats.find("bgm") != stats.end()) {
-            bgm = stats["bgm"];
+            bgm = stats["bgm"].get<std::string>();
         }
         auto weapon = NULL_STRING;
         if (stats.find("startingWeapon") != stats.end()) {
-            weapon = stats["startingWeapon"];
+            weapon = stats["startingWeapon"].get<std::string>();
         }
         chr->SetBaseStats(stat);
         chr->SetInfos(item.key(), stats["charName"].template get<std::string>(),
                       stats["description"].template get<std::string>(), bgm,
                       weapon);
-        chr->SetDrawable(std::make_unique<::Util::Image>(
+        chr->SetDrawable(std::make_shared<::Util::Image>(
             SPRITE_PATH + stats["spriteName"].template get<std::string>()));
         if (stats.find("skins") != stats.end()) {
             for (auto &skin : stats["skins"]) {
@@ -92,7 +92,7 @@ void Resource::Initialize() {
                 // remove all characters after _ symbol
                 base = base.substr(0, base.find('.') - 2);
                 std::vector<std::shared_ptr<::Util::Image>> images;
-                int32_t frames = skin["walkingFrames"];
+                int32_t frames = skin["walkingFrames"].get<int32_t>();
                 for (int32_t i = 1; i <= frames; i++) {
                     std::string frame = std::to_string(i);
                     if (i < 10) {
@@ -106,11 +106,11 @@ void Resource::Initialize() {
                 auto animationName = static_cast<std::string>(item.key()) +
                                      skin["name"].template get<std::string>();
                 s_Animation[animationName] = std::move(animation);
-                chr->Load(skin["name"], s_Animation[animationName]);
+                chr->Load(skin["name"].get<std::string>(), s_Animation[animationName]);
             }
         } else {
             std::vector<std::shared_ptr<::Util::Image>> images;
-            int32_t frames = stats["walkingFrames"];
+            int32_t frames = stats["walkingFrames"].get<int32_t>();
             std::string base = stats["spriteName"].template get<std::string>();
             base = base.substr(0, base.find('.') - 2);
             for (int32_t i = 1; i <= frames; i++) {
@@ -141,8 +141,8 @@ void Resource::Initialize() {
             auto &passive = s_Passive[item.key()];
             auto &stats = data[0];
             std::unordered_map<std::string, float_t> stat;
-            stat["level"] = stats["level"];
-            stat["rarity"] = stats["rarity"];
+            stat["level"] = stats["level"].get<float>();
+            stat["rarity"] = stats["rarity"].get<float>();
             stat["maxLevel"] = data.size();
             std::vector<std::vector<std::pair<std::string, float_t>>>
                 levelUpStat;
@@ -150,7 +150,7 @@ void Resource::Initialize() {
                 std::vector<std::pair<std::string, float_t>> temp;
                 for (auto &info : level.items()) {
                     if (Game::Passive::Passive::IsEffect(info.key())) {
-                        temp.push_back({info.key(), info.value()});
+                        temp.push_back({info.key(), info.value().get<float>()});
                     }
                 }
                 levelUpStat.push_back(temp);
@@ -158,7 +158,7 @@ void Resource::Initialize() {
             passive->SetUp(item.key(),
                            stats["description"].template get<std::string>(),
                            stat, levelUpStat);
-            passive->SetDrawable(std::make_unique<::Util::Image>(
+            passive->SetDrawable(std::make_shared<::Util::Image>(
                 SPRITE_PATH + stats["frameName"].template get<std::string>()));
             // Weapon
         } else {
@@ -168,10 +168,10 @@ void Resource::Initialize() {
             auto &stats = data[0];
             std::unordered_map<std::string, float_t> stat;
             stat["maxLevel"] = data.size();
-            stat["rarity"] = stats["rarity"];
-            stat["poolLimit"] = stats["poolLimit"];
+            stat["rarity"] = stats["rarity"].get<float>();
+            stat["poolLimit"] = stats["poolLimit"].get<float>();
             stat["repeatInterval"] =
-                stats["repeatInterval"]; // a.k.a delay between amount of shots
+                stats["repeatInterval"].get<float>(); // a.k.a delay between amount of shots
             stat["hitsWalls"] = stats.value("hitsWalls", false) ? 1.0f : 0.0f;
             stat["critChance"] = stats.value("critChance", 0.0f);
             stat["critMul"] = stats.value("critMul", 1.0f);
@@ -204,7 +204,7 @@ void Resource::Initialize() {
                 std::vector<std::pair<std::string, float_t>> temp;
                 for (auto &info : level.items()) {
                     if (Game::Passive::Passive::IsEffect(info.key())) {
-                        temp.push_back({info.key(), info.value()});
+                        temp.push_back({info.key(), info.value().get<float>()});
                     }
                 }
                 levelUpStat.push_back(temp);
@@ -212,7 +212,7 @@ void Resource::Initialize() {
             weapon->SetUp(item.key(),
                           stats["description"].template get<std::string>(),
                           evoRequired, evoFrom, stat, levelUpStat);
-            weapon->SetDrawable(std::make_unique<::Util::Image>(
+            weapon->SetDrawable(std::make_shared<::Util::Image>(
                 SPRITE_PATH + stats["frameName"].template get<std::string>()));
             s_ProjectilePool[item.key()] =
                 Util::ObjectPool<Projectile::Projectile>();
@@ -259,7 +259,7 @@ void Resource::Initialize() {
         std::vector<std::shared_ptr<::Util::Image>> images;
         int32_t frames = 0;
         if (stats.find("idleFrameCount") != stats.end()) {
-            frames = stats["idleFrameCount"];
+            frames = stats["idleFrameCount"].get<int32_t>();
         } else {
             images.push_back(std::make_shared<::Util::Image>(
                 SPRITE_PATH +
@@ -282,7 +282,7 @@ void Resource::Initialize() {
         enemy->Load("Idle", s_Animation[animationName]);
 
         images.clear();
-        for (int32_t i = 0; i < stats["end"]; i++) {
+        for (int32_t i = 0; i < stats["end"].get<int32_t>(); i++) {
             images.push_back(std::make_shared<::Util::Image>(
                 SPRITE_PATH + base + std::to_string(i) + ".png"));
         }

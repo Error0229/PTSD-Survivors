@@ -1,6 +1,7 @@
 #include "Game/Util/Animation.hpp"
 #include "Game/Util/Timer.hpp"
 #include "Util/Image.hpp"
+#include "Util/TransformUtils.hpp"
 namespace Game::Util {
 Animation::Animation(std::vector<std::shared_ptr<::Util::Image>> frames,
                      bool isLoop, time_t frameTime)
@@ -64,11 +65,13 @@ float_t Animation::GetWidth() {
 bool Animation::IsAnimated() {
     return m_IsAnimated;
 }
-void Animation::Draw(::Util::Transform &transform, const float_t &zIndex) {
+void Animation::Draw(const ::Util::Transform &transform, const float_t &zIndex) {
     Update();
     if (m_CurrentFrame < 0 || m_CurrentFrame >= FrameCount())
         return;
-    m_Frames[m_CurrentFrame]->Draw(transform, zIndex);
+    auto data = ::Util::ConvertToUniformBufferData(
+        transform, m_Frames[m_CurrentFrame]->GetSize(), zIndex);
+    m_Frames[m_CurrentFrame]->Draw(data);
 }
 void Animation::SetFrameTime(time_t frameTime) {
     m_FrameTime = frameTime;

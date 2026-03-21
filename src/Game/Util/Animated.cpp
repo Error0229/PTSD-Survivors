@@ -38,7 +38,7 @@ void Animated::Load(const std::string &name,
     m_CurrentAnimation = name;
 }
 
-void Animated::Draw(::Util::Transform &transform, float_t &zIndex,
+void Animated::Draw(const ::Util::Transform &transform, const float_t &zIndex,
                     const std::string &name) {
     if (auto anim = GetAnimation(name)) {
         anim->Draw(transform, zIndex);

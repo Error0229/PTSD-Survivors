@@ -1,5 +1,6 @@
 #include "Game/Weapon/Weapon.hpp"
 #include "Game/Manager.hpp"
+#include "Util/TransformUtils.hpp"
 #include <string>
 #include <unordered_map>
 
@@ -45,7 +46,9 @@ void Weapon::Update(const ::Util::Transform &transform) {
 }
 
 void Weapon::Draw() {
-    m_Drawable->Draw(m_Transform, m_ZIndex);
+    auto data = ::Util::ConvertToUniformBufferData(
+        m_Transform, m_Drawable->GetSize(), m_ZIndex);
+    m_Drawable->Draw(data);
 }
 
 void Weapon::LevelUp() {

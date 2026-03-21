@@ -8,6 +8,8 @@
 
 #include "Util/Keycode.hpp" // for Keycode
 
+#include "Util/Position.hpp" // Util::PTSDPosition
+
 namespace Util {
 
 /**
@@ -15,7 +17,7 @@ namespace Util {
 * @brief The Input class provides access to keyboard and mouse input.
 * @note This class is a singleton and constructable. Use is as follows: \n
             `Util::Input::IsKeyPressed(Keycode::A)`,
-            `Util::Input::IsLButtonPressed()`, etc.
+            `Util::Input::IsLButtonDown()`, etc.
 */
 class Input {
 public:
@@ -26,9 +28,9 @@ public:
     Input &operator=(const Input &) = delete;
 
     /**
-     * \brief Retrieves the scroll distance of an element.\n
+     * @brief Retrieves the scroll distance of an element.\n
      *
-     * \details The scroll distance is the distance that the mouse wheel has
+     * @details The scroll distance is the distance that the mouse wheel has
      * been scrolled. The distance is expressed in multiples or fractions of
      * lines; for example, if the mouse wheel is rotated three lines downward,
      * the scroll distance is {-1.0F, 0.0F}. If the mouse wheel is rotated three
@@ -37,61 +39,63 @@ public:
      * mouse wheel is rotated three lines left, the scroll distance is {0.0F,
      * -1.0F}.
      *
-     * \return The scroll distance as vec2(x,y).
+     * @return The scroll distance as vec2(x,y).
      */
     static glm::vec2 GetScrollDistance();
 
     /**
      * @brief Retrieves the current position of the cursor.
-     * @note The cursor position is relative to the upper-left corner of the
-     * client area of the window.
      *
-     * @return The cursor position as vec2(x, y).
+     * @return The cursor position as a PTSDPosition (x, y).
      *
      * @see Util::Input::SetCursorPosition()
+     * @see Util::PTSDPosition
      */
-    static glm::vec2 GetCursorPosition();
+    static Util::PTSDPosition GetCursorPosition();
 
     /**
-     * \brief Check if a specific key is currently pressed.
+     * @brief Check if a specific key is currently pressed.
      *
-     * This function checks whether the given key is currently being pressed on
-     * the keyboard.
+     * This function checks whether the given key is currently pressed.
      *
-     * \param key The keycode of the key to check.
+     * @param key The keycode of the key to check.
      *
-     * \return true if the key is currently pressed, false otherwise.
+     * @return true if `key` is currently pressed, false otherwise.
      *
-     * \see Util::Keycode
+     * @see Util::Keycode
      */
     static bool IsKeyPressed(const Keycode &key);
 
     /**
-     * \brief Checks if the left mouse button is currently pressed.
+     * @brief Check if a specific key is being pressed.
      *
-     * \return true if the left mouse button is currently pressed, false
-     * otherwise.r
+     * This function checks whether the given key is currently being pressed.
      *
+     * @param key The keycode of the key to check.
+     *
+     * @return true if `key` is currently pressed, false otherwise.
+     *
+     * @see Util::Keycode
      */
-    static bool IsLButtonPressed();
+    static bool IsKeyDown(const Keycode &key);
 
     /**
-     * @brief Checks if the right mouse button is currently pressed.
-     * @return  true if the right mouse button is currently pressed, false
-     * otherwise.
+     * @brief Check if a specific key is being un-pressed.
+     *
+     * This function checks whether the given key is currently being un-pressed.
+     *
+     * @param key The keycode of the key to check.
+     *
+     * @return true if `key` is currently pressed, false otherwise.
+     *
+     * @see Util::Keycode
      */
-    static bool IsRButtonPressed();
-
-    /**
-     * @brief Checks if the middle mouse button is currently pressed.
-     * @return  true if the middle mouse button is currently pressed, false
-     * otherwise.
-     */
-    static bool IsMButtonPressed();
+    static bool IsKeyUp(const Keycode &key);
 
     /**
      * @brief Checks if the mouse wheel is currently being scrolled.
-     * @return  A bool value representing the current state of the mouse wheel.
+     * @return  A bool value representing the current state of the mouse
+     * wheel.
      */
     static bool IfScroll();
 
@@ -110,13 +114,13 @@ public:
     /**
      * @brief Sets the position of the cursor.
      * @param pos The position to set the cursor to.
-     * @note The cursor position is relative to the upper-left corner of the
-     * client area of the window.
-     * @note It also generates a mouse motion event, which leads
-     * Util::Input::IsMouseMoving() to return true in this update-cycle.
+     * @note This also triggers a mouse motion event, making
+     * Util::Input::IsMouseMoving() return true in the current update cycle.
+     *
      * @see Util::Input::GetCursorPosition()
+     * @see Util::PTSDPosition
      */
-    static void SetCursorPosition(const glm::vec2 &pos);
+    static void SetCursorPosition(const Util::PTSDPosition &pos);
 
     /**
      * @brief Updates the state of the input.
@@ -126,19 +130,20 @@ public:
     static void Update();
 
 private:
+    static void UpdateKeyState(const SDL_Event *event);
+
     static SDL_Event s_Event;
 
-    static const Uint8 *s_KeyState;
-
-    static glm::vec2 s_CursorPosition;
+    static Util::PTSDPosition s_CursorPosition;
     static glm::vec2 s_ScrollDistance;
 
-    static bool s_LBPressed;
-    static bool s_RBPressed;
-    static bool s_MBPressed;
+    static std::unordered_map<Keycode, std::pair<bool, bool>> s_KeyState;
+
     static bool s_Scroll;
     static bool s_MouseMoving;
     static bool s_Exit;
+
+    static ImGuiIO s_Io;
 };
 
 } // namespace Util

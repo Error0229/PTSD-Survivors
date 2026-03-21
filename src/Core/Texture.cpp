@@ -39,8 +39,10 @@ GLint ChannelsToFormat(unsigned int channels) {
 };
 
 namespace Core {
-Texture::Texture(GLint format, int width, int height, const void *data) {
+Texture::Texture(GLint format, int width, int height, const void *data,
+                 bool useAA) {
     glGenTextures(1, &m_TextureId);
+    UseAntiAliasing(useAA);
     UpdateData(format, width, height, data);
 }
 
@@ -93,7 +95,25 @@ void Texture::UpdateData(GLint format, int width, int height,
     glTexImage2D(GL_TEXTURE_2D, 0, GlFormatToGlInternalFormat(format), width,
                  height, 0, format, GL_UNSIGNED_BYTE, data);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_MinFilter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_MagFilter);
+    glGenerateMipmap(GL_TEXTURE_2D);
+}
+
+void Texture::UseAntiAliasing(bool useAA) {
+    /**
+     * additional docs
+     * https://www.khronos.org/opengl/wiki/Texture
+     * https://www.khronos.org/opengl/wiki/Sampler_Object#Sampling_parameters
+     */
+    if (useAA) {
+        m_MinFilter = GL_LINEAR_MIPMAP_LINEAR;
+        m_MagFilter = GL_LINEAR;
+    } else {
+        m_MinFilter = GL_NEAREST_MIPMAP_NEAREST;
+        m_MagFilter = GL_NEAREST;
+    }
 }
 } // namespace Core

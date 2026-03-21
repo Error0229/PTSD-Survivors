@@ -50,7 +50,8 @@ void Enemy::Draw() {
         m_["isOver"] = true;
     }
     if (m_HitVFX != nullptr) {
-        m_HitVFX->Draw(m_Transform, VFX_LAYER);
+        const float_t vfxLayer = VFX_LAYER;
+        m_HitVFX->Draw(m_Transform, vfxLayer);
         if (!m_HitVFX->IsAnimated()) {
             m_HitVFX = nullptr;
         }

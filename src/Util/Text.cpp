@@ -3,15 +3,14 @@
 #include "Core/Texture.hpp"
 #include "Core/TextureUtils.hpp"
 
-#include "SDL_pixels.h"
+#include "Util/Logger.hpp"
+#include "Util/MissingTexture.hpp"
 #include "Util/Text.hpp"
 #include "Util/TransformUtils.hpp"
 
-#include "config.hpp"
-
 namespace Util {
 Text::Text(const std::string &font, int fontSize, const std::string &text,
-           const Util::Color &color)
+           const Util::Color &color, bool useAA)
     : m_Text(text),
       m_Color(color) {
     if (s_Program == nullptr) {
@@ -20,38 +19,40 @@ Text::Text(const std::string &font, int fontSize, const std::string &text,
     if (s_VertexArray == nullptr) {
         InitVertexArray();
     }
-    if (s_UniformBuffer == nullptr) {
-        InitUniformBuffer();
-    }
 
+    m_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
+        *s_Program, "Matrices", 0);
+
+    auto surface =
+        std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>();
     m_Font = {TTF_OpenFont(font.c_str(), fontSize), TTF_CloseFont};
 
     if (m_Font == nullptr) {
-        LOG_ERROR("Failed to load font: '{}'", text);
+        LOG_ERROR("Failed to load font: '{}'", font.c_str());
         LOG_ERROR("{}", TTF_GetError());
-    }
-
-    auto surface =
-        std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
-            TTF_RenderUTF8_Blended_Wrapped(m_Font.get(), m_Text.c_str(),
-                                           m_Color.ToSdlColor(), 0),
-            SDL_FreeSurface,
-        };
-    if (surface == nullptr) {
-        LOG_ERROR("Failed to create text");
-        LOG_ERROR("{}", TTF_GetError());
+        surface = {GetMissingFontTextureSDLSurface(), SDL_FreeSurface};
+    } else {
+        surface =
+            std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
+                TTF_RenderUTF8_Blended_Wrapped(m_Font.get(), m_Text.c_str(),
+                                               m_Color.ToSdlColor(), 0),
+                SDL_FreeSurface,
+            };
     }
 
     m_Texture = std::make_unique<Core::Texture>(
         Core::SdlFormatToGlFormat(surface->format->format),
         surface->pitch / surface->format->BytesPerPixel, surface->h,
-        surface->pixels);
+        surface->pixels, useAA);
     m_Size = {surface->pitch / surface->format->BytesPerPixel, surface->h};
 }
 
-void Text::Draw(const Util::Transform &transform, const float zIndex) {
-    auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
-    s_UniformBuffer->SetData(0, data);
+void Text::UseAntiAliasing(bool useAA) {
+    m_Texture->UseAntiAliasing(useAA);
+}
+
+void Text::Draw(const Core::Matrices &data) {
+    m_UniformBuffer->SetData(0, data);
 
     m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
     s_Program->Bind();
@@ -63,8 +64,9 @@ void Text::Draw(const Util::Transform &transform, const float zIndex) {
 
 void Text::InitProgram() {
     // TODO: Create `BaseProgram` from `Program` and pass it into `Drawable`
-    s_Program = std::make_unique<Core::Program>("../assets/shaders/Base.vert",
-                                                "../assets/shaders/Base.frag");
+    s_Program =
+        std::make_unique<Core::Program>(PTSD_ASSETS_DIR "/shaders/Base.vert",
+                                        PTSD_ASSETS_DIR "/shaders/Base.frag");
     s_Program->Bind();
 
     GLint location = glGetUniformLocation(s_Program->GetId(), "surface");
@@ -107,18 +109,19 @@ void Text::InitVertexArray() {
     // NOLINTEND
 }
 
-void Text::InitUniformBuffer() {
-    s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
-        *s_Program, "Matrices", 0);
-}
-
 void Text::ApplyTexture() {
     auto surface =
-        std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
-            TTF_RenderUTF8_Blended_Wrapped(m_Font.get(), m_Text.c_str(),
-                                           m_Color.ToSdlColor(), 0),
-            SDL_FreeSurface,
-        };
+        std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>();
+    if (m_Font == nullptr) {
+        surface = {GetMissingFontTextureSDLSurface(), SDL_FreeSurface};
+    } else {
+        surface =
+            std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
+                TTF_RenderUTF8_Blended_Wrapped(m_Font.get(), m_Text.c_str(),
+                                               m_Color.ToSdlColor(), 0),
+                SDL_FreeSurface,
+            };
+    }
     if (surface == nullptr) {
         LOG_ERROR("Failed to create text: {}", TTF_GetError());
     }
@@ -131,7 +134,5 @@ void Text::ApplyTexture() {
 
 std::unique_ptr<Core::Program> Text::s_Program = nullptr;
 std::unique_ptr<Core::VertexArray> Text::s_VertexArray = nullptr;
-std::unique_ptr<Core::UniformBuffer<Core::Matrices>> Text::s_UniformBuffer =
-    nullptr;
 
 } // namespace Util

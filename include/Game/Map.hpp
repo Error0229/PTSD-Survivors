@@ -2,6 +2,7 @@
 #define MAP_HPP
 
 #include "Util/GameObject.hpp"
+#include <deque>
 #include <glm/fwd.hpp>
 #include <memory>
 namespace Game {

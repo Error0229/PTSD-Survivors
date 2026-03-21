@@ -14,7 +14,7 @@
 #include "Util/Transform.hpp"
 #include "config.hpp"
 #include "pch.hpp"
-#include <execution>
+#include "Util/TransformUtils.hpp"
 #include <memory>
 namespace Game {
 Manager CAT;
@@ -33,8 +33,8 @@ void Manager::Start() {
         "../resources/Font/ANY.ttf", 24, "ChrPos: 0",
         ::Util::Color{135 / 255., 206 / 255., 235 / 255., 1});
     m_Plain = std::make_shared<Util::QuadTree>(
-        0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, QUADTREE_MAX_OBJECTS,
-        QUADTREE_MAX_LEVELS, 0);
+        0, 0, PTSD_Config::WINDOW_WIDTH, PTSD_Config::WINDOW_HEIGHT,
+        QUADTREE_MAX_OBJECTS, QUADTREE_MAX_LEVELS, 0);
     AcquireWeapon("VAMPIRICA");
     Util::Clock.Start();
 }
@@ -106,8 +106,18 @@ void Manager::Draw() {
     for (auto &projectile : m_Projectiles) {
         projectile->Draw();
     }
-    m_FPS->Draw({{-280, 275}, 0, {1, 1}}, 3);
-    m_ChrPos->Draw({{-280, 250}, 0, {1, 1}}, 3);
+    {
+        ::Util::Transform fpsTransform{{-280, 275}, 0, {1, 1}};
+        auto fpsData = ::Util::ConvertToUniformBufferData(
+            fpsTransform, m_FPS->GetSize(), 3);
+        m_FPS->Draw(fpsData);
+    }
+    {
+        ::Util::Transform chrPosTransform{{-280, 250}, 0, {1, 1}};
+        auto chrPosData = ::Util::ConvertToUniformBufferData(
+            chrPosTransform, m_ChrPos->GetSize(), 3);
+        m_ChrPos->Draw(chrPosData);
+    }
 }
 bool Manager::Have(std::string name) {
     return m_Have.count(name) > 0;

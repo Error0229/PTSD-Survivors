@@ -6,11 +6,12 @@
 #include <functional>
 
 #include "Core/Drawable.hpp"
+#include "Core/Program.hpp"
 #include "Core/Texture.hpp"
+#include "Core/UniformBuffer.hpp"
+#include "Core/VertexArray.hpp"
 
 #include "Util/Color.hpp"
-#include "Util/Logger.hpp"
-#include "Util/Transform.hpp"
 
 namespace Util {
 /**
@@ -23,8 +24,18 @@ namespace Util {
  */
 class Text : public Core::Drawable {
 public:
+    /**
+     * @brief Constructor for the Text class.
+     *
+     * @param font The font file path or name.
+     * @param size The font size.
+     * @param text The text content to render.
+     * @param color The color of the text (default is gray).
+     * @param useAA Flag indicating whether anti-aliasing should be enabled
+     * (default is true).
+     */
     Text(const std::string &font, int size, const std::string &text,
-         const Util::Color &color = Color(0.5F, 0.5F, 0.5F, 1.0F));
+         const Util::Color &color = Color(127, 127, 127), bool useAA = true);
 
     glm::vec2 GetSize() const override { return m_Size; };
 
@@ -49,12 +60,29 @@ public:
     };
 
     /**
+     * @brief Sets whether anti-aliasing (AA) should be enabled or disabled.
+     *
+     * @param useAA A boolean value indicating whether anti-aliasing should be
+     * enabled (true) or disabled (false).
+     *
+     * @note This function only sets the internal flag for anti-aliasing and
+     * does not directly affect rendering. The actual effect of anti-aliasing
+     * depends on the rendering pipeline and the graphics hardware capabilities.
+     *
+     * @sa https://en.wikipedia.org/wiki/Spatial_anti-aliasing
+     */
+    void UseAntiAliasing(bool useAA);
+
+    /**
      * @brief Draws the text with a given transform and z-index.
+     *
+     * This function draws the image at the specified z-index and applies the
+     * given transform.
      *
      * @param transform The transform to apply to the text.
      * @param zIndex The z-index at which to draw the text.
      */
-    void Draw(const Transform &transform, const float zIndex) override;
+    void Draw(const Core::Matrices &data) override;
 
 private:
     void InitProgram();
@@ -72,7 +100,7 @@ private:
 
     static std::unique_ptr<Core::Program> s_Program;
     static std::unique_ptr<Core::VertexArray> s_VertexArray;
-    static std::unique_ptr<Core::UniformBuffer<Core::Matrices>> s_UniformBuffer;
+    std::unique_ptr<Core::UniformBuffer<Core::Matrices>> m_UniformBuffer;
 
 private:
     std::unique_ptr<Core::Texture> m_Texture = nullptr;

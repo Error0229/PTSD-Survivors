@@ -2,6 +2,7 @@
 #include "Game/Camera.hpp"
 #include "Game/Config.hpp"
 #include "Util/Image.hpp"
+#include "Util/TransformUtils.hpp"
 #include <memory>
 
 namespace Game {
@@ -79,7 +80,10 @@ void Map::Draw() {
         }
         padding->m_Transform.translation =
             Camera::WorldToScreen(padding->m_Position);
-        padding->m_Drawable->Draw(padding->m_Transform, padding->m_ZIndex);
+        auto data = ::Util::ConvertToUniformBufferData(
+            padding->m_Transform, padding->m_Drawable->GetSize(),
+            padding->m_ZIndex);
+        padding->m_Drawable->Draw(data);
     }
 }
 } // namespace Game

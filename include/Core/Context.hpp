@@ -5,6 +5,8 @@
 
 #include "config.hpp"
 
+#include "Util/Time.hpp"
+
 namespace Core {
 class Context {
 public:
@@ -29,7 +31,9 @@ public:
     void SetExit(bool exit) { m_Exit = exit; }
     void SetWindowWidth(unsigned int width) { m_WindowWidth = width; }
     void SetWindowHeight(unsigned int height) { m_WindowHeight = height; }
+    void SetWindowIcon(const std::string &path);
 
+    void Setup();
     void Update();
 
 private:
@@ -39,10 +43,12 @@ private:
     static std::shared_ptr<Context> s_Instance;
     bool m_Exit = false;
 
-    unsigned int m_WindowWidth = WINDOW_WIDTH;
-    unsigned int m_WindowHeight = WINDOW_HEIGHT;
-};
+    unsigned int m_WindowWidth = PTSD_Config::WINDOW_WIDTH;
+    unsigned int m_WindowHeight = PTSD_Config::WINDOW_HEIGHT;
 
+    // Can't access Time::s_Now, so using this variable to track time.
+    Util::ms_t m_BeforeUpdateTime = Util::Time::GetElapsedTimeMs();
+};
 } // namespace Core
 
 #endif

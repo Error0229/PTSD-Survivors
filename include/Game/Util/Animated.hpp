@@ -14,7 +14,7 @@ public:
               bool isLoop = true, time_t frameTime = 100);
     void Load(const std::string &name, std::shared_ptr<Animation> animation);
     void SetAnimation(const std::string &name);
-    void Draw(::Util::Transform &transform, float_t &zIndex,
+    void Draw(const ::Util::Transform &transform, const float_t &zIndex,
               const std::string &name = NULL_STRING);
     void Play(const std::string &name = NULL_STRING);
     void Stop(const std::string &name = NULL_STRING);

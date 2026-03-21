@@ -1,63 +1,71 @@
 #include "Util/Image.hpp"
 
+#include "Util/Logger.hpp"
 #include "pch.hpp"
 
 #include "Core/Texture.hpp"
 #include "Core/TextureUtils.hpp"
-
-#include "Util/TransformUtils.hpp"
+#include "Util/MissingTexture.hpp"
 
 #include "config.hpp"
+#include <glm/fwd.hpp>
+
+std::shared_ptr<SDL_Surface> LoadSurface(const std::string &filepath) {
+    auto surface = std::shared_ptr<SDL_Surface>(IMG_Load(filepath.c_str()),
+                                                SDL_FreeSurface);
+
+    if (surface == nullptr) {
+        surface = {Util::GetMissingImageTextureSDLSurface(), SDL_FreeSurface};
+        LOG_ERROR("Failed to load image: '{}'", filepath);
+        LOG_ERROR("{}", IMG_GetError());
+    }
+
+    return surface;
+}
 
 namespace Util {
-Image::Image(const std::string &filepath) : m_Path(filepath) {
+Image::Image(const std::string &filepath, bool useAA)
+    : m_Path(filepath) {
     if (s_Program == nullptr) {
         InitProgram();
     }
     if (s_VertexArray == nullptr) {
         InitVertexArray();
     }
-    if (s_UniformBuffer == nullptr) {
-        InitUniformBuffer();
-    }
 
-    auto surface =
-        std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
-            IMG_Load(filepath.c_str()),
-            SDL_FreeSurface,
-        };
+    m_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
+        *s_Program, "Matrices", 0);
+
+    auto surface = s_Store.Get(filepath);
+
     if (surface == nullptr) {
         LOG_ERROR("Failed to load image: '{}'", filepath);
         LOG_ERROR("{}", IMG_GetError());
+        surface = {GetMissingImageTextureSDLSurface(), SDL_FreeSurface};
     }
 
     m_Texture = std::make_unique<Core::Texture>(
         Core::SdlFormatToGlFormat(surface->format->format), surface->w,
-        surface->h, surface->pixels);
+        surface->h, surface->pixels, useAA);
     m_Size = {surface->w, surface->h};
 }
 
 Image::Image(const std::string_view &filepath) : Image(std::string{filepath}) {}
 
 void Image::SetImage(const std::string &filepath) {
-    auto surface =
-        std::unique_ptr<SDL_Surface, std::function<void(SDL_Surface *)>>{
-            IMG_Load(filepath.c_str()),
-            SDL_FreeSurface,
-        };
-    if (surface == nullptr) {
-        LOG_ERROR("Failed to load image: '{}'", filepath);
-        LOG_ERROR("{}", IMG_GetError());
-    }
+    auto surface = s_Store.Get(filepath);
 
     m_Texture->UpdateData(Core::SdlFormatToGlFormat(surface->format->format),
                           surface->w, surface->h, surface->pixels);
     m_Size = {surface->w, surface->h};
 }
 
-void Image::Draw(const Util::Transform &transform, const float zIndex) {
-    auto data = Util::ConvertToUniformBufferData(transform, m_Size, zIndex);
-    s_UniformBuffer->SetData(0, data);
+void Image::UseAntiAliasing(bool useAA) {
+    m_Texture->UseAntiAliasing(useAA);
+}
+
+void Image::Draw(const Core::Matrices &data) {
+    m_UniformBuffer->SetData(0, data);
 
     m_Texture->Bind(UNIFORM_SURFACE_LOCATION);
     s_Program->Bind();
@@ -69,8 +77,9 @@ void Image::Draw(const Util::Transform &transform, const float zIndex) {
 
 void Image::InitProgram() {
     // TODO: Create `BaseProgram` from `Program` and pass it into `Drawable`
-    s_Program = std::make_unique<Core::Program>("../assets/shaders/Base.vert",
-                                                "../assets/shaders/Base.frag");
+    s_Program =
+        std::make_unique<Core::Program>(PTSD_ASSETS_DIR "/shaders/Base.vert",
+                                        PTSD_ASSETS_DIR "/shaders/Base.frag");
     s_Program->Bind();
 
     GLint location = glGetUniformLocation(s_Program->GetId(), "surface");
@@ -113,13 +122,8 @@ void Image::InitVertexArray() {
     // NOLINTEND
 }
 
-void Image::InitUniformBuffer() {
-    s_UniformBuffer = std::make_unique<Core::UniformBuffer<Core::Matrices>>(
-        *s_Program, "Matrices", 0);
-}
-
 std::unique_ptr<Core::Program> Image::s_Program = nullptr;
 std::unique_ptr<Core::VertexArray> Image::s_VertexArray = nullptr;
-std::unique_ptr<Core::UniformBuffer<Core::Matrices>> Image::s_UniformBuffer =
-    nullptr;
+
+Util::AssetStore<std::shared_ptr<SDL_Surface>> Image::s_Store(LoadSurface);
 } // namespace Util

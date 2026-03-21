@@ -1,12 +1,9 @@
 #include "App.hpp"
 
-#include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
-#include <memory>
-
-#include "GiraffeText.hpp"
+#include "Util/Position.hpp"
 
 void App::Start() {
     LOG_TRACE("Start");
@@ -15,15 +12,15 @@ void App::Start() {
 }
 
 void App::Update() {
-    if (Util::Input::IsLButtonPressed()) {
+    if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
         Game::CAT.EnemyGen();
         LOG_DEBUG("Left button pressed");
     }
-    if (Util::Input::IsRButtonPressed()) {
+    if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_RB)) {
         LOG_DEBUG("Right button pressed");
         Game::CAT.HurtEnemy();
     }
-    if (Util::Input::IsMButtonPressed()) {
+    if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_MB)) {
         LOG_DEBUG("Middle button pressed");
     }
     if (Util::Input::IfScroll()) {
@@ -44,7 +41,7 @@ void App::Update() {
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::B)) {
         LOG_DEBUG("B");
-        Util::Input::SetCursorPosition({0.0F, 0.0F});
+        Util::Input::SetCursorPosition(Util::PTSDPosition{0.0F, 0.0F});
     }
     Game::CAT.Update();
 }
