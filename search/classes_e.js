@@ -9,5 +9,7 @@ var searchData=
   ['priority_5ftag_6',['priority_tag',['../structnlohmann_1_1detail_1_1priority__tag.html',1,'nlohmann::detail']]],
   ['priority_5ftag_3c_200_20_3e_7',['priority_tag&lt; 0 &gt;',['../structnlohmann_1_1detail_1_1priority__tag_3_010_01_4.html',1,'nlohmann::detail']]],
   ['program_8',['Program',['../classCore_1_1Program.html',1,'Core']]],
-  ['projectile_9',['Projectile',['../classGame_1_1Projectile_1_1Projectile.html',1,'Game::Projectile']]]
+  ['projectile_9',['Projectile',['../classGame_1_1Projectile_1_1Projectile.html',1,'Game::Projectile']]],
+  ['ptsd_5fconfig_10',['PTSD_Config',['../structPTSD__Config.html',1,'']]],
+  ['ptsdposition_11',['PTSDPosition',['../structUtil_1_1PTSDPosition.html',1,'Util']]]
 ];

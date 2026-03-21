@@ -12,6 +12,10 @@ var hierarchy =
     ] ],
     [ "Game::Util::Animation", "classGame_1_1Util_1_1Animation.html", null ],
     [ "App", "classApp.html", null ],
+    [ "Util::AssetStore< T >", "classUtil_1_1AssetStore.html", null ],
+    [ "Util::AssetStore< std::shared_ptr< Mix_Chunk > >", "classUtil_1_1AssetStore.html", null ],
+    [ "Util::AssetStore< std::shared_ptr< Mix_Music > >", "classUtil_1_1AssetStore.html", null ],
+    [ "Util::AssetStore< std::shared_ptr< SDL_Surface > >", "classUtil_1_1AssetStore.html", null ],
     [ "B1", null, [
       [ "nlohmann::detail::conjunction< B1 >", "structnlohmann_1_1detail_1_1conjunction_3_01B1_01_4.html", null ]
     ] ],
@@ -83,7 +87,10 @@ var hierarchy =
       [ "nlohmann::detail::is_iterator_traits< T, typename >", "structnlohmann_1_1detail_1_1is__iterator__traits.html", null ]
     ] ],
     [ "fmt::formatter", null, [
-      [ "fmt::formatter< Util::Transform >", "structfmt_1_1formatter_3_01Util_1_1Transform_01_4.html", null ]
+      [ "fmt::formatter< Util::PTSDPosition >", "structfmt_1_1formatter_3_01Util_1_1PTSDPosition_01_4.html", null ],
+      [ "fmt::formatter< Util::Transform >", "structfmt_1_1formatter_3_01Util_1_1Transform_01_4.html", null ],
+      [ "fmt::formatter< glm::mat< C, R, Pre > >", "structfmt_1_1formatter_3_01glm_1_1mat_3_01C_00_01R_00_01Pre_01_4_01_4.html", null ],
+      [ "fmt::formatter< glm::vec< L, Pre > >", "structfmt_1_1formatter_3_01glm_1_1vec_3_01L_00_01Pre_01_4_01_4.html", null ]
     ] ],
     [ "nlohmann::detail::from_json_fn", "structnlohmann_1_1detail_1_1from__json__fn.html", null ],
     [ "Util::GameObject", "classUtil_1_1GameObject.html", [
@@ -189,12 +196,15 @@ var hierarchy =
     [ "nlohmann::detail::priority_tag< N >", "structnlohmann_1_1detail_1_1priority__tag.html", null ],
     [ "nlohmann::detail::priority_tag< 0 >", "structnlohmann_1_1detail_1_1priority__tag_3_010_01_4.html", null ],
     [ "Core::Program", "classCore_1_1Program.html", null ],
+    [ "PTSD_Config", "structPTSD__Config.html", null ],
+    [ "Util::PTSDPosition", "structUtil_1_1PTSDPosition.html", null ],
     [ "Game::Util::QuadTree", "classGame_1_1Util_1_1QuadTree.html", null ],
+    [ "Util::Renderer", "classUtil_1_1Renderer.html", null ],
     [ "Game::Resource", "classGame_1_1Resource.html", null ],
     [ "std::reverse_iterator", null, [
       [ "nlohmann::detail::json_reverse_iterator< Base >", "classnlohmann_1_1detail_1_1json__reverse__iterator.html", null ]
     ] ],
-    [ "Util::Root", "classUtil_1_1Root.html", null ],
+    [ "Util::SDLPosition", "structUtil_1_1SDLPosition.html", null ],
     [ "nlohmann::detail::serializer< BasicJsonType >", "classnlohmann_1_1detail_1_1serializer.html", null ],
     [ "Util::SFX", "classUtil_1_1SFX.html", null ],
     [ "Core::Shader", "classCore_1_1Shader.html", null ],

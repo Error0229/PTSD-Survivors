@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['id_0',['id',['../classnlohmann_1_1detail_1_1exception.html#a0d4589a3fb54e81646d986c05efa3b9a',1,'nlohmann::detail::exception']]]
+  ['fps_5fcap_0',['FPS_CAP',['../structPTSD__Config.html#ae2f8a1724070f28032507c0ec1ed7aa8',1,'PTSD_Config']]]
 ];

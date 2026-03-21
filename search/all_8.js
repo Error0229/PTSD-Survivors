@@ -4,7 +4,7 @@ var searchData=
   ['ifexit_1',['IfExit',['../classUtil_1_1Input.html#a6eea7896fd941f4566c3e810e730d3d5',1,'Util::Input']]],
   ['ifscroll_2',['IfScroll',['../classUtil_1_1Input.html#a7322fdf894842d7ba57d6a7781e35e0e',1,'Util::Input']]],
   ['ignore_3',['ignore',['../namespacenlohmann_1_1detail.html#a5a76b60b26dc8c47256a996d18d967dfa567bc1d268f135496de3d5b946b691f3',1,'nlohmann::detail']]],
-  ['image_4',['Image',['../classUtil_1_1Image.html#a7804373fecd58d06045c3f2019a10cf7',1,'Util::Image::Image(const std::string &amp;filepath)'],['../classUtil_1_1Image.html#ae11efc4536dc9bda901182b41860867f',1,'Util::Image::Image(const std::string_view &amp;filepath)'],['../classUtil_1_1Image.html',1,'Util::Image']]],
+  ['image_4',['Image',['../classUtil_1_1Image.html#ae232d152681a7c192b6ba5dfd122911c',1,'Util::Image::Image(const std::string &amp;filepath, bool useAA=true)'],['../classUtil_1_1Image.html#ae11efc4536dc9bda901182b41860867f',1,'Util::Image::Image(const std::string_view &amp;filepath)'],['../classUtil_1_1Image.html',1,'Util::Image']]],
   ['index_5fsequence_5',['index_sequence',['../structnlohmann_1_1detail_1_1index__sequence.html',1,'nlohmann::detail']]],
   ['index_5fsequence_3c_200_20_3e_6',['index_sequence&lt; 0 &gt;',['../structnlohmann_1_1detail_1_1index__sequence.html',1,'nlohmann::detail']]],
   ['index_5fsequence_3c_20i1_2e_2e_2e_2c_28sizeof_2e_2e_2e_28i1_29_2bi2_29_2e_2e_2e_20_3e_7',['index_sequence&lt; I1...,(sizeof...(I1)+I2)... &gt;',['../structnlohmann_1_1detail_1_1index__sequence.html',1,'nlohmann::detail']]],

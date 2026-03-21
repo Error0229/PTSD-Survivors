@@ -19,6 +19,7 @@ var searchData=
   ['literal_5for_5fvalue_16',['literal_or_value',['../classnlohmann_1_1detail_1_1lexer.html#a3f313cdbe187cababfc5e06f0b69b098ad2a8e6f6721cccec0b466301dd9495a5',1,'nlohmann::detail::lexer']]],
   ['literal_5ftrue_17',['literal_true',['../classnlohmann_1_1detail_1_1lexer.html#a3f313cdbe187cababfc5e06f0b69b098a85cc1a37b0aaa52de40e72f0ed4e0c0d',1,'nlohmann::detail::lexer']]],
   ['little_5fendianess_18',['little_endianess',['../classnlohmann_1_1detail_1_1binary__reader.html#a1e31dbfcf9567c8c2d4f0e4eb1b0230a',1,'nlohmann::detail::binary_reader']]],
-  ['loadmedia_19',['LoadMedia',['../classUtil_1_1SFX.html#aa5128b936ea220bb3f3cb3e150e10678',1,'Util::SFX::LoadMedia()'],['../classUtil_1_1BGM.html#a25569bb71245283c8574a36e47b15c25',1,'Util::BGM::LoadMedia()']]],
-  ['loadtextfile_20',['LoadTextFile',['../namespaceUtil.html#a343c4ab3cb2daa5a8e7278592870d148',1,'Util']]]
+  ['load_19',['Load',['../classUtil_1_1AssetStore.html#a49ebe228fb30da6945e15fee2fc28af9',1,'Util::AssetStore']]],
+  ['loadmedia_20',['LoadMedia',['../classUtil_1_1SFX.html#aa5128b936ea220bb3f3cb3e150e10678',1,'Util::SFX::LoadMedia()'],['../classUtil_1_1BGM.html#a25569bb71245283c8574a36e47b15c25',1,'Util::BGM::LoadMedia()']]],
+  ['loadtextfile_21',['LoadTextFile',['../namespaceUtil.html#a343c4ab3cb2daa5a8e7278592870d148',1,'Util']]]
 ];
