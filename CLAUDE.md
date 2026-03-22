@@ -40,3 +40,30 @@
 - `Enemy::Width()` and `Height()` are swapped
 - `Vampirica` weapon is an exact copy of `Whip` — differentiate or remove
 - Projectile-enemy collision partially disabled in `Manager.cpp`
+
+## gstack
+
+Use the `/browse` skill from gstack for all web browsing. Never use `mcp__claude-in-chrome__*` tools directly.
+
+Available skills:
+- `/office-hours` — Brainstorming and idea validation
+- `/plan-ceo-review` — Strategy-level plan review
+- `/plan-eng-review` — Architecture-level plan review
+- `/plan-design-review` — Design-level plan review
+- `/design-consultation` — Create a design system
+- `/review` — Pre-landing code review
+- `/ship` — Ship workflow (test, review, PR, deploy)
+- `/browse` — Headless browser for QA and site testing
+- `/qa` — Systematic QA testing with auto-fix
+- `/qa-only` — QA report without fixes
+- `/design-review` — Visual design audit with fixes
+- `/setup-browser-cookies` — Import browser cookies for authenticated testing
+- `/retro` — Weekly engineering retrospective
+- `/investigate` — Systematic debugging with root cause analysis
+- `/document-release` — Post-ship documentation updates
+- `/codex` — Second opinion / adversarial code review
+- `/careful` — Safety guardrails for destructive commands
+- `/freeze` — Restrict edits to a specific directory
+- `/guard` — Maximum safety mode (careful + freeze)
+- `/unfreeze` — Remove edit restrictions
+- `/gstack-upgrade` — Upgrade gstack to latest version

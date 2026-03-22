@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include "Core/SpriteBatch.hpp"
 #include "Util/GameObject.hpp"
 
 class App;
@@ -18,7 +19,6 @@ class Renderer final {
 public:
     /**
      * @brief Parameterized constructor.
-     *`
      *
      * @param children The GameObject needing to be managed by Renderer.
      */
@@ -47,13 +47,20 @@ public:
 
     /**
      * @brief Draw children according to their z-index.
+     * Uses SpriteBatch for batched rendering when available.
      *
      * @note The user is not recommended to modify this function.
      */
     void Update();
 
+    /**
+     * @brief Get the number of draw calls issued in the last frame.
+     */
+    int GetDrawCallCount() const;
+
 private:
     std::vector<std::shared_ptr<GameObject>> m_Children;
+    std::unique_ptr<Core::SpriteBatch> m_Batch;
 };
 } // namespace Util
 

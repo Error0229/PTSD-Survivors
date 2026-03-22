@@ -7,7 +7,9 @@
 
 #include "Core/Drawable.hpp"
 #include "Core/Program.hpp"
+#include "Core/SpriteBatch.hpp"
 #include "Core/Texture.hpp"
+#include "Core/TextureAtlas.hpp"
 #include "Core/UniformBuffer.hpp"
 #include "Core/VertexArray.hpp"
 
@@ -21,6 +23,10 @@ namespace Util {
  * This class encapsulates the properties and behaviors of an image.
  * It includes properties such as texture and surface.
  * It also includes behaviors such as drawing the image.
+ *
+ * Supports two rendering modes:
+ * - Immediate mode: each sprite issues its own draw call (legacy)
+ * - Batch mode: sprites are submitted to a SpriteBatch for batched rendering
  */
 class Image : public Core::Drawable {
 public:
@@ -83,6 +89,27 @@ public:
      */
     void Draw(const Core::Matrices &data) override;
 
+    // --- Batch mode API ---
+
+    /**
+     * @brief Set the active SpriteBatch. When set, Draw() submits to batch.
+     * Pass nullptr to revert to immediate mode.
+     */
+    static void SetBatch(Core::SpriteBatch *batch) { s_Batch = batch; }
+
+    /**
+     * @brief Get the GL texture ID (standalone or atlas).
+     */
+    GLuint GetTextureId() const;
+
+    /**
+     * @brief Build texture atlases from all sprites currently in the texture
+     * cache. Call after all sprites are loaded (e.g., after
+     * Resource::Initialize). Sprites >256px in either dimension are skipped
+     * and keep their standalone textures.
+     */
+    static void BuildAtlases();
+
 private:
     void InitProgram();
     void InitVertexArray();
@@ -96,8 +123,20 @@ private:
 
     static Util::AssetStore<std::shared_ptr<SDL_Surface>> s_Store;
 
+    // Shared texture cache: same filepath → same GL texture
+    static std::unordered_map<std::string, std::shared_ptr<Core::Texture>>
+        s_TextureCache;
+
+    // Active SpriteBatch (null = immediate mode)
+    static Core::SpriteBatch *s_Batch;
+
+    // Global atlas lookup: filepath → (atlas textureId, UV region)
+    static std::vector<std::unique_ptr<Core::TextureAtlas>> s_Atlases;
+    static std::unordered_map<std::string, std::pair<GLuint, Core::AtlasRegion>>
+        s_AtlasLookup;
+
 private:
-    std::unique_ptr<Core::Texture> m_Texture = nullptr;
+    std::shared_ptr<Core::Texture> m_Texture = nullptr;
 
     std::string m_Path;
     glm::vec2 m_Size;

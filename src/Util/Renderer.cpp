@@ -2,7 +2,9 @@
 
 #include <queue>
 
+#include "Util/Image.hpp"
 #include "Util/Logger.hpp"
+#include "Util/TransformUtils.hpp"
 
 namespace Util {
 Renderer::Renderer(const std::vector<std::shared_ptr<GameObject>> &children)
@@ -24,6 +26,11 @@ void Renderer::AddChildren(
 }
 
 void Renderer::Update() {
+    // Lazily initialize the SpriteBatch
+    if (!m_Batch) {
+        m_Batch = std::make_unique<Core::SpriteBatch>(8192);
+    }
+
     struct StackInfo {
         std::shared_ptr<GameObject> m_GameObject;
         Transform m_ParentTransform;
@@ -53,12 +60,27 @@ void Renderer::Update() {
                 StackInfo{child, curr.m_GameObject->GetTransform()});
         }
     }
-    // draw all in render queue by order
+
+    glm::mat4 viewProjection = Util::ComputeViewProjection();
+
+    // Begin batched rendering
+    Image::SetBatch(m_Batch.get());
+    m_Batch->Begin(viewProjection);
+
+    // Draw all in render queue by z-order
     while (!renderQueue.empty()) {
         auto curr = renderQueue.top();
         renderQueue.pop();
 
         curr.m_GameObject->Draw();
     }
+
+    // Flush batched draw calls
+    m_Batch->End();
+    Image::SetBatch(nullptr);
+}
+
+int Renderer::GetDrawCallCount() const {
+    return m_Batch ? m_Batch->GetDrawCallCount() : 0;
 }
 } // namespace Util

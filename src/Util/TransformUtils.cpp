@@ -32,4 +32,18 @@ Core::Matrices ConvertToUniformBufferData(const Util::Transform &transform,
     return data;
 }
 
+glm::mat4 ComputeViewProjection() {
+    constexpr float nearClip = -100;
+    constexpr float farClip = 100;
+    constexpr glm::mat4 eye(1.F);
+
+    auto projection =
+        glm::ortho<float>(0.0F, 1.0F, 0.0F, 1.0F, nearClip, farClip);
+    auto view = glm::scale(eye, {1.F / PTSD_Config::WINDOW_WIDTH,
+                                 1.F / PTSD_Config::WINDOW_HEIGHT, 1.F}) *
+                glm::translate(eye, {PTSD_Config::WINDOW_WIDTH / 2,
+                                     PTSD_Config::WINDOW_HEIGHT / 2, 0});
+    return projection * view;
+}
+
 } // namespace Util

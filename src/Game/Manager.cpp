@@ -8,10 +8,12 @@
 #include "Game/Weapon/Vampirica.hpp"
 #include "Game/Weapon/Whip.hpp"
 #include "Util/Color.hpp"
+#include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Time.hpp"
 #include "Util/Transform.hpp"
+#include "Util/TransformUtils.hpp"
 #include "config.hpp"
 #include "pch.hpp"
 #include "Util/TransformUtils.hpp"
@@ -20,6 +22,7 @@ namespace Game {
 Manager CAT;
 void Manager::Start() {
     Resource::Initialize();
+    ::Util::Image::BuildAtlases();
     m_Character = Resource::GetCharacter("TATANKA");
     m_Character->SetAnimation("Default");
     m_Character->Start();
@@ -95,11 +98,28 @@ void Manager::Update() {
         result.clear();
     }
     toErase.clear();
-    m_FPS->SetText("Frame time: " +
-                   std::to_string(::Util::Time::GetDeltaTime() * 1000));
+    int drawCalls = m_Batch ? m_Batch->GetDrawCallCount() : 0;
+    int spriteCount = m_Batch ? m_Batch->GetSpriteCount() : 0;
+    float fps = ::Util::Time::GetDeltaTime() > 0
+                    ? 1.0f / ::Util::Time::GetDeltaTime()
+                    : 0;
+    m_FPS->SetText("FPS:" + std::to_string(static_cast<int>(fps)) +
+                   "  DC:" + std::to_string(drawCalls) +
+                   "  Sprites:" + std::to_string(spriteCount));
     m_ChrPos->SetText("ChrPos:" + glm::to_string(m_Character->GetPosition()));
 }
 void Manager::Draw() {
+    // Lazily initialize SpriteBatch
+    if (!m_Batch) {
+        m_Batch = std::make_unique<Core::SpriteBatch>(8192);
+    }
+
+    glm::mat4 viewProjection = ::Util::ComputeViewProjection();
+
+    // Begin batched rendering
+    ::Util::Image::SetBatch(m_Batch.get());
+    m_Batch->Begin(viewProjection);
+
     m_Map->Draw();
     m_Character->Draw();
     std::for_each(m_Enemies.begin(), m_Enemies.end(),
@@ -107,6 +127,13 @@ void Manager::Draw() {
     for (auto &projectile : m_Projectiles) {
         projectile->Draw();
     }
+
+    // Flush batched sprites
+    m_Batch->End();
+    ::Util::Image::SetBatch(nullptr);
+
+    // Draw text overlays in immediate mode (not batched — Text uses its own
+    // rendering path)
     {
         ::Util::Transform fpsTransform{{-280, 275}, 0, {1, 1}};
         auto fpsData = ::Util::ConvertToUniformBufferData(

@@ -144,10 +144,18 @@ void Context::Setup() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
+    m_ImGuiFrameStarted = true;
 #endif
 }
 
 void Context::Update() {
+#ifndef PTSD_DISABLE_IMGUI
+    if (m_ImGuiFrameStarted) {
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        m_ImGuiFrameStarted = false;
+    }
+#endif
     Util::Input::Update();
     SDL_GL_SwapWindow(m_Window);
 

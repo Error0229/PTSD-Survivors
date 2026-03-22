@@ -48,6 +48,8 @@ private:
 
     // Can't access Time::s_Now, so using this variable to track time.
     Util::ms_t m_BeforeUpdateTime = Util::Time::GetElapsedTimeMs();
+
+    bool m_ImGuiFrameStarted = false;
 };
 } // namespace Core
 

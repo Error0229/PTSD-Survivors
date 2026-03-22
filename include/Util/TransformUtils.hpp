@@ -23,6 +23,14 @@ namespace Util {
 Core::Matrices ConvertToUniformBufferData(const Util::Transform &transform,
                                           const glm::vec2 &size, float zIndex);
 
+/**
+ * @brief Compute the view-projection matrix for 2D rendering.
+ *
+ * Uses the current PTSD_Config window dimensions with an orthographic
+ * projection centered at (0,0).
+ */
+glm::mat4 ComputeViewProjection();
+
 } // namespace Util
 
 #endif // UTIL_TRANSFORM_UTILS_HPP

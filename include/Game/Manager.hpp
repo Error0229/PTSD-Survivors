@@ -1,5 +1,6 @@
 #ifndef MANAGER_HPP
 #define MANAGER_HPP
+#include "Core/SpriteBatch.hpp"
 #include "Game/Character.hpp"
 #include "Game/Enemy/Enemy.hpp"
 #include "Game/Map.hpp"
@@ -35,6 +36,7 @@ private:
     std::shared_ptr<::Util::Text> m_FPS;
     std::shared_ptr<::Util::Text> m_ChrPos;
     std::shared_ptr<Util::QuadTree> m_Plain;
+    std::unique_ptr<Core::SpriteBatch> m_Batch;
 };
 extern Manager CAT;
 } // namespace Game
