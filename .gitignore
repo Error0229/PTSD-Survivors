@@ -499,7 +499,6 @@ lib/
 # Doxygen generated files
 docs/html/
 
-# Ignore all Assets
-Assets/
 resources/
 build-web/
+.gstack/
