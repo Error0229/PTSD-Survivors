@@ -37,9 +37,7 @@
 
 ## Known Bugs
 
-- `Enemy::Width()` and `Height()` are swapped
-- `Vampirica` weapon is an exact copy of `Whip` — differentiate or remove
-- Projectile-enemy collision partially disabled in `Manager.cpp`
+*(All Phase 4 bugs fixed — see TODOS.md for remaining work items)*
 
 ## gstack
 

@@ -1,0 +1,668 @@
+{
+  "enemies": [
+    {
+      "time_min": 0,
+      "pool": [
+        {
+          "type": "MUD",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 50,
+      "interval_ms": 3000.0
+    },
+    {
+      "time_min": 1,
+      "pool": [
+        {
+          "type": "MUD",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 80,
+      "interval_ms": 3000.0
+    },
+    {
+      "time_min": 2,
+      "pool": [
+        {
+          "type": "MUD",
+          "weight": 1.0
+        },
+        {
+          "type": "ECTO1",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 100,
+      "interval_ms": 4000.0
+    },
+    {
+      "time_min": 3,
+      "pool": [
+        {
+          "type": "MUMMY",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 60,
+      "interval_ms": 4000.0
+    },
+    {
+      "time_min": 4,
+      "pool": [
+        {
+          "type": "MUD",
+          "weight": 1.0
+        },
+        {
+          "type": "MUMMY",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 110,
+      "interval_ms": 4000.0
+    },
+    {
+      "time_min": 5,
+      "pool": [
+        {
+          "type": "MUMMY",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 100,
+      "interval_ms": 4000.0
+    },
+    {
+      "time_min": 6,
+      "pool": [
+        {
+          "type": "DULL1",
+          "weight": 1.0
+        },
+        {
+          "type": "ECTO1",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 30,
+      "interval_ms": 1200.0
+    },
+    {
+      "time_min": 7,
+      "pool": [
+        {
+          "type": "DULL1",
+          "weight": 1.0
+        },
+        {
+          "type": "ECTO1",
+          "weight": 1.0
+        },
+        {
+          "type": "ECTO2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 80,
+      "interval_ms": 2000.0
+    },
+    {
+      "time_min": 8,
+      "pool": [
+        {
+          "type": "GHOST",
+          "weight": 1.0
+        },
+        {
+          "type": "ECTO2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 80,
+      "interval_ms": 1000.0
+    },
+    {
+      "time_min": 9,
+      "pool": [
+        {
+          "type": "GHOST",
+          "weight": 1.0
+        },
+        {
+          "type": "MUMMY",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 200,
+      "interval_ms": 500.0
+    },
+    {
+      "time_min": 10,
+      "pool": [
+        {
+          "type": "ECTO2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 100,
+      "interval_ms": 500.0
+    },
+    {
+      "time_min": 11,
+      "pool": [
+        {
+          "type": "MEDUSA2",
+          "weight": 1.0
+        },
+        {
+          "type": "BUER",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 120,
+      "interval_ms": 2000.0
+    },
+    {
+      "time_min": 12,
+      "pool": [
+        {
+          "type": "MEDUSA2",
+          "weight": 1.0
+        },
+        {
+          "type": "DULL1",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 80,
+      "interval_ms": 1000.0
+    },
+    {
+      "time_min": 13,
+      "pool": [
+        {
+          "type": "MUMMY",
+          "weight": 1.0
+        },
+        {
+          "type": "DULL1",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 120,
+      "interval_ms": 500.0
+    },
+    {
+      "time_min": 14,
+      "pool": [
+        {
+          "type": "MUMMY",
+          "weight": 1.0
+        },
+        {
+          "type": "MEDUSA1",
+          "weight": 1.0
+        },
+        {
+          "type": "ECTO2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 300,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 15,
+      "pool": [
+        {
+          "type": "MEDUSA2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 100,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 16,
+      "pool": [
+        {
+          "type": "WITCH1",
+          "weight": 1.0
+        },
+        {
+          "type": "DULL1",
+          "weight": 1.0
+        },
+        {
+          "type": "DULL2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 100,
+      "interval_ms": 1000.0
+    },
+    {
+      "time_min": 17,
+      "pool": [
+        {
+          "type": "WITCH1",
+          "weight": 1.0
+        },
+        {
+          "type": "ECTO2",
+          "weight": 1.0
+        },
+        {
+          "type": "ECTO1",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 200,
+      "interval_ms": 1000.0
+    },
+    {
+      "time_min": 18,
+      "pool": [
+        {
+          "type": "WITCH1",
+          "weight": 1.0
+        },
+        {
+          "type": "BUER",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 60,
+      "interval_ms": 500.0
+    },
+    {
+      "time_min": 19,
+      "pool": [
+        {
+          "type": "WITCH1",
+          "weight": 1.0
+        },
+        {
+          "type": "DULL2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 120,
+      "interval_ms": 500.0
+    },
+    {
+      "time_min": 20,
+      "pool": [
+        {
+          "type": "BUER",
+          "weight": 1.0
+        },
+        {
+          "type": "DULL2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 100,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 21,
+      "pool": [
+        {
+          "type": "BUER",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 100,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 22,
+      "pool": [
+        {
+          "type": "BUER",
+          "weight": 1.0
+        },
+        {
+          "type": "WITCH2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 80,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 23,
+      "pool": [
+        {
+          "type": "DULL1",
+          "weight": 1.0
+        },
+        {
+          "type": "DULL2",
+          "weight": 1.0
+        },
+        {
+          "type": "WITCH2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 120,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 24,
+      "pool": [
+        {
+          "type": "WITCH2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 300,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 25,
+      "pool": [
+        {
+          "type": "WITCH2",
+          "weight": 1.0
+        },
+        {
+          "type": "SKULL2",
+          "weight": 1.0
+        },
+        {
+          "type": "XLBAT",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 300,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 26,
+      "pool": [
+        {
+          "type": "XLMEDUSA",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 100,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 27,
+      "pool": [
+        {
+          "type": "XLMEDUSA",
+          "weight": 1.0
+        },
+        {
+          "type": "MEDUSA2",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 300,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 28,
+      "pool": [
+        {
+          "type": "MEDUSA2",
+          "weight": 1.0
+        },
+        {
+          "type": "BOSS_MEDUSA",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 250,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 29,
+      "pool": [
+        {
+          "type": "BOSS_MUD",
+          "weight": 1.0
+        },
+        {
+          "type": "BOSS_ECTO",
+          "weight": 1.0
+        },
+        {
+          "type": "BOSS_BUER",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 250,
+      "interval_ms": 100.0
+    },
+    {
+      "time_min": 30,
+      "pool": [
+        {
+          "type": "DEATH",
+          "weight": 1.0
+        }
+      ],
+      "min_count": 1,
+      "interval_ms": 10000.0
+    }
+  ],
+  "bosses": [
+    {
+      "time_min": 3,
+      "type": "BOSS_XLMUMMY",
+      "chest_evo_chance": 0.0
+    },
+    {
+      "time_min": 5,
+      "type": "BOSS_XLMUMMY",
+      "chest_evo_chance": 0.0
+    },
+    {
+      "time_min": 8,
+      "type": "BOSS_ECTO",
+      "chest_evo_chance": 0.0
+    },
+    {
+      "time_min": 10,
+      "type": "BOSS_BUER",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 11,
+      "type": "BOSS_MEDUSA",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 11,
+      "type": "BAT4"
+    },
+    {
+      "time_min": 12,
+      "type": "BAT4",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 13,
+      "type": "BOSS_MUD",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 14,
+      "type": "BAT5",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 15,
+      "type": "BOSS_XLMEDUSA",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 16,
+      "type": "BAT4",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 18,
+      "type": "WITCH2",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 20,
+      "type": "BOSS_COUNT",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 21,
+      "type": "BAT4",
+      "chest_evo_chance": 0.0
+    },
+    {
+      "time_min": 22,
+      "type": "BAT4",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 23,
+      "type": "BOSS_BUER",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 25,
+      "type": "BOSS_HAG",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 26,
+      "type": "BOSS_XLMEDUSA",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 27,
+      "type": "BOSS_XLMEDUSA",
+      "chest_evo_chance": 1.0
+    },
+    {
+      "time_min": 28,
+      "type": "BOSS_XLMEDUSA",
+      "chest_evo_chance": 1.0
+    }
+  ],
+  "swarms": [
+    {
+      "time_min": 0,
+      "type": "SWARM_SHADERED",
+      "amount": 1,
+      "interval_ms": 100
+    },
+    {
+      "time_min": 2,
+      "type": "SWARM_MEDUSA",
+      "amount": 72,
+      "interval_ms": 5000.0
+    },
+    {
+      "time_min": 5,
+      "type": "SWARM_MEDUSA",
+      "amount": 72,
+      "interval_ms": 5000.0
+    },
+    {
+      "time_min": 6,
+      "type": "SWARM_SHADERED",
+      "amount": 5,
+      "interval_ms": 10000.0
+    },
+    {
+      "time_min": 7,
+      "type": "SWARM_SHADERED",
+      "amount": 9,
+      "interval_ms": 5000.0
+    },
+    {
+      "time_min": 9,
+      "type": "SWARM_SHADERED",
+      "amount": 6,
+      "interval_ms": 20000.0
+    },
+    {
+      "time_min": 10,
+      "type": "SWARM_SHADERED",
+      "amount": 1,
+      "interval_ms": 100
+    },
+    {
+      "time_min": 10,
+      "type": "BAT1",
+      "amount": 8,
+      "interval_ms": 10000.0
+    },
+    {
+      "time_min": 12,
+      "type": "SWARM_MEDUSA",
+      "amount": 72,
+      "interval_ms": 5000.0
+    },
+    {
+      "time_min": 15,
+      "type": "SWARM_MEDUSA",
+      "amount": 312,
+      "interval_ms": 2000.0
+    },
+    {
+      "time_min": 17,
+      "type": "SWARM_SHADERED",
+      "amount": 15,
+      "interval_ms": 100
+    },
+    {
+      "time_min": 20,
+      "type": "SWARM_SKULL2",
+      "amount": 120,
+      "interval_ms": 10000.0
+    },
+    {
+      "time_min": 20,
+      "type": "BAT1",
+      "amount": 120,
+      "interval_ms": 10000.0
+    },
+    {
+      "time_min": 22,
+      "type": "SWARM_SHADERED",
+      "amount": 78,
+      "interval_ms": 2000.0
+    },
+    {
+      "time_min": 25,
+      "type": "SWARM_SKULL2",
+      "amount": 240,
+      "interval_ms": 5000.0
+    },
+    {
+      "time_min": 25,
+      "type": "BAT2",
+      "amount": 50,
+      "interval_ms": 100
+    },
+    {
+      "time_min": 27,
+      "type": "SWARM_MEDUSA",
+      "amount": 312,
+      "interval_ms": 2000.0
+    },
+    {
+      "time_min": 22,
+      "type": "SWARM_SHADERED",
+      "amount": 204,
+      "interval_ms": 1000.0
+    }
+  ]
+}
