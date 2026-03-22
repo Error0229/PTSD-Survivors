@@ -86,4 +86,32 @@ void Character::SetInfos(std::string ID, std::string chrName,
     m_Weapon = weapon;
 }
 
+void Character::SetSpeed(float speed) { m_["moveSpeed"] = speed; }
+
+// XP curve from OOPL-VS:
+// Level 1-19:  base 5 + 10/level
+// Level 20-39: base 205 + 13/level
+// Level 40+:   base 475 + 16/level
+float Character::ComputeMaxXP(int level) const {
+    if (level < 20) {
+        return 5.0f + 10.0f * level;
+    } else if (level < 40) {
+        return 205.0f + 13.0f * level;
+    } else {
+        return 475.0f + 16.0f * level;
+    }
+}
+
+int Character::AddXP(float amount) {
+    m_XP += amount;
+    int levelsGained = 0;
+    while (m_XP >= m_MaxXP) {
+        m_XP -= m_MaxXP;
+        m_Level++;
+        m_MaxXP = ComputeMaxXP(m_Level);
+        levelsGained++;
+    }
+    return levelsGained;
+}
+
 } // namespace Game
