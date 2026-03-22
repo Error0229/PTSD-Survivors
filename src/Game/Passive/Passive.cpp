@@ -17,8 +17,12 @@ void Passive::Draw() {
 }
 
 void Passive::LevelUp() {
-    for (auto &stat : m_LevelUpStat[m_["level"] - 1]) {
+    for (auto &stat : m_LevelUpStat[static_cast<int>(m_["level"]) - 1]) {
         m_[stat.first] += stat.second;
+        // Push delta into global effect table (pull model)
+        if (s_Effect.count(stat.first)) {
+            s_Effect[stat.first] += stat.second;
+        }
     }
     m_["level"] += 1;
 }

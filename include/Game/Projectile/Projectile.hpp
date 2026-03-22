@@ -1,5 +1,6 @@
 #ifndef PROJECTILE_HPP
 #define PROJECTILE_HPP
+#include "Game/Projectile/Behavior.hpp"
 #include "Game/Util/Animated.hpp"
 #include "Game/Util/Animation.hpp"
 #include "Game/Util/Mirrored.hpp"
@@ -10,11 +11,6 @@
 #include <string>
 #include <string_view>
 namespace Game::Projectile {
-struct Stats {
-    int32_t duration, pierce, poolLimit, blockByWall;
-    float_t area, chance, critMulti, damage, knockBack, angle;
-    time_t createdTime, interval, hitboxDelay, delay;
-};
 class Projectile : public ::Util::GameObject,
                    public Util::Physical,
                    public Util::Animated,
@@ -29,6 +25,7 @@ public:
     Update(const ::Util::Transform &transform = ::Util::Transform());
     virtual void Draw() override;
     bool IsOver() const;
+    void MarkOver() { m_IsOver = true; }
     void SetUp(std::unordered_map<std::string, float_t> stats);
     float_t Height() const override;
     float_t Width() const override;
@@ -39,12 +36,22 @@ public:
     float_t Get(const std::string &name) const;
     void Set(const std::string &name, float_t value);
 
+    // Behavior system
+    void SetBehavior(BehaviorVariant behavior);
+    BehaviorVariant &GetBehavior() { return m_Behavior; }
+    void StartBehavior(const BehaviorContext &ctx);
+    void UpdateBehavior(float dt, const glm::vec2 &playerPos);
+    void ResetForReuse(); // call when returning to pool
+
 protected:
     float m_ZIndex = PROJECTILE_LAYER;
     std::unordered_map<std::string, float_t> m_;
     std::string m_ID;
     bool m_IsOver = false, m_IsStarted = false;
-    time_t m_StartTime, m_Delay, m_CreateTime;
+    time_t m_StartTime = 0, m_Delay = 0, m_CreateTime = 0;
+    BehaviorVariant m_Behavior{Unimplemented{}};
+    float m_Duration = 0; // remaining duration in seconds
+    bool m_HasBehavior = false;
 };
 
 } // namespace Game::Projectile

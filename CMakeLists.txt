@@ -187,11 +187,11 @@ set(GAME_SRC_FILES
     ${SRC_DIR}/Game/Util/Offsetted.cpp
     ${SRC_DIR}/Game/Passive/Passive.cpp
     ${SRC_DIR}/Game/Projectile/Projectile.cpp
-    ${SRC_DIR}/Game/Projectile/Whip.cpp
-    ${SRC_DIR}/Game/Projectile/Vampirica.cpp
+    ${SRC_DIR}/Game/Projectile/Behavior.cpp
     ${SRC_DIR}/Game/Weapon/Weapon.cpp
-    ${SRC_DIR}/Game/Weapon/Whip.cpp
-    ${SRC_DIR}/Game/Weapon/Vampirica.cpp
+    ${SRC_DIR}/Game/WaveManager.cpp
+    ${SRC_DIR}/Game/Pickup.cpp
+    ${SRC_DIR}/Game/LevelUpSystem.cpp
     ${SRC_DIR}/Game/Enemy/Enemy.cpp
     ${SRC_DIR}/Game/Camera.cpp
     ${SRC_DIR}/Game/Map.cpp

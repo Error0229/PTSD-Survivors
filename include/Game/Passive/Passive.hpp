@@ -23,6 +23,7 @@ public:
         std::unordered_map<std::string, float_t> &BaseStats,
         std::vector<std::vector<std::pair<std::string, float_t>>> &LevelUpStat);
 
+    std::string ID() const { return m_ID; }
     static float_t GetEffect(const std::string &name);
     static void Initialize();
     static bool IsEffect(const std::string &name);

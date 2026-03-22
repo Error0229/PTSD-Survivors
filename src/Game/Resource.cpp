@@ -35,7 +35,7 @@ std::vector<std::string> Resource::s_Passives;
 std::vector<std::string> Resource::s_Projectiles;
 void Resource::Initialize() {
     using json = nlohmann::json;
-    // TODO: load all resources
+    Passive::Passive::Initialize();
     // Character
     std::ifstream chrFile(RESOURCE_BASE + "TextAsset/v1.3.100_CHARACTER_DATA.txt");
     auto chrJson = json::parse(chrFile);
@@ -364,8 +364,8 @@ std::shared_ptr<Passive::Passive> Resource::GetPassive(std::string type) {
 
 std::shared_ptr<Projectile::Projectile>
 Resource::GetProjectile(std::string type) {
-    if (s_Projectile.find(type) == s_Projectile.end()) {
-        throw std::logic_error("Projectile not found");
+    if (s_ProjectilePool.find(type) == s_ProjectilePool.end()) {
+        throw std::logic_error("Projectile pool not found: " + type);
     }
     return s_ProjectilePool[type].GetObject();
 }
