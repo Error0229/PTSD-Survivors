@@ -16,6 +16,7 @@ var hierarchy =
     [ "Util::AssetStore< std::shared_ptr< Mix_Chunk > >", "classUtil_1_1AssetStore.html", null ],
     [ "Util::AssetStore< std::shared_ptr< Mix_Music > >", "classUtil_1_1AssetStore.html", null ],
     [ "Util::AssetStore< std::shared_ptr< SDL_Surface > >", "classUtil_1_1AssetStore.html", null ],
+    [ "Core::AtlasRegion", "structCore_1_1AtlasRegion.html", null ],
     [ "B1", null, [
       [ "nlohmann::detail::conjunction< B1 >", "structnlohmann_1_1detail_1_1conjunction_3_01B1_01_4.html", null ]
     ] ],
@@ -209,9 +210,11 @@ var hierarchy =
     [ "Util::SFX", "classUtil_1_1SFX.html", null ],
     [ "Core::Shader", "classCore_1_1Shader.html", null ],
     [ "Game::Util::Size", "structGame_1_1Util_1_1Size.html", null ],
+    [ "Core::SpriteBatch", "classCore_1_1SpriteBatch.html", null ],
     [ "nlohmann::detail::static_const< T >", "structnlohmann_1_1detail_1_1static__const.html", null ],
     [ "Game::Projectile::Stats", "structGame_1_1Projectile_1_1Stats.html", null ],
     [ "Core::Texture", "classCore_1_1Texture.html", null ],
+    [ "Core::TextureAtlas", "classCore_1_1TextureAtlas.html", null ],
     [ "Util::Time", "classUtil_1_1Time.html", null ],
     [ "Game::Util::Timer", "classGame_1_1Util_1_1Timer.html", null ],
     [ "nlohmann::detail::to_json_fn", "structnlohmann_1_1detail_1_1to__json__fn.html", null ],

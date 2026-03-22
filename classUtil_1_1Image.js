@@ -4,6 +4,7 @@ var classUtil_1_1Image =
     [ "Image", "classUtil_1_1Image.html#ae11efc4536dc9bda901182b41860867f", null ],
     [ "Draw", "classUtil_1_1Image.html#a3b92569a6554f6088f0f373d2ec4201c", null ],
     [ "GetSize", "classUtil_1_1Image.html#a0c6cbb5562274d1ea8d8f37572ab2495", null ],
+    [ "GetTextureId", "classUtil_1_1Image.html#a5b5c7478b59fec539d6f054ecdc9a468", null ],
     [ "SetImage", "classUtil_1_1Image.html#a63c44b5b608111defb4756d1c107fdb9", null ],
     [ "UseAntiAliasing", "classUtil_1_1Image.html#ab00610f01b988efcda4946a16dec76bd", null ]
 ];

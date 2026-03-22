@@ -113,7 +113,7 @@ $(document).ready(function(){initNavTree('classUtil_1_1Renderer.html',''); initR
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aaae3189c59691fcc9c01a7db48bdf8bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Renderer.html#aaae3189c59691fcc9c01a7db48bdf8bd">Renderer</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classUtil_1_1GameObject.html">GameObject</a> &gt; &gt; &amp;children={})</td></tr>
-<tr class="memdesc:aaae3189c59691fcc9c01a7db48bdf8bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameterized constructor. `.  <a href="classUtil_1_1Renderer.html#aaae3189c59691fcc9c01a7db48bdf8bd">More...</a><br /></td></tr>
+<tr class="memdesc:aaae3189c59691fcc9c01a7db48bdf8bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameterized constructor.  <a href="classUtil_1_1Renderer.html#aaae3189c59691fcc9c01a7db48bdf8bd">More...</a><br /></td></tr>
 <tr class="separator:aaae3189c59691fcc9c01a7db48bdf8bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb1e495346a3417a92d2f6f2db974cf2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Renderer.html#adb1e495346a3417a92d2f6f2db974cf2">AddChild</a> (const std::shared_ptr&lt; <a class="el" href="classUtil_1_1GameObject.html">GameObject</a> &gt; &amp;child)</td></tr>
 <tr class="memdesc:adb1e495346a3417a92d2f6f2db974cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a child to <a class="el" href="classUtil_1_1Renderer.html" title="A class handling GameObjects&#39; Draw()">Renderer</a>.  <a href="classUtil_1_1Renderer.html#adb1e495346a3417a92d2f6f2db974cf2">More...</a><br /></td></tr>
@@ -125,8 +125,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5d459fc5acebe1867487cd443bd79415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the child.  <a href="classUtil_1_1Renderer.html#a5d459fc5acebe1867487cd443bd79415">More...</a><br /></td></tr>
 <tr class="separator:a5d459fc5acebe1867487cd443bd79415"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1e4aa64a9279eee2e7e717b0d179b64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Renderer.html#ad1e4aa64a9279eee2e7e717b0d179b64">Update</a> ()</td></tr>
-<tr class="memdesc:ad1e4aa64a9279eee2e7e717b0d179b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw children according to their z-index.  <a href="classUtil_1_1Renderer.html#ad1e4aa64a9279eee2e7e717b0d179b64">More...</a><br /></td></tr>
+<tr class="memdesc:ad1e4aa64a9279eee2e7e717b0d179b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw children according to their z-index. Uses SpriteBatch for batched rendering when available.  <a href="classUtil_1_1Renderer.html#ad1e4aa64a9279eee2e7e717b0d179b64">More...</a><br /></td></tr>
 <tr class="separator:ad1e4aa64a9279eee2e7e717b0d179b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19d0de23cf9f9f98bd65c2f5613cea7a"><td class="memItemLeft" align="right" valign="top"><a id="a19d0de23cf9f9f98bd65c2f5613cea7a" name="a19d0de23cf9f9f98bd65c2f5613cea7a"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>GetDrawCallCount</b> () const</td></tr>
+<tr class="memdesc:a19d0de23cf9f9f98bd65c2f5613cea7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of draw calls issued in the last frame. <br /></td></tr>
+<tr class="separator:a19d0de23cf9f9f98bd65c2f5613cea7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >A class handling GameObjects' Draw() </p>
@@ -148,7 +152,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Parameterized constructor. `. </p>
+<p>Parameterized constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">children</td><td>The <a class="el" href="classUtil_1_1GameObject.html" title="A class representing a game object.">GameObject</a> needing to be managed by <a class="el" href="classUtil_1_1Renderer.html" title="A class handling GameObjects&#39; Draw()">Renderer</a>. </td></tr>
@@ -252,7 +256,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Draw children according to their z-index. </p>
+<p>Draw children according to their z-index. Uses SpriteBatch for batched rendering when available. </p>
 <dl class="section note"><dt>Note</dt><dd>The user is not recommended to modify this function. </dd></dl>
 
 </div>

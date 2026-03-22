@@ -415,6 +415,7 @@ var namespaceUtil =
       [ "MOUSE_MB", "namespaceUtil.html#a17caf66bd49f055feb4a848c4da8cdc5ad6552b43c17ac76569953e0a9d55066f", null ],
       [ "MOUSE_RB", "namespaceUtil.html#a17caf66bd49f055feb4a848c4da8cdc5aa8f6fc014c7f7c835cda64bcb0e53a71", null ]
     ] ],
+    [ "ComputeViewProjection", "namespaceUtil.html#a246dbf9d1445ebe9515164382904d620", null ],
     [ "ConvertToUniformBufferData", "namespaceUtil.html#a45e3e4f96aaac8e23c435be6bacca014", null ],
     [ "LoadTextFile", "namespaceUtil.html#a343c4ab3cb2daa5a8e7278592870d148", null ]
 ];

@@ -689,6 +689,9 @@ SDL_Surface *&#160;</td><td class="memItemRight" valign="bottom"><b>GetMissingIm
 <tr class="memitem:a45e3e4f96aaac8e23c435be6bacca014"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structCore_1_1Matrices.html">Core::Matrices</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceUtil.html#a45e3e4f96aaac8e23c435be6bacca014">ConvertToUniformBufferData</a> (const <a class="el" href="structUtil_1_1Transform.html">Util::Transform</a> &amp;transform, const glm::vec2 &amp;size, float zIndex)</td></tr>
 <tr class="memdesc:a45e3e4f96aaac8e23c435be6bacca014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <a class="el" href="structUtil_1_1Transform.html" title="A struct representing a transformation in 2D space.">Transform</a> object into uniform buffer data.  <a href="namespaceUtil.html#a45e3e4f96aaac8e23c435be6bacca014">More...</a><br /></td></tr>
 <tr class="separator:a45e3e4f96aaac8e23c435be6bacca014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a246dbf9d1445ebe9515164382904d620"><td class="memItemLeft" align="right" valign="top">glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceUtil.html#a246dbf9d1445ebe9515164382904d620">ComputeViewProjection</a> ()</td></tr>
+<tr class="memdesc:a246dbf9d1445ebe9515164382904d620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the view-projection matrix for 2D rendering.  <a href="namespaceUtil.html#a246dbf9d1445ebe9515164382904d620">More...</a><br /></td></tr>
+<tr class="separator:a246dbf9d1445ebe9515164382904d620"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Useful tools for development. </p>
@@ -820,6 +823,26 @@ SDL_Surface *&#160;</td><td class="memItemRight" valign="bottom"><b>GetMissingIm
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a246dbf9d1445ebe9515164382904d620" name="a246dbf9d1445ebe9515164382904d620"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a246dbf9d1445ebe9515164382904d620">&#9670;&#160;</a></span>ComputeViewProjection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::mat4 Util::ComputeViewProjection </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the view-projection matrix for 2D rendering. </p>
+<p >Uses the current <a class="el" href="structPTSD__Config.html">PTSD_Config</a> window dimensions with an orthographic projection centered at (0,0). </p>
+
+</div>
+</div>
 <a id="a45e3e4f96aaac8e23c435be6bacca014" name="a45e3e4f96aaac8e23c435be6bacca014"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a45e3e4f96aaac8e23c435be6bacca014">&#9670;&#160;</a></span>ConvertToUniformBufferData()</h2>
 

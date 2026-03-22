@@ -148,10 +148,12 @@ $(document).ready(function(){initNavTree('Context_8hpp_source.html',''); initRes
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="comment">// Can&#39;t access Time::s_Now, so using this variable to track time.</span></div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    Util::ms_t m_BeforeUpdateTime = <a class="code hl_function" href="classUtil_1_1Time.html#a6716a7816bd818080e650da2b602d061">Util::Time::GetElapsedTimeMs</a>();</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>};</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>} <span class="comment">// namespace Core</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordtype">bool</span> m_ImGuiFrameStarted = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>};</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>} <span class="comment">// namespace Core</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassCore_1_1Context_html"><div class="ttname"><a href="classCore_1_1Context.html">Core::Context</a></div><div class="ttdef"><b>Definition:</b> Context.hpp:11</div></div>
 <div class="ttc" id="aclassCore_1_1Context_html_a7cbc7d91a45aa27c6a247eca7b3c40c6"><div class="ttname"><a href="classCore_1_1Context.html#a7cbc7d91a45aa27c6a247eca7b3c40c6">Core::Context::Context</a></div><div class="ttdeci">Context()</div><div class="ttdoc">Initialize context for SDL, OpenGL, and create a window.</div></div>
 <div class="ttc" id="aclassUtil_1_1Time_html_a6716a7816bd818080e650da2b602d061"><div class="ttname"><a href="classUtil_1_1Time.html#a6716a7816bd818080e650da2b602d061">Util::Time::GetElapsedTimeMs</a></div><div class="ttdeci">static ms_t GetElapsedTimeMs()</div><div class="ttdoc">Get the elapsed time from the start of the program in milliseconds.</div></div>

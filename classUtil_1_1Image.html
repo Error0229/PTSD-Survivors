@@ -100,6 +100,7 @@ $(document).ready(function(){initNavTree('classUtil_1_1Image.html',''); initResi
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classUtil_1_1Image-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Util::Image Class Reference</div></div>
 </div><!--header-->
@@ -139,14 +140,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3b92569a6554f6088f0f373d2ec4201c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Image.html#a3b92569a6554f6088f0f373d2ec4201c">Draw</a> (const <a class="el" href="structCore_1_1Matrices.html">Core::Matrices</a> &amp;data) override</td></tr>
 <tr class="memdesc:a3b92569a6554f6088f0f373d2ec4201c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the image with a given transform and z-index.  <a href="classUtil_1_1Image.html#a3b92569a6554f6088f0f373d2ec4201c">More...</a><br /></td></tr>
 <tr class="separator:a3b92569a6554f6088f0f373d2ec4201c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b5c7478b59fec539d6f054ecdc9a468"><td class="memItemLeft" align="right" valign="top"><a id="a5b5c7478b59fec539d6f054ecdc9a468" name="a5b5c7478b59fec539d6f054ecdc9a468"></a>
+GLuint&#160;</td><td class="memItemRight" valign="bottom"><b>GetTextureId</b> () const</td></tr>
+<tr class="memdesc:a5b5c7478b59fec539d6f054ecdc9a468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the GL texture ID (standalone or atlas). <br /></td></tr>
+<tr class="separator:a5b5c7478b59fec539d6f054ecdc9a468"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c1723d4ec7e0664126106360039d911"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCore_1_1Drawable.html#a7c1723d4ec7e0664126106360039d911">Draw</a> (const <a class="el" href="structCore_1_1Matrices.html">Core::Matrices</a> &amp;data)=0</td></tr>
 <tr class="separator:a7c1723d4ec7e0664126106360039d911"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abda8df312a60383a1bf5e401888e1d13"><td class="memItemLeft" align="right" valign="top">virtual glm::vec2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCore_1_1Drawable.html#abda8df312a60383a1bf5e401888e1d13">GetSize</a> () const =0</td></tr>
 <tr class="separator:abda8df312a60383a1bf5e401888e1d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a587fa2925a9e0d84536524a4429c7caf"><td class="memItemLeft" align="right" valign="top"><a id="a587fa2925a9e0d84536524a4429c7caf" name="a587fa2925a9e0d84536524a4429c7caf"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>SetBatch</b> (<a class="el" href="classCore_1_1SpriteBatch.html">Core::SpriteBatch</a> *batch)</td></tr>
+<tr class="memdesc:a587fa2925a9e0d84536524a4429c7caf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the active SpriteBatch. When set, <a class="el" href="classUtil_1_1Image.html#a3b92569a6554f6088f0f373d2ec4201c" title="Draws the image with a given transform and z-index.">Draw()</a> submits to batch. Pass nullptr to revert to immediate mode. <br /></td></tr>
+<tr class="separator:a587fa2925a9e0d84536524a4429c7caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6eef7793ed7a8ca37c2eae928ccff86b"><td class="memItemLeft" align="right" valign="top"><a id="a6eef7793ed7a8ca37c2eae928ccff86b" name="a6eef7793ed7a8ca37c2eae928ccff86b"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>BuildAtlases</b> ()</td></tr>
+<tr class="memdesc:a6eef7793ed7a8ca37c2eae928ccff86b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build texture atlases from all sprites currently in the texture cache. Call after all sprites are loaded (e.g., after Resource::Initialize). Sprites &gt;256px in either dimension are skipped and keep their standalone textures. <br /></td></tr>
+<tr class="separator:a6eef7793ed7a8ca37c2eae928ccff86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >A class representing an image. </p>
-<p >This class encapsulates the properties and behaviors of an image. It includes properties such as texture and surface. It also includes behaviors such as drawing the image. </p>
+<p >This class encapsulates the properties and behaviors of an image. It includes properties such as texture and surface. It also includes behaviors such as drawing the image.</p>
+<p >Supports two rendering modes:</p><ul>
+<li>Immediate mode: each sprite issues its own draw call (legacy)</li>
+<li>Batch mode: sprites are submitted to a SpriteBatch for batched rendering </li>
+</ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae232d152681a7c192b6ba5dfd122911c" name="ae232d152681a7c192b6ba5dfd122911c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae232d152681a7c192b6ba5dfd122911c">&#9670;&#160;</a></span>Image() <span class="overload">[1/2]</span></h2>
