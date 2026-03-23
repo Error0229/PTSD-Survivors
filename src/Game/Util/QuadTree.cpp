@@ -13,7 +13,12 @@ QuadTree::~QuadTree() {
 }
 QuadTree::QuadTree(int x, int y, int w, int h, int maxObjects, int maxLevels,
                    int level)
-    : x(x), y(y), w(w), h(h), max_objects(maxObjects), max_levels(maxLevels),
+    : x(x),
+      y(y),
+      w(w),
+      h(h),
+      max_objects(maxObjects),
+      max_levels(maxLevels),
       level(level) {
     for (int i = 0; i < 4; i++) {
         children[i] = nullptr;

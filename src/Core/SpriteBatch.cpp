@@ -27,18 +27,22 @@ SpriteBatch::SpriteBatch(int maxSprites)
 }
 
 SpriteBatch::~SpriteBatch() {
-    if (m_VBO) glDeleteBuffers(1, &m_VBO);
-    if (m_IBO) glDeleteBuffers(1, &m_IBO);
-    if (m_VAO) glDeleteVertexArrays(1, &m_VAO);
-    if (m_ProgramId) glDeleteProgram(m_ProgramId);
+    if (m_VBO)
+        glDeleteBuffers(1, &m_VBO);
+    if (m_IBO)
+        glDeleteBuffers(1, &m_IBO);
+    if (m_VAO)
+        glDeleteVertexArrays(1, &m_VAO);
+    if (m_ProgramId)
+        glDeleteProgram(m_ProgramId);
 }
 
 void SpriteBatch::InitGL() {
     // --- Compile batch shader program ---
-    auto vertSrc = Util::LoadTextFile(
-        std::string(PTSD_ASSETS_DIR) + "/shaders/Batch.vert");
-    auto fragSrc = Util::LoadTextFile(
-        std::string(PTSD_ASSETS_DIR) + "/shaders/Batch.frag");
+    auto vertSrc = Util::LoadTextFile(std::string(PTSD_ASSETS_DIR) +
+                                      "/shaders/Batch.vert");
+    auto fragSrc = Util::LoadTextFile(std::string(PTSD_ASSETS_DIR) +
+                                      "/shaders/Batch.frag");
 
     // Prepend version string for GLES 3.0 / GL 4.1
 #ifdef __EMSCRIPTEN__
@@ -113,14 +117,16 @@ void SpriteBatch::InitGL() {
 
     // IBO: static, pre-built
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 static_cast<GLsizeiptr>(m_Indices.size() * sizeof(unsigned int)),
-                 m_Indices.data(), GL_STATIC_DRAW);
+    glBufferData(
+        GL_ELEMENT_ARRAY_BUFFER,
+        static_cast<GLsizeiptr>(m_Indices.size() * sizeof(unsigned int)),
+        m_Indices.data(), GL_STATIC_DRAW);
 
     glBindVertexArray(0);
 
-    LOG_INFO("SpriteBatch: Initialized (max {} sprites, VAO={}, VBO={}, IBO={})",
-             m_MaxSprites, m_VAO, m_VBO, m_IBO);
+    LOG_INFO(
+        "SpriteBatch: Initialized (max {} sprites, VAO={}, VBO={}, IBO={})",
+        m_MaxSprites, m_VAO, m_VBO, m_IBO);
 }
 
 void SpriteBatch::Begin(const glm::mat4 &viewProjection) {
@@ -130,14 +136,11 @@ void SpriteBatch::Begin(const glm::mat4 &viewProjection) {
     m_Begun = true;
 }
 
-void SpriteBatch::Draw(GLuint textureId,
-                        const glm::vec2 &topLeft,
-                        const glm::vec2 &bottomLeft,
-                        const glm::vec2 &bottomRight,
-                        const glm::vec2 &topRight,
-                        const glm::vec2 &uvMin,
-                        const glm::vec2 &uvMax,
-                        float zIndex) {
+void SpriteBatch::Draw(GLuint textureId, const glm::vec2 &topLeft,
+                       const glm::vec2 &bottomLeft,
+                       const glm::vec2 &bottomRight, const glm::vec2 &topRight,
+                       const glm::vec2 &uvMin, const glm::vec2 &uvMax,
+                       float zIndex) {
     if (!m_Begun) {
         LOG_ERROR("SpriteBatch::Draw called without Begin()");
         return;
@@ -156,9 +159,11 @@ void SpriteBatch::Draw(GLuint textureId,
     // TL — z-index carried through for depth buffer
     entry.vertices[0] = {{topLeft.x, topLeft.y, zIndex}, {uvMin.x, uvMin.y}};
     // BL
-    entry.vertices[1] = {{bottomLeft.x, bottomLeft.y, zIndex}, {uvMin.x, uvMax.y}};
+    entry.vertices[1] = {{bottomLeft.x, bottomLeft.y, zIndex},
+                         {uvMin.x, uvMax.y}};
     // BR
-    entry.vertices[2] = {{bottomRight.x, bottomRight.y, zIndex}, {uvMax.x, uvMax.y}};
+    entry.vertices[2] = {{bottomRight.x, bottomRight.y, zIndex},
+                         {uvMax.x, uvMax.y}};
     // TR
     entry.vertices[3] = {{topRight.x, topRight.y, zIndex}, {uvMax.x, uvMin.y}};
 
@@ -166,10 +171,12 @@ void SpriteBatch::Draw(GLuint textureId,
 }
 
 void SpriteBatch::End() {
-    if (!m_Begun) return;
+    if (!m_Begun)
+        return;
     m_Begun = false;
 
-    if (m_Sprites.empty()) return;
+    if (m_Sprites.empty())
+        return;
 
     // Stable sort by z-index first (painter's algorithm), then by texture to
     // batch within the same z-layer. stable_sort preserves submission order for
@@ -199,9 +206,10 @@ void SpriteBatch::End() {
     // Upload vertex data
     glBindVertexArray(m_VAO);
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferSubData(GL_ARRAY_BUFFER, 0,
-                    static_cast<GLsizeiptr>(m_VertexData.size() * sizeof(float)),
-                    m_VertexData.data());
+    glBufferSubData(
+        GL_ARRAY_BUFFER, 0,
+        static_cast<GLsizeiptr>(m_VertexData.size() * sizeof(float)),
+        m_VertexData.data());
 
     // Bind shader
     glUseProgram(m_ProgramId);
@@ -243,8 +251,8 @@ void SpriteBatch::Flush(GLuint textureId, int startIdx, int count) {
     int indexCount = count * 6;
 
     glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT,
-                   reinterpret_cast<void *>(
-                       static_cast<intptr_t>(indexOffset) * sizeof(unsigned int)));
+                   reinterpret_cast<void *>(static_cast<intptr_t>(indexOffset) *
+                                            sizeof(unsigned int)));
 
     m_DrawCallCount++;
 }

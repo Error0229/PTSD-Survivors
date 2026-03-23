@@ -5,12 +5,19 @@
 namespace Game::Util {
 Animation::Animation(std::vector<std::shared_ptr<::Util::Image>> frames,
                      bool isLoop, time_t frameTime)
-    : m_Frames(frames), m_IsAnimated(false), m_IsLoop(isLoop),
-      m_FrameTime(frameTime), m_LastFrameTime(0), m_PauseTime(0) {}
+    : m_Frames(frames),
+      m_IsAnimated(false),
+      m_IsLoop(isLoop),
+      m_FrameTime(frameTime),
+      m_LastFrameTime(0),
+      m_PauseTime(0) {}
 Animation::Animation(std::vector<std::string> &paths, bool isLoop,
                      time_t frameTime)
-    : m_IsAnimated(false), m_IsLoop(isLoop), m_FrameTime(frameTime),
-      m_LastFrameTime(0), m_PauseTime(0) {
+    : m_IsAnimated(false),
+      m_IsLoop(isLoop),
+      m_FrameTime(frameTime),
+      m_LastFrameTime(0),
+      m_PauseTime(0) {
     for (auto &path : paths) {
         m_Frames.push_back(std::make_shared<::Util::Image>(path));
     }
@@ -65,7 +72,8 @@ float_t Animation::GetWidth() {
 bool Animation::IsAnimated() {
     return m_IsAnimated;
 }
-void Animation::Draw(const ::Util::Transform &transform, const float_t &zIndex) {
+void Animation::Draw(const ::Util::Transform &transform,
+                     const float_t &zIndex) {
     Update();
     if (m_CurrentFrame < 0 || m_CurrentFrame >= FrameCount())
         return;

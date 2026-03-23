@@ -38,6 +38,11 @@ public:
     float_t Width() const override;
     float_t Rotation() const override;
     std::string ID();
+    float_t Get(const std::string &name) const {
+        auto it = m_.find(name);
+        return it != m_.end() ? it->second : 0.0f;
+    }
+    void Set(const std::string &name, float_t value) { m_[name] = value; }
 
 private:
     time_t m_lastHit;

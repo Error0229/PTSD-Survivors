@@ -17,6 +17,7 @@ constexpr const char *SPRITE_EXT = ".png";
 constexpr int32_t MAP_PADDING_NUM = 4;
 constexpr int32_t DEFAULT_ANIMATION_FRAME_TIME = 100;
 constexpr float MAP_LAYER = 1;
+constexpr float PICKUP_LAYER = 1.5f;
 constexpr float ENEMY_LAYER = 2;
 constexpr float VFX_LAYER = 3;
 constexpr float CHARACTER_LAYER = 4;

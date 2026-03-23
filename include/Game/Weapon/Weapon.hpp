@@ -1,15 +1,22 @@
 #ifndef WEAPON_HPP
 #define WEAPON_HPP
 #include "Game/Passive/Passive.hpp"
+#include "Game/Projectile/Behavior.hpp"
 #include "Game/Projectile/Projectile.hpp"
 #include "Util/GameObject.hpp"
 #include "pch.hpp"
 #include <cmath>
+#include <functional>
 #include <memory>
 #include <string>
 namespace Game {
 namespace Weapon {
 enum class Type;
+
+// Maps weapon ID string to the behavior variant it should use
+Projectile::BehaviorVariant
+CreateBehaviorForWeapon(const std::string &weaponID);
+
 class Weapon : public ::Util::GameObject {
 public:
     Weapon() = default;
@@ -30,21 +37,30 @@ public:
     void RecalculateStat();
     void UpdateModifier(std::unordered_map<std::string, float_t> &modifier);
 
-    virtual void Start();
-    virtual void
-    Update(const ::Util::Transform &transform = ::Util::Transform());
-    virtual void Draw() override;
-    virtual void LevelUp();
+    void Start();
+    void Update(const ::Util::Transform &transform = ::Util::Transform());
+    void Draw() override;
+    void LevelUp();
     std::string ID();
+
+    // Evolution data accessors
+    const std::vector<std::string> &GetEvoRequired() const {
+        return m_EvoRequired;
+    }
+    const std::vector<std::string> &GetEvoFrom() const { return m_EvoFrom; }
 
 protected:
     std::string m_ID, m_Description;
-    time_t m_LastTimeAttack;
+    time_t m_LastTimeAttack = -1;
     // m_ indicate the stat
     std::unordered_map<std::string, float_t> m_, m_Base, m_Mod;
     std::vector<std::string> m_LevelUpMessage;
     std::vector<std::vector<std::pair<std::string, float_t>>> m_LevelUpStat;
     std::vector<std::string> m_EvoRequired, m_EvoFrom;
+
+private:
+    void FireProjectiles();
+    bool m_PermanentFired = false;
 };
 
 } // namespace Weapon

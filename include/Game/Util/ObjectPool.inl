@@ -34,6 +34,16 @@ void ObjectPool<T>::GetObjects(std::vector<std::shared_ptr<T>> &objects,
 
 template <class T>
 std::shared_ptr<T> ObjectPool<T>::GetObject() {
+    if (FreeIndices_.empty()) {
+        // Pool exhausted — grow by cloning the first object
+        // This avoids a crash and matches OOPL-VS dynamic pool behavior
+        if (!Pool_.empty()) {
+            auto clone = std::make_shared<T>(*Pool_[0]);
+            AddObject(clone);
+        } else {
+            return nullptr;
+        }
+    }
     auto index = FreeIndices_.top();
     FreeIndices_.pop();
     return Pool_[index];

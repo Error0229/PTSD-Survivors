@@ -7,6 +7,15 @@ std::unordered_set<std::string> Passive::s_EffectName;
 void Passive::Start() {
     m_["level"] = 1;
     m_["maxLevel"] = m_LevelUpStat.size();
+    // Apply level-1 bonuses to global effect table on acquisition
+    if (!m_LevelUpStat.empty()) {
+        for (auto &stat : m_LevelUpStat[0]) {
+            m_[stat.first] += stat.second;
+            if (s_Effect.count(stat.first)) {
+                s_Effect[stat.first] += stat.second;
+            }
+        }
+    }
 }
 void Passive::Update(const ::Util::Transform &transform) {
     (void)transform;
@@ -17,8 +26,12 @@ void Passive::Draw() {
 }
 
 void Passive::LevelUp() {
-    for (auto &stat : m_LevelUpStat[m_["level"] - 1]) {
+    for (auto &stat : m_LevelUpStat[static_cast<int>(m_["level"]) - 1]) {
         m_[stat.first] += stat.second;
+        // Push delta into global effect table (pull model)
+        if (s_Effect.count(stat.first)) {
+            s_Effect[stat.first] += stat.second;
+        }
     }
     m_["level"] += 1;
 }

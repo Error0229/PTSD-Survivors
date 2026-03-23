@@ -64,7 +64,8 @@ Image::Image(const std::string &filepath, bool useAA)
     }
 }
 
-Image::Image(const std::string_view &filepath) : Image(std::string{filepath}) {}
+Image::Image(const std::string_view &filepath)
+    : Image(std::string{filepath}) {}
 
 void Image::SetImage(const std::string &filepath) {
     // Check cache for the new image
@@ -104,16 +105,18 @@ void Image::Draw(const Core::Matrices &data) {
         // Viewport culling: skip sprites entirely outside the screen.
         // Screen coordinates are centered at (0,0), extending to ±half window.
         constexpr float CULL_MARGIN = 200.0f;
-        float halfW = static_cast<float>(PTSD_Config::WINDOW_WIDTH) / 2.0f
-                       + CULL_MARGIN;
-        float halfH = static_cast<float>(PTSD_Config::WINDOW_HEIGHT) / 2.0f
-                       + CULL_MARGIN;
+        float halfW =
+            static_cast<float>(PTSD_Config::WINDOW_WIDTH) / 2.0f + CULL_MARGIN;
+        float halfH =
+            static_cast<float>(PTSD_Config::WINDOW_HEIGHT) / 2.0f + CULL_MARGIN;
 
         // If all 4 vertices are outside the same edge, the quad is off-screen.
-        if ((tl.x < -halfW && bl.x < -halfW && br.x < -halfW && tr.x < -halfW) ||
-            (tl.x >  halfW && bl.x >  halfW && br.x >  halfW && tr.x >  halfW) ||
-            (tl.y < -halfH && bl.y < -halfH && br.y < -halfH && tr.y < -halfH) ||
-            (tl.y >  halfH && bl.y >  halfH && br.y >  halfH && tr.y >  halfH)) {
+        if ((tl.x < -halfW && bl.x < -halfW && br.x < -halfW &&
+             tr.x < -halfW) ||
+            (tl.x > halfW && bl.x > halfW && br.x > halfW && tr.x > halfW) ||
+            (tl.y < -halfH && bl.y < -halfH && br.y < -halfH &&
+             tr.y < -halfH) ||
+            (tl.y > halfH && bl.y > halfH && br.y > halfH && tr.y > halfH)) {
             return; // fully off-screen, skip
         }
 
@@ -216,7 +219,8 @@ std::unordered_map<std::string, std::pair<GLuint, Core::AtlasRegion>>
     Image::s_AtlasLookup;
 
 void Image::BuildAtlases() {
-    if (!s_AtlasLookup.empty()) return; // already built
+    if (!s_AtlasLookup.empty())
+        return; // already built
 
     constexpr int ATLAS_SIZE = 4096;
     constexpr int MAX_SPRITE_DIM = 256; // skip sprites larger than this
@@ -230,8 +234,10 @@ void Image::BuildAtlases() {
 
     for (const auto &[path, texture] : s_TextureCache) {
         auto surface = s_Store.Get(path);
-        if (!surface) continue;
-        if (surface->w > MAX_SPRITE_DIM || surface->h > MAX_SPRITE_DIM) continue;
+        if (!surface)
+            continue;
+        if (surface->w > MAX_SPRITE_DIM || surface->h > MAX_SPRITE_DIM)
+            continue;
         candidates.push_back({path, surface->w, surface->h});
     }
 
@@ -241,13 +247,13 @@ void Image::BuildAtlases() {
     }
 
     // Sort by height descending for better shelf packing
-    std::sort(candidates.begin(), candidates.end(),
-              [](const SpriteInfo &a, const SpriteInfo &b) {
-                  return a.h > b.h;
-              });
+    std::sort(
+        candidates.begin(), candidates.end(),
+        [](const SpriteInfo &a, const SpriteInfo &b) { return a.h > b.h; });
 
     // Pack into atlases
-    auto currentAtlas = std::make_unique<Core::TextureAtlas>(ATLAS_SIZE, ATLAS_SIZE);
+    auto currentAtlas =
+        std::make_unique<Core::TextureAtlas>(ATLAS_SIZE, ATLAS_SIZE);
     int atlasCount = 1;
     int packedCount = 0;
 
@@ -256,7 +262,8 @@ void Image::BuildAtlases() {
             // Current atlas full, finalize and start a new one
             currentAtlas->Build();
             s_Atlases.push_back(std::move(currentAtlas));
-            currentAtlas = std::make_unique<Core::TextureAtlas>(ATLAS_SIZE, ATLAS_SIZE);
+            currentAtlas =
+                std::make_unique<Core::TextureAtlas>(ATLAS_SIZE, ATLAS_SIZE);
             atlasCount++;
 
             if (!currentAtlas->Add(sprite.path)) {
@@ -284,8 +291,8 @@ void Image::BuildAtlases() {
         }
     }
 
-    int skippedOversized = static_cast<int>(s_TextureCache.size())
-                          - static_cast<int>(candidates.size());
+    int skippedOversized = static_cast<int>(s_TextureCache.size()) -
+                           static_cast<int>(candidates.size());
     int skippedNoFit = static_cast<int>(candidates.size()) - packedCount;
     LOG_INFO("Image::BuildAtlases: Packed {} sprites into {} atlas(es), "
              "{} skipped (oversized), {} skipped (no fit)",

@@ -8,7 +8,8 @@ namespace Game::Weapon {
 class Whip : public Weapon {
 public:
     Whip() = default;
-    explicit Whip(const Weapon &weapon) : Weapon(weapon) {}
+    explicit Whip(const Weapon &weapon)
+        : Weapon(weapon) {}
     void Update(const ::Util::Transform &transform) override;
 };
 } // namespace Game::Weapon

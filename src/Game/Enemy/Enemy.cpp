@@ -156,6 +156,10 @@ void Enemy::CollisionWith(
         return;
     }
     other->Set("penetrating", other->Get("penetrating") - 1);
+    if (other->Get("penetrating") <= 0) {
+        other->MarkOver();
+        return; // projectile consumed — skip knockback physics
+    }
     auto overlap_x =
         std::min(m_Position.x + Width() - other->GetPosition().x,
                  other->GetPosition().x + other->Width() - m_Position.x);
@@ -184,15 +188,15 @@ void Enemy::SetScale(int32_t level) {
 }
 float_t Enemy::Height() const {
     if (m_CurrentAnimation != NULL_STRING)
-        return Util::Animated::GetAnimation(m_CurrentAnimation)->GetWidth() *
-               std::abs(m_Transform.scale.x);
-    return m_Drawable->GetSize().x * std::abs(m_Transform.scale.x);
+        return Util::Animated::GetAnimation(m_CurrentAnimation)->GetHeight() *
+               std::abs(m_Transform.scale.y);
+    return m_Drawable->GetSize().y * std::abs(m_Transform.scale.y);
 }
 float_t Enemy::Width() const {
     if (m_CurrentAnimation != NULL_STRING)
-        return Util::Animated::GetAnimation(m_CurrentAnimation)->GetHeight() *
-               m_Transform.scale.y;
-    return m_Drawable->GetSize().y * m_Transform.scale.y;
+        return Util::Animated::GetAnimation(m_CurrentAnimation)->GetWidth() *
+               std::abs(m_Transform.scale.x);
+    return m_Drawable->GetSize().x * std::abs(m_Transform.scale.x);
 }
 float_t Enemy::Rotation() const {
     return m_Transform.rotation;

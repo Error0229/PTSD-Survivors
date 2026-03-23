@@ -32,12 +32,32 @@ public:
     void SetInfos(std::string ID, std::string name, std::string description,
                   std::string bgm, std::string weapon);
     void Hurt(float_t damage);
+    void AddHP(float_t amount) {
+        m_["hp"] = std::min(m_["hp"] + amount, m_["maxHp"]);
+    }
+
+    // XP / Level
+    int GetLevel() const { return m_Level; }
+    float GetXP() const { return m_XP; }
+    float GetMaxXP() const { return m_MaxXP; }
+    int AddXP(float amount); // returns number of levels gained (0 if none)
+    std::string GetStartingWeapon() const { return m_Weapon; }
+    std::string GetID() const { return m_ID; }
+    bool IsDead() const {
+        auto it = m_.find("hp");
+        return it != m_.end() && it->second <= 0;
+    }
 
 private:
     std::string m_ID, m_ChrName, m_Description, m_BGM, m_Weapon;
     std::unordered_map<std::string, float_t> m_BaseStats;
     std::unordered_map<std::string, float_t> m_Coefficients;
     std::unordered_map<std::string, float_t> m_;
+    int m_Level = 1;
+    float m_XP = 0;
+    float m_MaxXP = 15.0f; // level 1 threshold
+
+    float ComputeMaxXP(int level) const;
 };
 } // namespace Game
 
