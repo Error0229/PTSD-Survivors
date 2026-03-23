@@ -86,7 +86,9 @@ void Character::SetInfos(std::string ID, std::string chrName,
     m_Weapon = weapon;
 }
 
-void Character::SetSpeed(float speed) { m_["moveSpeed"] = speed; }
+void Character::SetSpeed(float speed) {
+    m_["moveSpeed"] = speed;
+}
 
 // XP curve from OOPL-VS:
 // Level 1-19:  base 5 + 10/level

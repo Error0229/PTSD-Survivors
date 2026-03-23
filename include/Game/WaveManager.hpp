@@ -7,7 +7,8 @@
 
 namespace Game {
 
-// Spawn request returned to Manager — WaveManager decides WHAT, Manager decides WHERE
+// Spawn request returned to Manager — WaveManager decides WHAT, Manager decides
+// WHERE
 struct SpawnRequest {
     std::string enemyType;
     bool isBoss = false;
@@ -24,14 +25,14 @@ public:
 private:
     // Wave track: enemy spawning (per-minute pools)
     struct WaveEntry {
-        float timeMin = 0;         // minute this wave starts
+        float timeMin = 0; // minute this wave starts
         struct WeightedEnemy {
             std::string type;
             float weight = 1.0f;
         };
         std::vector<WeightedEnemy> pool;
-        int minCount = 5;          // burst size per spawn tick
-        float intervalMs = 2000;   // ms between spawn ticks
+        int minCount = 5;        // burst size per spawn tick
+        float intervalMs = 2000; // ms between spawn ticks
     };
 
     // Boss track: timed boss spawns
@@ -39,7 +40,7 @@ private:
         float timeMin = 0;
         std::string type;
         float evoChance = 0;
-        bool spawned = false;      // only spawn once
+        bool spawned = false; // only spawn once
     };
 
     // Swarm track: burst enemy charges

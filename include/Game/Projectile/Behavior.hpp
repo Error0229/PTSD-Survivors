@@ -62,7 +62,7 @@ struct CursorDirection {
 // ─────────────────────────────────────────────────────────
 struct ParabolicArc {
     glm::vec2 origin{0, 0};
-    float angle = 0;   // launch angle (radians)
+    float angle = 0; // launch angle (radians)
     float speed = 0;
     float elapsed = 0;
     float gravity = 980.0f;
@@ -158,17 +158,10 @@ struct Unimplemented {
 };
 
 // The variant type — no heap allocation, pool-friendly
-using BehaviorVariant = std::variant<
-    StaticFieldAoE,
-    DirectLine,
-    CursorDirection,
-    ParabolicArc,
-    BoomerangArc,
-    OrbitalCircle,
-    ConeSpread,
-    BouncingWall,
-    SeekingExplosion,
-    Unimplemented>;
+using BehaviorVariant =
+    std::variant<StaticFieldAoE, DirectLine, CursorDirection, ParabolicArc,
+                 BoomerangArc, OrbitalCircle, ConeSpread, BouncingWall,
+                 SeekingExplosion, Unimplemented>;
 
 } // namespace Game::Projectile
 

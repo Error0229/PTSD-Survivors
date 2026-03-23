@@ -13,14 +13,30 @@ void Pickup::Spawn(Type type, const glm::vec2 &position) {
     m_Position = position;
 
     switch (type) {
-    case Type::XP_SMALL:  m_Value = 1.0f;  break;
-    case Type::XP_MED:    m_Value = 3.0f;  break;
-    case Type::XP_LARGE:  m_Value = 10.0f; break;
-    case Type::COIN:      m_Value = 1.0f;  break;
-    case Type::CHEST:     m_Value = 0.0f;  break;
-    case Type::CHICKEN:   m_Value = 30.0f; break;
-    case Type::ROSARY:    m_Value = 0.0f;  break;
-    case Type::VACUUM:    m_Value = 0.0f;  break;
+    case Type::XP_SMALL:
+        m_Value = 1.0f;
+        break;
+    case Type::XP_MED:
+        m_Value = 3.0f;
+        break;
+    case Type::XP_LARGE:
+        m_Value = 10.0f;
+        break;
+    case Type::COIN:
+        m_Value = 1.0f;
+        break;
+    case Type::CHEST:
+        m_Value = 0.0f;
+        break;
+    case Type::CHICKEN:
+        m_Value = 30.0f;
+        break;
+    case Type::ROSARY:
+        m_Value = 0.0f;
+        break;
+    case Type::VACUUM:
+        m_Value = 0.0f;
+        break;
     }
 }
 

@@ -14,7 +14,8 @@ namespace Weapon {
 enum class Type;
 
 // Maps weapon ID string to the behavior variant it should use
-Projectile::BehaviorVariant CreateBehaviorForWeapon(const std::string &weaponID);
+Projectile::BehaviorVariant
+CreateBehaviorForWeapon(const std::string &weaponID);
 
 class Weapon : public ::Util::GameObject {
 public:

@@ -20,11 +20,13 @@ void StaticFieldAoE::Start(Projectile &p, const BehaviorContext &ctx) {
 }
 
 void StaticFieldAoE::Update(Projectile &p, float dt,
-                             const glm::vec2 &playerPos) {
+                            const glm::vec2 &playerPos) {
     p.SetPosition(playerPos + offset);
 }
 
-void StaticFieldAoE::Reset() { offset = {0, 0}; }
+void StaticFieldAoE::Reset() {
+    offset = {0, 0};
+}
 
 // ── DirectLine ──────────────────────────────────────────
 
@@ -40,8 +42,7 @@ void DirectLine::Start(Projectile &p, const BehaviorContext &ctx) {
     p.SetPosition(ctx.playerPos);
 }
 
-void DirectLine::Update(Projectile &p, float dt,
-                         const glm::vec2 &playerPos) {
+void DirectLine::Update(Projectile &p, float dt, const glm::vec2 &playerPos) {
     p.SetPosition(p.GetPosition() + direction * speed * dt);
 }
 
@@ -65,7 +66,7 @@ void CursorDirection::Start(Projectile &p, const BehaviorContext &ctx) {
 }
 
 void CursorDirection::Update(Projectile &p, float dt,
-                              const glm::vec2 &playerPos) {
+                             const glm::vec2 &playerPos) {
     p.SetPosition(p.GetPosition() + direction * speed * dt);
 }
 
@@ -89,12 +90,11 @@ void ParabolicArc::Start(Projectile &p, const BehaviorContext &ctx) {
     p.SetPosition(origin);
 }
 
-void ParabolicArc::Update(Projectile &p, float dt,
-                           const glm::vec2 &playerPos) {
+void ParabolicArc::Update(Projectile &p, float dt, const glm::vec2 &playerPos) {
     elapsed += dt;
     float x = origin.x + speed * elapsed * std::cos(angle);
-    float y =
-        origin.y - speed * elapsed * std::sin(angle) + 0.5f * gravity * elapsed * elapsed;
+    float y = origin.y - speed * elapsed * std::sin(angle) +
+              0.5f * gravity * elapsed * elapsed;
     float prevY = p.GetPosition().y;
     p.SetPosition({x, y});
 
@@ -131,8 +131,7 @@ void BoomerangArc::Start(Projectile &p, const BehaviorContext &ctx) {
     p.SetPosition(origin);
 }
 
-void BoomerangArc::Update(Projectile &p, float dt,
-                           const glm::vec2 &playerPos) {
+void BoomerangArc::Update(Projectile &p, float dt, const glm::vec2 &playerPos) {
     elapsed += dt;
     // Parabolic in local coords, rotated toward target
     float localX = speed * elapsed;
@@ -180,7 +179,7 @@ void OrbitalCircle::Start(Projectile &p, const BehaviorContext &ctx) {
 }
 
 void OrbitalCircle::Update(Projectile &p, float dt,
-                            const glm::vec2 &playerPos) {
+                           const glm::vec2 &playerPos) {
     currentAngle += angularSpeed * dt;
     float x = playerPos.x + radius * std::cos(currentAngle);
     float y = playerPos.y + radius * std::sin(currentAngle);
@@ -220,8 +219,7 @@ void ConeSpread::Start(Projectile &p, const BehaviorContext &ctx) {
     p.SetPosition(ctx.playerPos);
 }
 
-void ConeSpread::Update(Projectile &p, float dt,
-                         const glm::vec2 &playerPos) {
+void ConeSpread::Update(Projectile &p, float dt, const glm::vec2 &playerPos) {
     p.SetPosition(p.GetPosition() + direction * speed * dt);
 }
 
@@ -241,8 +239,7 @@ void BouncingWall::Start(Projectile &p, const BehaviorContext &ctx) {
     p.SetPosition(ctx.playerPos);
 }
 
-void BouncingWall::Update(Projectile &p, float dt,
-                           const glm::vec2 &playerPos) {
+void BouncingWall::Update(Projectile &p, float dt, const glm::vec2 &playerPos) {
     glm::vec2 pos = p.GetPosition() + direction * speed * dt;
 
     // Bounce off viewport edges (player-centered viewport)
@@ -289,7 +286,7 @@ void SeekingExplosion::Start(Projectile &p, const BehaviorContext &ctx) {
 }
 
 void SeekingExplosion::Update(Projectile &p, float dt,
-                               const glm::vec2 &playerPos) {
+                              const glm::vec2 &playerPos) {
     if (!exploded) {
         glm::vec2 pos = p.GetPosition();
         float dist = glm::distance(pos, target);

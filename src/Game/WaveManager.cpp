@@ -83,7 +83,7 @@ void WaveManager::Load(const std::string &stageFile) {
 }
 
 std::vector<SpawnRequest> WaveManager::Update(float dt, float gameTime,
-                                               int playerLevel) {
+                                              int playerLevel) {
     std::vector<SpawnRequest> requests;
     float gameMinutes = gameTime / 60.0f;
 

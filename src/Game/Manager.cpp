@@ -68,10 +68,18 @@ void Manager::Update() {
             int edge = edgeDist(rng);
             glm::vec2 spawnPos = chrPos;
             switch (edge) {
-            case 0: spawnPos += glm::vec2{posDist(rng) * halfW, -halfH}; break;
-            case 1: spawnPos += glm::vec2{posDist(rng) * halfW, halfH}; break;
-            case 2: spawnPos += glm::vec2{-halfW, posDist(rng) * halfH}; break;
-            case 3: spawnPos += glm::vec2{halfW, posDist(rng) * halfH}; break;
+            case 0:
+                spawnPos += glm::vec2{posDist(rng) * halfW, -halfH};
+                break;
+            case 1:
+                spawnPos += glm::vec2{posDist(rng) * halfW, halfH};
+                break;
+            case 2:
+                spawnPos += glm::vec2{-halfW, posDist(rng) * halfH};
+                break;
+            case 3:
+                spawnPos += glm::vec2{halfW, posDist(rng) * halfH};
+                break;
             }
             enemy->SetPosition(spawnPos);
             if (req.isBoss) {
@@ -91,8 +99,8 @@ void Manager::Update() {
         currentMinute != m_LastVacuumMinute) {
         m_LastVacuumMinute = currentMinute;
         Pickup vacuum;
-        vacuum.Spawn(Pickup::Type::VACUUM, m_Character->GetPosition() +
-                     glm::vec2{100, 0});
+        vacuum.Spawn(Pickup::Type::VACUUM,
+                     m_Character->GetPosition() + glm::vec2{100, 0});
         m_Pickups.push_back(std::move(vacuum));
     }
 
@@ -102,8 +110,8 @@ void Manager::Update() {
         projectile->Update();
         if (projectile->IsOver()) {
             // Return to pool for reuse
-            Resource::ReturnProjectile(
-                std::string(projectile->ID()), projectile);
+            Resource::ReturnProjectile(std::string(projectile->ID()),
+                                       projectile);
             return true;
         }
         return false;
@@ -239,8 +247,8 @@ void Manager::Update() {
     if (m_PendingLevelUps > 0 && m_State == GameState::PLAYING) {
         // Generate choices
         auto choices = LevelUpSystem::GenerateChoices(
-            4, m_Have, m_Weapons, m_Passives,
-            Resource::s_Weapons, Resource::s_Passives);
+            4, m_Have, m_Weapons, m_Passives, Resource::s_Weapons,
+            Resource::s_Passives);
 
         if (choices.empty()) {
             // TODO-004 fallback: nothing to offer, skip
@@ -265,7 +273,8 @@ void Manager::Update() {
                 break;
             case LevelUpChoice::Category::UPGRADE_PASSIVE:
                 for (auto &p : m_Passives) {
-                    if (p->ID() == pick.id && p->GetLevel() < p->GetMaxLevel()) {
+                    if (p->ID() == pick.id &&
+                        p->GetLevel() < p->GetMaxLevel()) {
                         p->LevelUp();
                         break;
                     }
@@ -295,12 +304,13 @@ void Manager::Update() {
                    "  Enemies:" + std::to_string(m_Enemies.size()));
     int gameMin = static_cast<int>(m_GameTime / 60.0f);
     int gameSec = static_cast<int>(m_GameTime) % 60;
-    m_ChrPos->SetText("Lv:" + std::to_string(m_Character->GetLevel()) +
-                      "  XP:" + std::to_string(static_cast<int>(m_Character->GetXP())) +
-                      "/" + std::to_string(static_cast<int>(m_Character->GetMaxXP())) +
-                      "  Time:" + std::to_string(gameMin) + ":" +
-                      (gameSec < 10 ? "0" : "") + std::to_string(gameSec) +
-                      "  Pickups:" + std::to_string(m_Pickups.size()));
+    m_ChrPos->SetText(
+        "Lv:" + std::to_string(m_Character->GetLevel()) +
+        "  XP:" + std::to_string(static_cast<int>(m_Character->GetXP())) + "/" +
+        std::to_string(static_cast<int>(m_Character->GetMaxXP())) +
+        "  Time:" + std::to_string(gameMin) + ":" + (gameSec < 10 ? "0" : "") +
+        std::to_string(gameSec) +
+        "  Pickups:" + std::to_string(m_Pickups.size()));
 }
 void Manager::Draw() {
     // Lazily initialize SpriteBatch
@@ -333,8 +343,8 @@ void Manager::Draw() {
     // rendering path)
     {
         ::Util::Transform fpsTransform{{-280, 275}, 0, {1, 1}};
-        auto fpsData = ::Util::ConvertToUniformBufferData(
-            fpsTransform, m_FPS->GetSize(), 3);
+        auto fpsData = ::Util::ConvertToUniformBufferData(fpsTransform,
+                                                          m_FPS->GetSize(), 3);
         m_FPS->Draw(fpsData);
     }
     {
@@ -392,8 +402,8 @@ void Manager::AddProjectile(
 
 bool Manager::TryEvolveWeapon() {
     // Check all weapon definitions for evolution candidates.
-    // An evolved weapon has "evolveFrom" (base weapons needed, must be max level)
-    // and "requires" (passives needed, must be owned).
+    // An evolved weapon has "evolveFrom" (base weapons needed, must be max
+    // level) and "requires" (passives needed, must be owned).
     for (auto &evoID : Resource::s_Weapons) {
         auto evoDef = Resource::GetWeapon(evoID);
         auto &evoFrom = evoDef->GetEvoFrom();
@@ -443,9 +453,8 @@ bool Manager::TryEvolveWeapon() {
 
         // Clean up in-flight projectiles from old weapon (Codex issue #4)
         for (auto &baseID : evoFrom) {
-            std::erase_if(m_Projectiles, [&](auto &proj) {
-                return proj->ID() == baseID;
-            });
+            std::erase_if(m_Projectiles,
+                          [&](auto &proj) { return proj->ID() == baseID; });
         }
 
         AcquireWeapon(evoID);

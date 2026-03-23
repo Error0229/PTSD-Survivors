@@ -18,8 +18,8 @@ namespace Game::Weapon {
 Projectile::BehaviorVariant
 CreateBehaviorForWeapon(const std::string &weaponID) {
     // StaticFieldAoE: follows player at fixed offset
-    if (weaponID == "WHIP" || weaponID == "VAMPIRICA" ||
-        weaponID == "GARLIC" || weaponID == "VORTEX") {
+    if (weaponID == "WHIP" || weaponID == "VAMPIRICA" || weaponID == "GARLIC" ||
+        weaponID == "VORTEX") {
         return Projectile::StaticFieldAoE{};
     }
     // DirectLine: targets nearest enemy
@@ -82,9 +82,13 @@ void Weapon::SetUp(
     m_LastTimeAttack = -1;
 }
 
-std::string Weapon::ID() { return m_ID; }
+std::string Weapon::ID() {
+    return m_ID;
+}
 
-int32_t Weapon::GetLevel() { return static_cast<int32_t>(m_["level"]); }
+int32_t Weapon::GetLevel() {
+    return static_cast<int32_t>(m_["level"]);
+}
 int32_t Weapon::GetMaxLevel() {
     return static_cast<int32_t>(m_["maxLevel"]);
 }
@@ -138,8 +142,8 @@ void Weapon::FireProjectiles() {
     // Cursor direction
     glm::vec2 cursorDiff = mouse - chrPos;
     float cursorLen = glm::length(cursorDiff);
-    ctx.cursorDir = (cursorLen > 0.001f) ? cursorDiff / cursorLen
-                                          : glm::vec2{1, 0};
+    ctx.cursorDir =
+        (cursorLen > 0.001f) ? cursorDiff / cursorLen : glm::vec2{1, 0};
 
     // Find nearest enemy
     ctx.hasNearestEnemy = false;
@@ -194,8 +198,7 @@ void Weapon::FireProjectiles() {
         if (i > 0 && m_.count("repeatInterval") &&
             !std::holds_alternative<Projectile::StaticFieldAoE>(
                 proj->GetBehavior())) {
-            proj->SetDelay(
-                static_cast<time_t>(m_["repeatInterval"]) * i);
+            proj->SetDelay(static_cast<time_t>(m_["repeatInterval"]) * i);
         }
 
         Game::CAT.AddProjectile(proj);
@@ -219,8 +222,12 @@ void Weapon::LevelUp() {
     RecalculateStat();
 }
 
-bool Weapon::IsMaxLevel() { return m_["level"] == m_["maxLevel"]; }
-bool Weapon::IsEvo() { return m_["isEvolution"] == 1.0f; }
+bool Weapon::IsMaxLevel() {
+    return m_["level"] == m_["maxLevel"];
+}
+bool Weapon::IsEvo() {
+    return m_["isEvolution"] == 1.0f;
+}
 bool Weapon::CanEvo() {
     if (!IsMaxLevel())
         return false;
@@ -236,12 +243,16 @@ bool Weapon::CanEvo() {
 }
 
 void Weapon::RecalculateStat() {
-    m_["power"] = m_Base["power"] * (1.0f + Passive::Passive::GetEffect("power"));
+    m_["power"] =
+        m_Base["power"] * (1.0f + Passive::Passive::GetEffect("power"));
     m_["area"] = m_Base["area"] * (1.0f + Passive::Passive::GetEffect("area"));
-    m_["speed"] = m_Base["speed"] * (1.0f + Passive::Passive::GetEffect("speed"));
+    m_["speed"] =
+        m_Base["speed"] * (1.0f + Passive::Passive::GetEffect("speed"));
     m_["amount"] = m_Base["amount"] + Passive::Passive::GetEffect("amount");
-    m_["duration"] = m_Base["duration"] * (1.0f + Passive::Passive::GetEffect("duration"));
-    m_["coolDown"] = m_Base["interval"] * (1.0f - Passive::Passive::GetEffect("coolDown"));
+    m_["duration"] =
+        m_Base["duration"] * (1.0f + Passive::Passive::GetEffect("duration"));
+    m_["coolDown"] =
+        m_Base["interval"] * (1.0f - Passive::Passive::GetEffect("coolDown"));
     m_["interval"] = m_["coolDown"]; // alias for the cooldown timer check
 }
 

@@ -8,7 +8,9 @@
 #include "Util/Time.hpp"
 #include <cstdlib>
 namespace Game::Projectile {
-Projectile::Projectile(std::string ID) { m_ID = ID; }
+Projectile::Projectile(std::string ID) {
+    m_ID = ID;
+}
 
 void Projectile::Start() {
     m_Type = PROJECTILE;
@@ -66,10 +68,12 @@ void Projectile::SetUp(std::unordered_map<std::string, float_t> stats) {
     m_CreateTime = Util::Clock.Now();
     m_Delay = 0;
     m_Duration = stats.count("duration") ? stats.at("duration") / 1000.0f
-                                          : 5.0f; // default 5s
+                                         : 5.0f; // default 5s
 }
 
-void Projectile::SetDelay(time_t delay) { m_Delay = delay; }
+void Projectile::SetDelay(time_t delay) {
+    m_Delay = delay;
+}
 
 float_t Projectile::Height() const {
     try {
@@ -87,9 +91,13 @@ float_t Projectile::Width() const {
     }
 }
 
-float_t Projectile::Rotation() const { return m_Transform.rotation; }
+float_t Projectile::Rotation() const {
+    return m_Transform.rotation;
+}
 
-bool Projectile::IsOver() const { return m_IsOver; }
+bool Projectile::IsOver() const {
+    return m_IsOver;
+}
 
 void Projectile::Draw() {
     if (!m_IsStarted)
@@ -109,7 +117,9 @@ void Projectile::CollideWith(std::shared_ptr<::Util::GameObject> &other) {
     // Collision is handled by Enemy::CollisionWith(Projectile)
 }
 
-std::string_view Projectile::ID() const { return m_ID; }
+std::string_view Projectile::ID() const {
+    return m_ID;
+}
 
 float_t Projectile::Get(const std::string &name) const {
     auto it = m_.find(name);

@@ -10,8 +10,8 @@
 #include "Game/Projectile/Projectile.hpp"
 #include "Game/Util/QuadTree.hpp"
 #include "Game/Util/Timer.hpp"
-#include "Game/Weapon/Weapon.hpp"
 #include "Game/WaveManager.hpp"
+#include "Game/Weapon/Weapon.hpp"
 #include "Util/Text.hpp"
 #include <memory>
 #include <string>

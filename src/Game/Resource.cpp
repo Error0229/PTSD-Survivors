@@ -2,12 +2,12 @@
 #include "Game/Config.hpp"
 #include "Util/Image.hpp"
 #include "Util/Logger.hpp"
-#include <nlohmann/json.hpp>
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
 #include <fstream>
 #include <memory>
+#include <nlohmann/json.hpp>
 
 namespace Game {
 std::unordered_map<std::string, std::shared_ptr<Character>>
@@ -37,7 +37,8 @@ void Resource::Initialize() {
     using json = nlohmann::json;
     Passive::Passive::Initialize();
     // Character
-    std::ifstream chrFile(RESOURCE_BASE + "TextAsset/v1.3.100_CHARACTER_DATA.txt");
+    std::ifstream chrFile(RESOURCE_BASE +
+                          "TextAsset/v1.3.100_CHARACTER_DATA.txt");
     auto chrJson = json::parse(chrFile);
     for (auto &item : chrJson.items()) {
         s_Character[item.key()] = std::make_shared<Character>();
@@ -106,7 +107,8 @@ void Resource::Initialize() {
                 auto animationName = static_cast<std::string>(item.key()) +
                                      skin["name"].template get<std::string>();
                 s_Animation[animationName] = std::move(animation);
-                chr->Load(skin["name"].get<std::string>(), s_Animation[animationName]);
+                chr->Load(skin["name"].get<std::string>(),
+                          s_Animation[animationName]);
             }
         } else {
             std::vector<std::shared_ptr<::Util::Image>> images;
@@ -171,7 +173,8 @@ void Resource::Initialize() {
             stat["rarity"] = stats["rarity"].get<float>();
             stat["poolLimit"] = stats["poolLimit"].get<float>();
             stat["repeatInterval"] =
-                stats["repeatInterval"].get<float>(); // a.k.a delay between amount of shots
+                stats["repeatInterval"]
+                    .get<float>(); // a.k.a delay between amount of shots
             stat["hitsWalls"] = stats.value("hitsWalls", false) ? 1.0f : 0.0f;
             stat["critChance"] = stats.value("critChance", 0.0f);
             stat["critMul"] = stats.value("critMul", 1.0f);
@@ -224,7 +227,8 @@ void Resource::Initialize() {
         }
     }
     // Enemy
-    std::ifstream enemyFile(RESOURCE_BASE + "TextAsset/v1.3.100_ENEMY_DATA.txt");
+    std::ifstream enemyFile(RESOURCE_BASE +
+                            "TextAsset/v1.3.100_ENEMY_DATA.txt");
     auto enemyJson = json::parse(enemyFile);
     for (auto &item : enemyJson.items()) {
         s_Enemy[item.key()] = std::make_shared<Game::Enemy::Enemy>();
@@ -297,7 +301,8 @@ void Resource::Initialize() {
         }
     }
     // hitVFX
-    std::ifstream hitVFXFile(RESOURCE_BASE + "TextAsset/v1.3.100_HITVFX_DATA.txt");
+    std::ifstream hitVFXFile(RESOURCE_BASE +
+                             "TextAsset/v1.3.100_HITVFX_DATA.txt");
     auto hitVFXJson = json::parse(hitVFXFile);
     for (auto &item : hitVFXJson.items()) {
         if (item.key() == "0") {

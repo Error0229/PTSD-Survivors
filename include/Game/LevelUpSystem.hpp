@@ -26,13 +26,12 @@ struct LevelUpChoice {
 
 class LevelUpSystem {
 public:
-    static std::vector<LevelUpChoice> GenerateChoices(
-        int count,
-        const std::set<std::string> &ownedItems,
-        const std::set<std::shared_ptr<Weapon::Weapon>> &weapons,
-        const std::set<std::shared_ptr<Passive::Passive>> &passives,
-        const std::vector<std::string> &allWeaponIDs,
-        const std::vector<std::string> &allPassiveIDs);
+    static std::vector<LevelUpChoice>
+    GenerateChoices(int count, const std::set<std::string> &ownedItems,
+                    const std::set<std::shared_ptr<Weapon::Weapon>> &weapons,
+                    const std::set<std::shared_ptr<Passive::Passive>> &passives,
+                    const std::vector<std::string> &allWeaponIDs,
+                    const std::vector<std::string> &allPassiveIDs);
 
     static constexpr int WEAPON_CAP = 6;
     static constexpr int PASSIVE_CAP = 6;

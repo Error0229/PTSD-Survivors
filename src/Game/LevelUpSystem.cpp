@@ -13,8 +13,7 @@ static std::mt19937 &RNG() {
 }
 
 std::vector<LevelUpChoice> LevelUpSystem::GenerateChoices(
-    int count,
-    const std::set<std::string> &ownedItems,
+    int count, const std::set<std::string> &ownedItems,
     const std::set<std::shared_ptr<Weapon::Weapon>> &weapons,
     const std::set<std::shared_ptr<Passive::Passive>> &passives,
     const std::vector<std::string> &allWeaponIDs,
@@ -34,8 +33,8 @@ std::vector<LevelUpChoice> LevelUpSystem::GenerateChoices(
                 } catch (...) {
                     continue;
                 }
-                pool.push_back(
-                    {id, LevelUpChoice::Category::NEW_WEAPON, "New: " + id, 0, 0});
+                pool.push_back({id, LevelUpChoice::Category::NEW_WEAPON,
+                                "New: " + id, 0, 0});
             }
         }
     }
@@ -45,8 +44,7 @@ std::vector<LevelUpChoice> LevelUpSystem::GenerateChoices(
         if (!weapon->IsMaxLevel()) {
             pool.push_back({weapon->ID(),
                             LevelUpChoice::Category::UPGRADE_WEAPON,
-                            "Upgrade: " + weapon->ID(),
-                            weapon->GetLevel(),
+                            "Upgrade: " + weapon->ID(), weapon->GetLevel(),
                             weapon->GetMaxLevel()});
         }
     }
@@ -55,8 +53,8 @@ std::vector<LevelUpChoice> LevelUpSystem::GenerateChoices(
     if (static_cast<int>(passives.size()) < PASSIVE_CAP) {
         for (auto &id : allPassiveIDs) {
             if (ownedItems.count(id) == 0) {
-                pool.push_back(
-                    {id, LevelUpChoice::Category::NEW_PASSIVE, "New: " + id, 0, 0});
+                pool.push_back({id, LevelUpChoice::Category::NEW_PASSIVE,
+                                "New: " + id, 0, 0});
             }
         }
     }
@@ -66,15 +64,15 @@ std::vector<LevelUpChoice> LevelUpSystem::GenerateChoices(
         if (passive->GetLevel() < passive->GetMaxLevel()) {
             pool.push_back({passive->ID(),
                             LevelUpChoice::Category::UPGRADE_PASSIVE,
-                            "Upgrade: " + passive->ID(),
-                            passive->GetLevel(),
+                            "Upgrade: " + passive->ID(), passive->GetLevel(),
                             passive->GetMaxLevel()});
         }
     }
 
     // TODO-004: Fallback if pool is empty or too small
     while (static_cast<int>(pool.size()) < count) {
-        pool.push_back({"GOLD", LevelUpChoice::Category::GOLD, "+25 Gold", 0, 0});
+        pool.push_back(
+            {"GOLD", LevelUpChoice::Category::GOLD, "+25 Gold", 0, 0});
     }
 
     // Weighted random sample without duplicates

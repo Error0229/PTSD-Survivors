@@ -5,18 +5,19 @@
 
 namespace Game {
 
-// Lightweight pickup — NOT a GameObject. Uses flat distance check, not QuadTree.
+// Lightweight pickup — NOT a GameObject. Uses flat distance check, not
+// QuadTree.
 class Pickup {
 public:
     enum class Type {
-        XP_SMALL,  // +1 XP (blue gem)
-        XP_MED,    // +3 XP (green gem)
-        XP_LARGE,  // +10 XP (red gem)
-        COIN,      // +1 coin
-        CHEST,     // boss drop — triggers evolution/rewards
-        CHICKEN,   // heal 30 HP
-        ROSARY,    // kill all on-screen enemies
-        VACUUM,    // collect all on-screen pickups
+        XP_SMALL, // +1 XP (blue gem)
+        XP_MED,   // +3 XP (green gem)
+        XP_LARGE, // +10 XP (red gem)
+        COIN,     // +1 coin
+        CHEST,    // boss drop — triggers evolution/rewards
+        CHICKEN,  // heal 30 HP
+        ROSARY,   // kill all on-screen enemies
+        VACUUM,   // collect all on-screen pickups
     };
 
     void Spawn(Type type, const glm::vec2 &position);
