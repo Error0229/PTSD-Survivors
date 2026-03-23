@@ -141,19 +141,24 @@ $(document).ready(function(){initNavTree('Enemy_8hpp_source.html',''); initResiz
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    float_t Width() <span class="keyword">const override</span>;</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    float_t Rotation() <span class="keyword">const override</span>;</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    std::string ID();</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    time_t m_lastHit;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordtype">bool</span> m_IsStunned;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    std::string m_ID, m_Desc;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    std::unordered_map&lt;std::string, float_t&gt; m_;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    std::unordered_map&lt;std::shared_ptr&lt;Projectile::Projectile&gt;, time_t&gt;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        m_lastHitBy;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    std::shared_ptr&lt;Util::Animation&gt; m_HitVFX;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>};</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>} <span class="comment">// namespace Game::Enemy</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    float_t Get(<span class="keyword">const</span> std::string &amp;name)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">auto</span> it = m_.find(name);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">return</span> it != m_.end() ? it-&gt;second : 0.0f;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    }</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">void</span> Set(<span class="keyword">const</span> std::string &amp;name, float_t value) { m_[name] = value; }</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    time_t m_lastHit;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">bool</span> m_IsStunned;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    std::string m_ID, m_Desc;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    std::unordered_map&lt;std::string, float_t&gt; m_;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    std::unordered_map&lt;std::shared_ptr&lt;Projectile::Projectile&gt;, time_t&gt;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        m_lastHitBy;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    std::shared_ptr&lt;Util::Animation&gt; m_HitVFX;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>};</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>} <span class="comment">// namespace Game::Enemy</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassGame_1_1Enemy_1_1Enemy_html"><div class="ttname"><a href="classGame_1_1Enemy_1_1Enemy.html">Game::Enemy::Enemy</a></div><div class="ttdef"><b>Definition:</b> Enemy.hpp:17</div></div>
 <div class="ttc" id="aclassGame_1_1Util_1_1Animated_html"><div class="ttname"><a href="classGame_1_1Util_1_1Animated.html">Game::Util::Animated</a></div><div class="ttdef"><b>Definition:</b> Animated.hpp:11</div></div>
 <div class="ttc" id="aclassGame_1_1Util_1_1Mirrored_html"><div class="ttname"><a href="classGame_1_1Util_1_1Mirrored.html">Game::Util::Mirrored</a></div><div class="ttdef"><b>Definition:</b> Mirrored.hpp:6</div></div>

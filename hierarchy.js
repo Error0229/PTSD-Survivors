@@ -21,15 +21,21 @@ var hierarchy =
       [ "nlohmann::detail::conjunction< B1 >", "structnlohmann_1_1detail_1_1conjunction_3_01B1_01_4.html", null ]
     ] ],
     [ "nlohmann::basic_json< ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer >", "classnlohmann_1_1basic__json.html", null ],
+    [ "Game::Projectile::BehaviorContext", "structGame_1_1Projectile_1_1BehaviorContext.html", null ],
     [ "Util::BGM", "classUtil_1_1BGM.html", null ],
     [ "nlohmann::detail::binary_reader< BasicJsonType, SAX >", "classnlohmann_1_1detail_1_1binary__reader.html", null ],
     [ "nlohmann::detail::binary_writer< BasicJsonType, CharType >", "classnlohmann_1_1detail_1_1binary__writer.html", null ],
+    [ "Game::Projectile::BoomerangArc", "structGame_1_1Projectile_1_1BoomerangArc.html", null ],
+    [ "Game::Projectile::BouncingWall", "structGame_1_1Projectile_1_1BouncingWall.html", null ],
     [ "nlohmann::detail::dtoa_impl::boundaries", "structnlohmann_1_1detail_1_1dtoa__impl_1_1boundaries.html", null ],
     [ "nlohmann::detail::dtoa_impl::cached_power", "structnlohmann_1_1detail_1_1dtoa__impl_1_1cached__power.html", null ],
     [ "Game::Camera", "classGame_1_1Camera.html", null ],
+    [ "Game::Projectile::ConeSpread", "structGame_1_1Projectile_1_1ConeSpread.html", null ],
     [ "Core::Context", "classCore_1_1Context.html", null ],
+    [ "Game::Projectile::CursorDirection", "structGame_1_1Projectile_1_1CursorDirection.html", null ],
     [ "nlohmann::detail::detector< Default, AlwaysVoid, Op, Args >", "structnlohmann_1_1detail_1_1detector.html", null ],
     [ "nlohmann::detail::detector< Default, void_t< Op< Args... > >, Op, Args... >", "structnlohmann_1_1detail_1_1detector_3_01Default_00_01void__t_3_01Op_3_01Args_8_8_8_01_4_01_4_00_01Op_00_01Args_8_8_8_01_4.html", null ],
+    [ "Game::Projectile::DirectLine", "structGame_1_1Projectile_1_1DirectLine.html", null ],
     [ "nlohmann::detail::dtoa_impl::diyfp", "structnlohmann_1_1detail_1_1dtoa__impl_1_1diyfp.html", null ],
     [ "Core::Drawable", "classCore_1_1Drawable.html", [
       [ "Util::Animation", "classUtil_1_1Animation.html", null ],
@@ -162,6 +168,8 @@ var hierarchy =
     [ "nlohmann::detail::json_sax_dom_callback_parser< BasicJsonType >", "classnlohmann_1_1detail_1_1json__sax__dom__callback__parser.html", null ],
     [ "nlohmann::detail::json_sax_dom_parser< BasicJsonType >", "classnlohmann_1_1detail_1_1json__sax__dom__parser.html", null ],
     [ "std::less<::nlohmann::detail::value_t >", "structstd_1_1less_3_1_1nlohmann_1_1detail_1_1value__t_01_4.html", null ],
+    [ "Game::LevelUpChoice", "structGame_1_1LevelUpChoice.html", null ],
+    [ "Game::LevelUpSystem", "classGame_1_1LevelUpSystem.html", null ],
     [ "nlohmann::detail::lexer< BasicJsonType >", "classnlohmann_1_1detail_1_1lexer.html", null ],
     [ "nlohmann::detail::make_void< Ts >", "structnlohmann_1_1detail_1_1make__void.html", null ],
     [ "Game::Manager", "classGame_1_1Manager.html", null ],
@@ -180,18 +188,21 @@ var hierarchy =
     [ "Game::Util::Offsetted", "classGame_1_1Util_1_1Offsetted.html", [
       [ "Game::Projectile::Whip", "classGame_1_1Projectile_1_1Whip.html", null ]
     ] ],
+    [ "Game::Projectile::OrbitalCircle", "structGame_1_1Projectile_1_1OrbitalCircle.html", null ],
     [ "nlohmann::detail::output_adapter< CharType, StringType >", "classnlohmann_1_1detail_1_1output__adapter.html", null ],
     [ "nlohmann::detail::output_adapter_protocol< CharType >", "structnlohmann_1_1detail_1_1output__adapter__protocol.html", [
       [ "nlohmann::detail::output_stream_adapter< CharType >", "classnlohmann_1_1detail_1_1output__stream__adapter.html", null ],
       [ "nlohmann::detail::output_string_adapter< CharType, StringType >", "classnlohmann_1_1detail_1_1output__string__adapter.html", null ],
       [ "nlohmann::detail::output_vector_adapter< CharType >", "classnlohmann_1_1detail_1_1output__vector__adapter.html", null ]
     ] ],
+    [ "Game::Projectile::ParabolicArc", "structGame_1_1Projectile_1_1ParabolicArc.html", null ],
     [ "nlohmann::detail::parser< BasicJsonType >", "classnlohmann_1_1detail_1_1parser.html", null ],
     [ "Game::Util::Physical", "classGame_1_1Util_1_1Physical.html", [
       [ "Game::Character", "classGame_1_1Character.html", null ],
       [ "Game::Enemy::Enemy", "classGame_1_1Enemy_1_1Enemy.html", null ],
       [ "Game::Projectile::Projectile", "classGame_1_1Projectile_1_1Projectile.html", null ]
     ] ],
+    [ "Game::Pickup", "classGame_1_1Pickup.html", null ],
     [ "nlohmann::detail::position_t", "structnlohmann_1_1detail_1_1position__t.html", null ],
     [ "nlohmann::detail::primitive_iterator_t", "classnlohmann_1_1detail_1_1primitive__iterator__t.html", null ],
     [ "nlohmann::detail::priority_tag< N >", "structnlohmann_1_1detail_1_1priority__tag.html", null ],
@@ -206,13 +217,15 @@ var hierarchy =
       [ "nlohmann::detail::json_reverse_iterator< Base >", "classnlohmann_1_1detail_1_1json__reverse__iterator.html", null ]
     ] ],
     [ "Util::SDLPosition", "structUtil_1_1SDLPosition.html", null ],
+    [ "Game::Projectile::SeekingExplosion", "structGame_1_1Projectile_1_1SeekingExplosion.html", null ],
     [ "nlohmann::detail::serializer< BasicJsonType >", "classnlohmann_1_1detail_1_1serializer.html", null ],
     [ "Util::SFX", "classUtil_1_1SFX.html", null ],
     [ "Core::Shader", "classCore_1_1Shader.html", null ],
     [ "Game::Util::Size", "structGame_1_1Util_1_1Size.html", null ],
+    [ "Game::SpawnRequest", "structGame_1_1SpawnRequest.html", null ],
     [ "Core::SpriteBatch", "classCore_1_1SpriteBatch.html", null ],
     [ "nlohmann::detail::static_const< T >", "structnlohmann_1_1detail_1_1static__const.html", null ],
-    [ "Game::Projectile::Stats", "structGame_1_1Projectile_1_1Stats.html", null ],
+    [ "Game::Projectile::StaticFieldAoE", "structGame_1_1Projectile_1_1StaticFieldAoE.html", null ],
     [ "Core::Texture", "classCore_1_1Texture.html", null ],
     [ "Core::TextureAtlas", "classCore_1_1TextureAtlas.html", null ],
     [ "Util::Time", "classUtil_1_1Time.html", null ],
@@ -233,11 +246,14 @@ var hierarchy =
       [ "nlohmann::detail::conjunction< B1, Bn... >", "structnlohmann_1_1detail_1_1conjunction_3_01B1_00_01Bn_8_8_8_01_4.html", null ]
     ] ],
     [ "Core::UniformBuffer< T >", "classCore_1_1UniformBuffer.html", null ],
+    [ "Game::Projectile::Unimplemented", "structGame_1_1Projectile_1_1Unimplemented.html", null ],
     [ "glm::vec4", null, [
       [ "Util::Color", "classUtil_1_1Color.html", null ]
     ] ],
     [ "Core::VertexArray", "classCore_1_1VertexArray.html", null ],
     [ "Core::VertexBuffer", "classCore_1_1VertexBuffer.html", null ],
+    [ "Game::WaveManager", "classGame_1_1WaveManager.html", null ],
+    [ "Game::WaveManager::WaveEntry::WeightedEnemy", "structGame_1_1WaveManager_1_1WaveEntry_1_1WeightedEnemy.html", null ],
     [ "nlohmann::detail::wide_string_input_helper< WideStringType, T >", "structnlohmann_1_1detail_1_1wide__string__input__helper.html", null ],
     [ "nlohmann::detail::wide_string_input_helper< WideStringType, 2 >", "structnlohmann_1_1detail_1_1wide__string__input__helper_3_01WideStringType_00_012_01_4.html", null ]
 ];

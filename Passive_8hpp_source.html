@@ -126,43 +126,44 @@ $(document).ready(function(){initNavTree('Passive_8hpp_source.html',''); initRes
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        std::unordered_map&lt;std::string, float_t&gt; &amp;BaseStats,</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        std::vector&lt;std::vector&lt;std::pair&lt;std::string, float_t&gt;&gt;&gt; &amp;LevelUpStat);</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">static</span> float_t GetEffect(<span class="keyword">const</span> std::string &amp;name);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> Initialize();</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> IsEffect(<span class="keyword">const</span> std::string &amp;name);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">static</span> std::unordered_map&lt;std::string, float_t&gt; s_Effect;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">static</span> std::unordered_set&lt;std::string&gt; s_EffectName;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    std::string m_ID, m_Description;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    std::unordered_map&lt;std::string, float_t&gt; m_;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    std::vector&lt;std::vector&lt;std::pair&lt;std::string, float_t&gt;&gt;&gt; m_LevelUpStat;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>};</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">enum class</span> PassiveType {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    POWER,</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    ARMOR,</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    MAXHEALTH,</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    REGEN,</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    COOLDOWN,</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    AREA,</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    SPEED,</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    DURATION,</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    AMOUNT,</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    MOVESPEED,</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    MAGNET,</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    LUCK,</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    GROWTH,</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    GREED,</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    REVIVAL,</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    CURSE,</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    SILVER,</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    GOLD,</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    pLEFT,</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    pRIGHT,</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    PANDORA</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>};</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>} <span class="comment">// namespace Game::Passive</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#endif </span><span class="comment">// PASSIVE_HPP</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    std::string ID()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_ID; }</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">static</span> float_t GetEffect(<span class="keyword">const</span> std::string &amp;name);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> Initialize();</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> IsEffect(<span class="keyword">const</span> std::string &amp;name);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">static</span> std::unordered_map&lt;std::string, float_t&gt; s_Effect;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">static</span> std::unordered_set&lt;std::string&gt; s_EffectName;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    std::string m_ID, m_Description;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    std::unordered_map&lt;std::string, float_t&gt; m_;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    std::vector&lt;std::vector&lt;std::pair&lt;std::string, float_t&gt;&gt;&gt; m_LevelUpStat;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>};</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">enum class</span> PassiveType {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    POWER,</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    ARMOR,</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    MAXHEALTH,</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    REGEN,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    COOLDOWN,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    AREA,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    SPEED,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    DURATION,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    AMOUNT,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    MOVESPEED,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    MAGNET,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    LUCK,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    GROWTH,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    GREED,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    REVIVAL,</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    CURSE,</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    SILVER,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    GOLD,</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    pLEFT,</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    pRIGHT,</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    PANDORA</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>};</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>} <span class="comment">// namespace Game::Passive</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#endif </span><span class="comment">// PASSIVE_HPP</span></div>
 <div class="ttc" id="aclassGame_1_1Passive_1_1Passive_html"><div class="ttname"><a href="classGame_1_1Passive_1_1Passive.html">Game::Passive::Passive</a></div><div class="ttdef"><b>Definition:</b> Passive.hpp:10</div></div>
 <div class="ttc" id="aclassUtil_1_1GameObject_html"><div class="ttname"><a href="classUtil_1_1GameObject.html">Util::GameObject</a></div><div class="ttdoc">A class representing a game object.</div><div class="ttdef"><b>Definition:</b> GameObject.hpp:20</div></div>
 <div class="ttc" id="astructUtil_1_1Transform_html"><div class="ttname"><a href="structUtil_1_1Transform.html">Util::Transform</a></div><div class="ttdoc">A struct representing a transformation in 2D space.</div><div class="ttdef"><b>Definition:</b> Transform.hpp:16</div></div>

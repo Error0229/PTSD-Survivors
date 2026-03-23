@@ -29,8 +29,18 @@ var annotated_dup =
         [ "Passive", "classGame_1_1Passive_1_1Passive.html", null ]
       ] ],
       [ "Projectile", null, [
+        [ "BehaviorContext", "structGame_1_1Projectile_1_1BehaviorContext.html", null ],
+        [ "BoomerangArc", "structGame_1_1Projectile_1_1BoomerangArc.html", null ],
+        [ "BouncingWall", "structGame_1_1Projectile_1_1BouncingWall.html", null ],
+        [ "ConeSpread", "structGame_1_1Projectile_1_1ConeSpread.html", null ],
+        [ "CursorDirection", "structGame_1_1Projectile_1_1CursorDirection.html", null ],
+        [ "DirectLine", "structGame_1_1Projectile_1_1DirectLine.html", null ],
+        [ "OrbitalCircle", "structGame_1_1Projectile_1_1OrbitalCircle.html", null ],
+        [ "ParabolicArc", "structGame_1_1Projectile_1_1ParabolicArc.html", null ],
         [ "Projectile", "classGame_1_1Projectile_1_1Projectile.html", null ],
-        [ "Stats", "structGame_1_1Projectile_1_1Stats.html", null ],
+        [ "SeekingExplosion", "structGame_1_1Projectile_1_1SeekingExplosion.html", null ],
+        [ "StaticFieldAoE", "structGame_1_1Projectile_1_1StaticFieldAoE.html", null ],
+        [ "Unimplemented", "structGame_1_1Projectile_1_1Unimplemented.html", null ],
         [ "Vampirica", "classGame_1_1Projectile_1_1Vampirica.html", null ],
         [ "Whip", "classGame_1_1Projectile_1_1Whip.html", null ]
       ] ],
@@ -52,9 +62,14 @@ var annotated_dup =
       ] ],
       [ "Camera", "classGame_1_1Camera.html", null ],
       [ "Character", "classGame_1_1Character.html", null ],
+      [ "LevelUpChoice", "structGame_1_1LevelUpChoice.html", null ],
+      [ "LevelUpSystem", "classGame_1_1LevelUpSystem.html", null ],
       [ "Manager", "classGame_1_1Manager.html", null ],
       [ "Map", "classGame_1_1Map.html", null ],
-      [ "Resource", "classGame_1_1Resource.html", null ]
+      [ "Pickup", "classGame_1_1Pickup.html", null ],
+      [ "Resource", "classGame_1_1Resource.html", null ],
+      [ "SpawnRequest", "structGame_1_1SpawnRequest.html", null ],
+      [ "WaveManager", "classGame_1_1WaveManager.html", null ]
     ] ],
     [ "nlohmann", "namespacenlohmann.html", [
       [ "detail", "namespacenlohmann_1_1detail.html", [
