@@ -42,11 +42,10 @@ public:
      * @param uvMax UV coordinates of bottom-right corner.
      * @param zIndex Z-index for draw ordering and depth buffer.
      */
-    void Draw(GLuint textureId,
-              const glm::vec2 &topLeft, const glm::vec2 &bottomLeft,
-              const glm::vec2 &bottomRight, const glm::vec2 &topRight,
-              const glm::vec2 &uvMin, const glm::vec2 &uvMax,
-              float zIndex);
+    void Draw(GLuint textureId, const glm::vec2 &topLeft,
+              const glm::vec2 &bottomLeft, const glm::vec2 &bottomRight,
+              const glm::vec2 &topRight, const glm::vec2 &uvMin,
+              const glm::vec2 &uvMax, float zIndex);
 
     /**
      * @brief Sort sprites and issue batched draw calls.
@@ -82,7 +81,7 @@ private:
     glm::mat4 m_ViewProjection{1.0f};
 
     std::vector<SpriteEntry> m_Sprites;
-    std::vector<float> m_VertexData;   // interleaved pos+uv for upload
+    std::vector<float> m_VertexData;     // interleaved pos+uv for upload
     std::vector<unsigned int> m_Indices; // pre-built index buffer
 
     GLuint m_VAO = 0;

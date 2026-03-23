@@ -54,7 +54,8 @@ void Shader::CheckStatus(const std::string &filepath) const {
         std::vector<char> message(infoLogLength + 1);
         glGetShaderInfoLog(m_ShaderId, infoLogLength, nullptr, message.data());
 
-        LOG_ERROR("Failed to Compile Shader: '{}'\n{}", filepath, message.data());
+        LOG_ERROR("Failed to Compile Shader: '{}'\n{}", filepath,
+                  message.data());
     }
 }
 } // namespace Core

@@ -6,7 +6,8 @@
 namespace Core {
 
 /**
- * @brief A region within a texture atlas, storing UV coordinates and pixel size.
+ * @brief A region within a texture atlas, storing UV coordinates and pixel
+ * size.
  */
 struct AtlasRegion {
     float u0, v0, u1, v1; // UV coordinates in atlas
@@ -72,8 +73,8 @@ public:
 
 private:
     struct ShelfRow {
-        int y;      // top-left y position of this row
-        int height; // row height (tallest sprite in this row)
+        int y;       // top-left y position of this row
+        int height;  // row height (tallest sprite in this row)
         int cursorX; // next free x position in this row
     };
 

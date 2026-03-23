@@ -86,7 +86,7 @@ struct fmt::formatter<Util::Transform> : fmt::formatter<std::string> {
     auto format(const Util::Transform &t, format_context &ctx) const
         -> decltype(ctx.out()) {
         return fmt::format_to(ctx.out(), "T: {} R: {} rad S: {}", t.translation,
-                         t.rotation, t.scale);
+                              t.rotation, t.scale);
     }
 };
 // NOLINTEND

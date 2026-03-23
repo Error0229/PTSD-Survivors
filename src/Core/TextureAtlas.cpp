@@ -49,8 +49,8 @@ bool TextureAtlas::Add(const std::string &filepath) {
         return true; // already added
     }
 
-    auto surface = std::shared_ptr<SDL_Surface>(
-        IMG_Load(filepath.c_str()), SDL_FreeSurface);
+    auto surface = std::shared_ptr<SDL_Surface>(IMG_Load(filepath.c_str()),
+                                                SDL_FreeSurface);
     if (!surface) {
         LOG_ERROR("TextureAtlas: Failed to load '{}'", filepath);
         return false;
@@ -66,10 +66,10 @@ bool TextureAtlas::Add(const std::string &filepath) {
     }
 
     SDL_LockSurface(converted.get());
-    bool result = PackSprite(
-        filepath, converted->w, converted->h,
-        static_cast<const unsigned char *>(converted->pixels),
-        converted->pitch);
+    bool result =
+        PackSprite(filepath, converted->w, converted->h,
+                   static_cast<const unsigned char *>(converted->pixels),
+                   converted->pitch);
     SDL_UnlockSurface(converted.get());
 
     if (!result) {
@@ -79,9 +79,9 @@ bool TextureAtlas::Add(const std::string &filepath) {
     return result;
 }
 
-bool TextureAtlas::PackSprite(const std::string &filepath,
-                               int spriteW, int spriteH,
-                               const unsigned char *pixels, int pitch) {
+bool TextureAtlas::PackSprite(const std::string &filepath, int spriteW,
+                              int spriteH, const unsigned char *pixels,
+                              int pitch) {
     int paddedW = spriteW + PADDING;
     int paddedH = spriteH + PADDING;
 
@@ -94,12 +94,13 @@ bool TextureAtlas::PackSprite(const std::string &filepath,
             BlitPixels(x, y, spriteW, spriteH, pixels, pitch);
             shelf.cursorX += paddedW;
 
-            m_Regions[filepath] = AtlasRegion{
-                static_cast<float>(x) / m_Width,
-                static_cast<float>(y) / m_Height,
-                static_cast<float>(x + spriteW) / m_Width,
-                static_cast<float>(y + spriteH) / m_Height,
-                spriteW, spriteH};
+            m_Regions[filepath] =
+                AtlasRegion{static_cast<float>(x) / m_Width,
+                            static_cast<float>(y) / m_Height,
+                            static_cast<float>(x + spriteW) / m_Width,
+                            static_cast<float>(y + spriteH) / m_Height,
+                            spriteW,
+                            spriteH};
             return true;
         }
     }
@@ -119,23 +120,23 @@ bool TextureAtlas::PackSprite(const std::string &filepath,
 
     BlitPixels(0, shelfY, spriteW, spriteH, pixels, pitch);
 
-    m_Regions[filepath] = AtlasRegion{
-        0.0f,
-        static_cast<float>(shelfY) / m_Height,
-        static_cast<float>(spriteW) / m_Width,
-        static_cast<float>(shelfY + spriteH) / m_Height,
-        spriteW, spriteH};
+    m_Regions[filepath] =
+        AtlasRegion{0.0f,
+                    static_cast<float>(shelfY) / m_Height,
+                    static_cast<float>(spriteW) / m_Width,
+                    static_cast<float>(shelfY + spriteH) / m_Height,
+                    spriteW,
+                    spriteH};
     return true;
 }
 
-void TextureAtlas::BlitPixels(int destX, int destY,
-                                int srcW, int srcH,
-                                const unsigned char *srcPixels, int srcPitch) {
+void TextureAtlas::BlitPixels(int destX, int destY, int srcW, int srcH,
+                              const unsigned char *srcPixels, int srcPitch) {
     for (int row = 0; row < srcH; ++row) {
         const unsigned char *srcRow = srcPixels + row * srcPitch;
-        unsigned char *destRow = m_PixelData.data() +
-                                 (static_cast<size_t>(destY + row) * m_Width +
-                                  destX) * 4;
+        unsigned char *destRow =
+            m_PixelData.data() +
+            (static_cast<size_t>(destY + row) * m_Width + destX) * 4;
         std::memcpy(destRow, srcRow, static_cast<size_t>(srcW) * 4);
     }
 }

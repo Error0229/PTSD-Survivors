@@ -20,6 +20,7 @@ jobs:
         with:
           clang-format-version: '20'
           check-path: src include test assets/shaders
+          exclude-regex: json\.hpp$
           include-regex: ^.*\.((((c|C)(c|pp|xx|\+\+)?$)|((h|H)h?(pp|xx|\+\+)?$))|(vert|frag))$
 
       - name: Run Linter
