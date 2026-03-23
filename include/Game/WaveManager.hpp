@@ -13,6 +13,7 @@ struct SpawnRequest {
     bool isBoss = false;
     bool isSwarm = false;
     int swarmAmount = 1;
+    float chestEvoChance = 0.0f; // for boss chests
 };
 
 class WaveManager {

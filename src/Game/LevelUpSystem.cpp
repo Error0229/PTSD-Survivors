@@ -22,10 +22,18 @@ std::vector<LevelUpChoice> LevelUpSystem::GenerateChoices(
 
     std::vector<LevelUpChoice> pool;
 
-    // New weapons (not owned, under weapon cap)
+    // New weapons (not owned, under weapon cap, exclude evolutions)
     if (static_cast<int>(weapons.size()) < WEAPON_CAP) {
         for (auto &id : allWeaponIDs) {
             if (ownedItems.count(id) == 0) {
+                // Skip evolution-only weapons — they're obtained via chests
+                try {
+                    auto def = Resource::GetWeapon(id);
+                    if (!def->GetEvoFrom().empty())
+                        continue; // this is an evolved weapon
+                } catch (...) {
+                    continue;
+                }
                 pool.push_back(
                     {id, LevelUpChoice::Category::NEW_WEAPON, "New: " + id, 0, 0});
             }

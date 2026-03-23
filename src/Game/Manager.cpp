@@ -76,8 +76,8 @@ void Manager::Update() {
             enemy->SetPosition(spawnPos);
             if (req.isBoss) {
                 enemy->SetScale(m_Character->GetLevel());
-                // Reset HP to match scaled maxHp (Start() set HP before scale)
                 enemy->Set("hp", enemy->Get("maxHp"));
+                enemy->Set("chestEvoChance", req.chestEvoChance);
             }
             m_Enemies.insert(enemy);
         } catch (const std::exception &e) {
@@ -125,10 +125,11 @@ void Manager::Update() {
                 xpPickup.Spawn(xpType, enemy->GetPosition());
                 m_Pickups.push_back(std::move(xpPickup));
 
-                // Boss enemies drop chests
+                // Boss enemies drop chests with evo chance from wave data
                 if (enemy->IsBoss()) {
                     Pickup chest;
                     chest.Spawn(Pickup::Type::CHEST, enemy->GetPosition());
+                    chest.SetEvoChance(enemy->Get("chestEvoChance"));
                     m_Pickups.push_back(std::move(chest));
                 }
             }
@@ -192,10 +193,17 @@ void Manager::Update() {
                 break;
             }
             case Pickup::Type::CHEST: {
-                // Chest opening: try evolution first, then random reward
-                bool evolved = TryEvolveWeapon();
+                // Chest opening: check evo chance before attempting evolution
+                bool evolved = false;
+                float evoChance = it->GetEvoChance();
+                if (evoChance > 0) {
+                    static std::mt19937 chestRng(std::random_device{}());
+                    std::uniform_real_distribution<float> dist(0, 1);
+                    if (dist(chestRng) < evoChance) {
+                        evolved = TryEvolveWeapon();
+                    }
+                }
                 if (!evolved) {
-                    // No evolution — grant a level-up instead
                     m_PendingLevelUps++;
                 }
                 break;

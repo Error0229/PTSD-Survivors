@@ -107,7 +107,7 @@ std::vector<SpawnRequest> WaveManager::Update(float dt, float gameTime,
     for (auto &boss : m_Bosses) {
         if (!boss.spawned && gameMinutes >= boss.timeMin) {
             boss.spawned = true;
-            requests.push_back({boss.type, true, false, 1});
+            requests.push_back({boss.type, true, false, 1, boss.evoChance});
         }
     }
 

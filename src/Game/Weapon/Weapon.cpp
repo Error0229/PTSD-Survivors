@@ -236,7 +236,7 @@ bool Weapon::CanEvo() {
 }
 
 void Weapon::RecalculateStat() {
-    m_["damage"] = m_Base["power"] * (1.0f + Passive::Passive::GetEffect("power"));
+    m_["power"] = m_Base["power"] * (1.0f + Passive::Passive::GetEffect("power"));
     m_["area"] = m_Base["area"] * (1.0f + Passive::Passive::GetEffect("area"));
     m_["speed"] = m_Base["speed"] * (1.0f + Passive::Passive::GetEffect("speed"));
     m_["amount"] = m_Base["amount"] + Passive::Passive::GetEffect("amount");
